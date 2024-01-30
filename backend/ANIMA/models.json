@@ -1,0 +1,21 @@
+{
+    "TTS_models": {
+        "en": {
+            "tts_model": "tts_models/en/ljspeech/tacotron2-DDC"
+        },
+        "fr": {
+            "tts_model": "tts_models/fr/mai/tacotron2-DDC"
+        },
+        "de": {
+            "tts_model": "tts_models/de/thorsten/vits"
+        }
+    },
+    "voice_cloning_models": {
+        "en": {
+            "tts_model": "tts_models/multilingual/multi-dataset/your_tts"
+        },
+        "pt": {
+            "tts_model": "tts_models/multilingual/multi-dataset/your_tts"
+        }
+    }
+}                                        
