@@ -54,8 +54,8 @@ namespace dotnetAnima
 
         private void updateBackendJson()
         {
-            string jsonData = JsonConvert.SerializeObject(backendJsonObject);
-            File.WriteAllText(jsonData, backendJsonFilePath);
+            string jsonData = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
+            File.WriteAllText(backendJsonFilePath, jsonData);
         }
 
         // Send the content typed by the user via registering it to the Json file
@@ -85,8 +85,8 @@ namespace dotnetAnima
 
         private void UpdateFrontendJsonFile()
         {
-            string jsonData = JsonConvert.SerializeObject(frontendJsonObject);
-            File.WriteAllText(jsonData, frontendJsonFilePath);
+            string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
+            File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
         }
 
         // Read from image button - Implement backend functionality for this to work
@@ -105,16 +105,13 @@ namespace dotnetAnima
 
         private async Task SendFileContentBackToFrontend()
         {
-            while (backendJsonObject["readContentSuccess"].ToString() == "true")
+            while (backendJsonObject["readFileSuccess"].ToString() == "true")
             {
                 readingBackendJson();
                 await Task.Delay(1000);
             }
             backendJsonObject["readContentSuccess"] = "";
             updateBackendJson();
-
-            string processedContent = backendJsonObject["readFileContent"];
-            myTextBox.Text = processedContent;
         }
 
         private void MyTextBoxTextChanged(object sender, TextChangedEventArgs e)

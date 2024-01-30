@@ -26,7 +26,6 @@ namespace dotnetAnima
             InitializeComponent();
             MainFrame.Navigate(new AnimaHomePage());
         }
-
         
     }
 }

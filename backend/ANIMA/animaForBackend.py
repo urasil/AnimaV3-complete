@@ -28,37 +28,38 @@ class BackendFunctionalites:
         self.imageConverter = ImgToStrings()
         self.pdfConverter = PdfToStrings()
 
-    def computerSpeak(self, text):
-        self.anima.use_profile_to_talk(profile_path=self.profileToUse(), text=text, lang='en')
+    def computerSpeak(self, text, currentUser):
+        print(currentUser)
+        profilePath = "../../animaProfiles/" + currentUser + ".animaprofile"
+        self.anima.use_profile_to_talk(profile_path=profilePath, text=text, lang='en')
 
     def registerProfile(self):
         newUser = frontendJson["speakerName"]
         self.anima.create_profile(profile_path=f"../../animaProfiles/{newUser}.animaprofile", speaker_wav="../../output.wav", lang="en")
     
-    def profileToUse(self):
-        currentUser = frontendJson["nameOfCurrentUser"]
-        return "../../animaProfiles/" + currentUser + ".animaprofile"
-    
     def convertImageToText(self, path):
+        print("convert image to text")
         return self.imageConverter.img_to_str(path, "eng")
 
 if __name__ == "__main__":
+    currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer()
     functions = BackendFunctionalites()
     while(True):
         changes = observer.detectChanges()
+        print(changes)
         if(changes != []):
             for change in changes:
 
                 # Setting which voice profile to use
                 if(change[0] == "nameOfCurrentUser"):
-                    functions.profileToUse()
+                    currentUser = change[1]
 
                 # Talking
                 elif(change[0] == "content"):
                     print("speak")
                     try:
-                        functions.computerSpeak(change[1])
+                        functions.computerSpeak(change[1], currentUser)
                         backendJson["speechSuccess"] = "true"
                         writeToBackendJson()
                     except Exception as e:
@@ -78,8 +79,11 @@ if __name__ == "__main__":
                     try:
                         text = functions.convertImageToText(change[1])
                         functions.computerSpeak(text)
-                        backendJson["readFileSuccess"] = ""
+                        backendJson["readFileSuccess"] = "true"
                         writeToBackendJson()
                     except:
                         print("Failed to read file")
         time.sleep(1)
+    functions.registerProfile()
+
+    #print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))
