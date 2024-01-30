@@ -37,9 +37,18 @@ class BackendFunctionalites:
         newUser = frontendJson["speakerName"]
         self.anima.create_profile(profile_path=f"../../animaProfiles/{newUser}.animaprofile", speaker_wav="../../output.wav", lang="en")
     
-    def convertImageToText(self, path):
-        print("convert image to text")
-        return self.imageConverter.img_to_str(path, "eng")
+    def converToText(self, path):
+        extension = path.split(".")[-1]
+        if(extension == "pdf"):
+            return self.pdfConverter.pdf_to_str(path)
+        elif(extension == "jpg"):
+            return self.imageConverter.img_to_str(path, "eng")
+        else:
+            return False
+    
+    def registerProfileFromImport(self, path):
+        name = path.split("\\")[-1].split(".")[0]
+        self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
 
 if __name__ == "__main__":
     currentUser = frontendJson["nameOfCurrentUser"]
@@ -77,13 +86,24 @@ if __name__ == "__main__":
                 elif(change[0] == "readFilePath"):
                     print("read file and speak")
                     try:
-                        text = functions.convertImageToText(change[1])
+                        text = functions.converToText(change[1])
                         functions.computerSpeak(text)
                         backendJson["readFileSuccess"] = "true"
                         writeToBackendJson()
                     except:
                         print("Failed to read file")
-        time.sleep(1)
-    functions.registerProfile()
+                        backendJson["readFileSuccess"] = "false"
+                        writeToBackendJson()
 
-    #print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))
+                elif(change[0] == "importFilePath"):
+                    print("import file")
+                    try:
+                        text = functions.registerProfileFromImport(change[1])
+                        backendJson["importFileSuccess"] = "true"
+                        writeToBackendJson()
+                    except:
+                        print("Failed to import file")
+                        backendJson["importFileSuccess"] = "false"
+                        writeToBackendJson()
+        time.sleep(1)
+    print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))

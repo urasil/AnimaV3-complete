@@ -64,11 +64,15 @@ namespace dotnetAnima
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
             await WaitSpeech();
+            if (backendJsonObject["speechSuccess"] == "false")
+            {
+                MessageBox.Show("Failed to create speech");
+            }
         }
 
         private async Task WaitSpeech()
         {
-            while (backendJsonObject["speechSuccess"].ToString() == "true")
+            while (backendJsonObject["speechSuccess"].ToString() == "true" || backendJsonObject["speechSuccess"] != "false")
             {
                 readingBackendJson();
                 await Task.Delay(1000);
