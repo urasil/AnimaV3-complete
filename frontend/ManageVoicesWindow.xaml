@@ -1,0 +1,153 @@
+﻿<Page x:Class="dotnetAnima.ManageVoicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotnetAnima"
+        mc:Ignorable="d"
+        Title="Manage Voices" 
+        Height="600" Width="920">
+    <Border Background="Beige">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="750"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="420"/>
+            </Grid.RowDefinitions>
+
+            <!-- Anima Logo -->
+            <TextBlock Text="Anima v3"
+           VerticalAlignment="Top"
+           HorizontalAlignment="Center"
+           Foreground="DarkBlue"
+           Grid.Row="0"
+           Grid.Column="0"
+           FontSize="25"
+           Margin="0,15,0,0"
+           FontWeight="Bold">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black"
+                          Direction="270"
+                          ShadowDepth="5"
+                          Opacity="0.5"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Voice Selector -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Grid.Row="1"
+                          Grid.RowSpan="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2" Margin="0,7,245,26">
+                <Border Background="DeepSkyBlue" CornerRadius="20" Margin="20">
+                    <StackPanel Margin="20,20,0,0"
+                                Name="groupPanel"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top">
+
+                        <!-- Your Voice -->
+
+
+                        <!-- Make this dynamic content -->
+                        <!-- Your Voice -->
+                        <TextBlock Foreground="AntiqueWhite"
+                                   FontSize="40"
+                                   FontStyle="Normal"
+                                   FontWeight="Bold"
+                                   Text="Your Voice"
+                                   Height="56" Width="587"/>
+
+
+                        <!-- Make this dynamic content -->
+                        <RadioButton Content="Option 1"
+                                  GroupName="VoiceSelection"
+                                  Name="yourVoiceRadioButton"
+                                  Foreground="AntiqueWhite"
+                                  Margin="0,0,0,10"
+                                  FontSize="25"
+                                  FontWeight="DemiBold"
+                                  FontStyle="Italic"
+                                  FontFamily="Times New Roman"
+                                  IsChecked="True"/>
+
+                        <!-- Your Voice -->
+                        <TextBlock Foreground="AntiqueWhite"
+                                   FontSize="40"
+                                   FontStyle="Normal"
+                                   FontWeight="Bold"
+                                   Text="Other Voices"
+                                   Margin="0,0,0,10" Height="56"/>
+
+                        <!-- Add more options dynamically as needed -->
+                    </StackPanel>
+                </Border>
+            </ScrollViewer>
+
+            <!-- Title Text Block -->
+            <TextBlock Text="MANAGE VOICES"
+             Grid.Row="0"
+             Grid.Column="1"
+             Margin="175,20,287,0"
+             VerticalAlignment="Top"
+             Foreground="Black"
+             FontSize="35"
+             FontWeight="Bold"/>
+
+            <!-- Delete Voice Button -->
+            <Button Content="TEXT-TO-SPEECH"
+            Name="speak"
+            Foreground="White"
+            Style="{StaticResource ListenButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Height="50"
+            Margin="510,40,25,10" Click="Speak"/>
+
+            <!-- Redo Voice Button -->
+            <Button Content="REDO MY VOICE"
+            Name="redoVoice"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Height="50"
+            Margin="510,30,25,340" Click="RedoVoice"/>
+
+            <!-- Import Voice Button -->
+            <Button Content="IMPORT VOICE"
+            Name="importVoice"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Height="50"
+            Margin="510,120,25,250" Click="ImportVoice"/>
+
+            <!-- Delete Voice Button -->
+            <Button Content="DELETE VOICE"
+            Name="deleteVoice"
+            Foreground="White"
+            Style="{StaticResource StartOverButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Height="50"
+            Margin="510,210,25,160" Click="DeleteVoice"/>
+
+            <!-- Select Voice Button -->
+            <Button Content="SELECT AS DEFAULT"
+            Name="selectVoıce"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Height="50"
+            Margin="510,300,25,70" Click="SelectVoice"/>
+        </Grid>
+    </Border>
+
+</Page>

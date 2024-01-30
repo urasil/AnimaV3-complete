@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="dotnetAnima.Components.AnimaLogoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:dotnetAnima.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="920">
+    <Grid>
+        <!-- Anima Logo -->
+        <TextBlock Text="Anima v3"
+           VerticalAlignment="Top"
+           HorizontalAlignment="Center"
+           Foreground="DarkBlue"
+           FontSize="25"
+           FontWeight="Bold">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="Black"
+                          Direction="270"
+                          ShadowDepth="5"
+                          Opacity="0.5"/>
+            </TextBlock.Effect>
+        </TextBlock>
+    </Grid>
+</UserControl>

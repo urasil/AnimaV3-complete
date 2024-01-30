@@ -1,0 +1,17 @@
+﻿<Window x:Class="dotnetAnima.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotnetAnima"
+        mc:Ignorable="d"
+        Title="Anima V3" 
+        Height="640" Width="920"
+        Background="Beige">
+    <Viewbox>
+        <Grid>
+            <Frame Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Viewbox>
+    
+</Window>

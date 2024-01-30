@@ -1,0 +1,8 @@
+1) Ask for a speaker name after the user completes voice registration - Maybe with a new window or a popup
+
+2) Make sure that only one checkbox is selectable at a given time
+
+3) Fill the button content using the 2 json communication
+
+4) Make the backend functions necessary for the front end to work - maybe look at how to make asynchronous function calls in Python
+Backend must wait until certain keys in json change their value

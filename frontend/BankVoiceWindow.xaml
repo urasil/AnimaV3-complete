@@ -1,0 +1,195 @@
+﻿<Page x:Class="dotnetAnima.BankVoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotnetAnima"
+        mc:Ignorable="d"
+        Title="Bank Your Voice" 
+        Height="600" Width="920">
+
+    <Border Background="Beige">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="750"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="420"/>
+            </Grid.RowDefinitions>
+
+            <!-- Anima v3 TextBlock -->
+            <TextBlock Text="Anima v3"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="DarkBlue"
+                       FontSize="25"
+                       Margin="20,0,0,0"
+                       FontWeight="Bold">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="Black"
+                                      Direction="270"
+                                      ShadowDepth="5"
+                                      Opacity="0.5"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+
+
+            <!-- Setting up voice TextBlock -->
+            <TextBlock Text="Setting up your voice"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Margin="162,-1,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Foreground="Black"
+                       FontSize="35"
+                       FontWeight="Bold">
+            </TextBlock>
+
+            <!-- Instructions TextBlock -->
+            <TextBlock
+                       Name="instructions"
+                       Grid.Column="1"
+                       Margin="235,82,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       TextAlignment="Center"
+                       Foreground="Black"
+                       FontSize="18"
+                       FontWeight="Normal"
+                       Height="80" Grid.RowSpan="2">
+                <Run FontWeight="Bold" Text="Select START READING"/>
+                <Run/><LineBreak/>
+                <Run Text="then begin reading"/>
+                <LineBreak/>
+                <Run Text="the text below"/>
+            </TextBlock>
+
+            <!-- Guy Speaking Image -->
+            <Image Margin="236,75,14,25" Grid.Column="1" Source="Images/guySpeaking.png" Grid.RowSpan="2"/>
+
+            <!-- Passage Progress Bar -->
+            <StackPanel Name="progress" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,78,0,0">
+                <Border Height="42" Width="50" Background="DeepSkyBlue" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">1</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">2</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">3</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">4</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">5</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">6</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">7</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">8</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,10">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">9</TextBlock>
+                </Border>
+                <Border Height="42" Width="50" Background="White" CornerRadius="10" Margin="0,0,0,5">
+                    <TextBlock FontFamily="Times New Roman" FontWeight="DemiBold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black">10</TextBlock>
+                </Border>
+            </StackPanel>
+            <TextBlock 
+                FontSize="16" 
+                FontFamily="Times New Roman" 
+                FontWeight="DemiBold"
+                TextAlignment="Justify"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Name="pageText" 
+                Grid.Column="1" 
+                Grid.Row="2" 
+                TextWrapping="Wrap" 
+                Text="test" 
+                Height="316" 
+                Width="730" Margin="6,26,0,0"/>
+
+            <!-- Speaking Line -->
+            <Image Source="Images/speechBubble.png" Margin="84,49,167,394" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="3"/>
+            <Button Content="START READING"
+            Name="lovelyButton"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2" 
+            Height="50"
+            Margin="234,347,301,23" Click="StartRecording"/>
+
+            <!-- Listen Button -->
+            <Button Content="LISTEN RECORDING"
+            Name="listenButton"
+            Foreground="White"
+            Style="{StaticResource ListenButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="2"
+            Visibility="Hidden"
+            Margin="488,350,67,25" 
+            Click="ListenRecording"/>
+
+            <!-- Start Over Button -->
+            <Button Content="START OVER"
+            Name="restartButton"
+            Visibility="Hidden"
+            Style="{StaticResource StartOverButtonTheme}"
+            Click="RestartClick" Grid.Column="1" Margin="49,352,551,23" Grid.Row="2"/>
+
+            <!-- Name entering field -->
+            <Grid Grid.Column="1" Grid.Row="2">
+                <TextBox Style="{StaticResource RoundedTextBoxTheme}" 
+                 HorizontalAlignment="Left" 
+                 Name="speakerName"
+                 TextWrapping="Wrap"
+                 Visibility="Hidden"
+                 Text="..." 
+                 TextChanged="SpeakerNameTextChanged"
+                 VerticalAlignment="Top" 
+                 Width="331" Height="34" Margin="182,187,0,0"/>
+
+                <TextBlock FontSize="18"
+                   FontStyle="Normal"
+                   Name="info"
+                   FontWeight="SemiBold"
+                   Visibility="Hidden"
+                   HorizontalAlignment="Left" 
+                   TextWrapping="Wrap" 
+                   Text="Enter your name below and press ALL DONE! to continue!" 
+                   VerticalAlignment="Top" 
+                   Height="56" 
+                   Width="331" Margin="182,126,0,0"/>
+
+                <TextBlock FontSize="16"
+                   Name="info2"
+                   Visibility="Hidden"
+                   FontStyle="Italic"
+                   FontWeight="Medium"
+                   HorizontalAlignment="Left" 
+                   TextWrapping="Wrap" 
+                   Text="Choose your name carefully, you won't be able to change it again!" 
+                   VerticalAlignment="Top" 
+                   Height="46" 
+                   Width="331" Margin="182,226,0,0"/>
+            </Grid>
+
+        </Grid>
+    </Border>
+</Page>
+
