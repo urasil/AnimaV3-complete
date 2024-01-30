@@ -7,3 +7,4 @@ packages/
 obj/
 *.vs
 output.wav
+.DS_Store
