@@ -1,1 +1,9 @@
-animaProfiles
+__pycache__
+venv/
+*.animaprofile
+bin/
+Fonts/
+packages/
+obj/
+*.vs
+output.wav
