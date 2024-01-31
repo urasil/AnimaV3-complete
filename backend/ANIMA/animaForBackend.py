@@ -10,6 +10,8 @@ import os
 
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
+language = "en"
+animaProfilesPath = "../../animaProfiles/"  # directory of anime profiles
 
 with open(frontendJsonFilePath, "r") as json_file:
     frontendJson = json.load(json_file)
@@ -30,12 +32,12 @@ class BackendFunctionalites:
 
     def computerSpeak(self, text, currentUser):
         print(currentUser)
-        profilePath = "../../animaProfiles/" + currentUser + ".animaprofile"
-        self.anima.use_profile_to_talk(profile_path=profilePath, text=text, lang='en')
+        profilePath = animaProfilesPath + currentUser + ".animaprofile"
+        self.anima.use_profile_to_talk(profile_path=profilePath, text=text, lang=language)
 
     def registerProfile(self):
         newUser = frontendJson["speakerName"]
-        self.anima.create_profile(profile_path=f"../../animaProfiles/{newUser}.animaprofile", speaker_wav="../../output.wav", lang="en")
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
     
     def converToText(self, path):
         extension = path.split(".")[-1]
@@ -52,7 +54,7 @@ class BackendFunctionalites:
 
 if __name__ == "__main__":
     currentUser = frontendJson["nameOfCurrentUser"]
-    observer = Observer()
+    observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
     while(True):
         changes = observer.detectChanges()

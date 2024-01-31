@@ -35,7 +35,7 @@ namespace dotnetAnima
             InitializeComponent();
             if (Directory.Exists(path))
             {
-                string[] directoriesWithinPath = Directory.GetFiles(path);
+                string[] directoriesWithinPath = Directory.GetFiles(path, "*.animaprofile");
                 if (directoriesWithinPath.Length > 0)
                 {
                     string userName = frontendJsonObject["nameOfCurrentUser"];
