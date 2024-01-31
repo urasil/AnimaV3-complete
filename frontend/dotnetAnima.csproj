@@ -119,9 +119,6 @@
     <Compile Include="ManageVoicesWindow.xaml.cs">
       <DependentUpon>ManageVoicesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ManageVoiceProfilePage.xaml.cs">
-      <DependentUpon>ManageVoiceProfilePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Test\SeperatorTest.cs" />
     <Compile Include="TextToSpeechWindow.xaml.cs">
       <DependentUpon>TextToSpeechWindow.xaml</DependentUpon>
@@ -147,10 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ManageVoicesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ManageVoiceProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,7 +191,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="data\test.animaprofile" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

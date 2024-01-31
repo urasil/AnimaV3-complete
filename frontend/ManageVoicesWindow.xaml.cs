@@ -34,6 +34,8 @@ namespace dotnetAnima
         private string frontendJsonContent = File.ReadAllText("../../../frontend.json");
         private Dictionary<string, string> frontendJsonObject;
         string[] listOfNames;
+
+
         public ManageVoicesWindow()
         {
             InitializeComponent();
@@ -66,7 +68,7 @@ namespace dotnetAnima
 
         private string[] ExtractNames()
         {
-            string[] filePaths = Directory.GetFiles("../../../animaProfiles");
+            string[] filePaths = Directory.GetFiles("../../../animaProfiles", "*.animaprofile");  //only get files with extension of 'animeprofile'
             string[] namesList = new string[filePaths.Length];
 
             for (int i = 0; i < filePaths.Length; i++)
