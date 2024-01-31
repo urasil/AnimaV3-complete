@@ -2,15 +2,18 @@ import json
 import time
 import os
 
+
+# Observer is used to monitor the change of json files
 class Observer:
-    def __init__(self):
+    def __init__(self, frontEndJsonPath):
         #"../../frontend.json"
-        self.frontendJson = None
+        self.frontEndJsonPath = frontEndJsonPath
+        #self.frontendJson = None
         self.updatedFrontendJson = None
         self.frontendJson = self.loadJson()
     
     def loadJson(self):
-        with open("../../frontend.json", "r") as jsonFile:
+        with open(self.frontEndJsonPath, "r") as jsonFile:
             jsonToLoad = json.loads(jsonFile.read())
         return jsonToLoad
 
@@ -36,11 +39,11 @@ class Observer:
         return changes
             
 def main():
-    observer = Observer()
+    observer = Observer(frontEndJsonPath="../../frontend.json")
     while True:
         changes = observer.detectChanges()
         if(changes != []):
-            print(changes)
+            print("changes detected: "+str(changes))
         time.sleep(0.5)
 
 if __name__ == '__main__':

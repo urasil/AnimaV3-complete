@@ -10,6 +10,8 @@ import os
 
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
+language = "en"
+animaProfilesPath = "../../animaProfiles/"
 
 with open(frontendJsonFilePath, "r") as json_file:
     frontendJson = json.load(json_file)
@@ -29,21 +31,21 @@ class BackendFunctionalites:
         self.pdfConverter = PdfToStrings()
 
     def computerSpeak(self, text):
-        self.anima.use_profile_to_talk(profile_path=self.profileToUse(), text=text, lang='en')
+        self.anima.use_profile_to_talk(profile_path=self.profileToUse(), text=text, lang='en')  # ANIMA already has a similar method for this
 
     def registerProfile(self):
         newUser = frontendJson["speakerName"]
-        self.anima.create_profile(profile_path=f"../../animaProfiles/{newUser}.animaprofile", speaker_wav="../../output.wav", lang="en")
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
     
     def profileToUse(self):
         currentUser = frontendJson["nameOfCurrentUser"]
-        return "../../animaProfiles/" + currentUser + ".animaprofile"
+        return animaProfilesPath + currentUser + ".animaprofile"
     
     def convertImageToText(self, path):
         return self.imageConverter.img_to_str(path, "eng")
 
 if __name__ == "__main__":
-    observer = Observer()
+    observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
     while(True):
         changes = observer.detectChanges()
