@@ -11,7 +11,7 @@ import os
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
 language = "en"
-animaProfilesPath = "../../animaProfiles/"
+animaProfilesPath = "../../animaProfiles/"  # directory of anime profiles
 
 with open(frontendJsonFilePath, "r") as json_file:
     frontendJson = json.load(json_file)
@@ -30,37 +30,47 @@ class BackendFunctionalites:
         self.imageConverter = ImgToStrings()
         self.pdfConverter = PdfToStrings()
 
-    def computerSpeak(self, text):
-        self.anima.use_profile_to_talk(profile_path=self.profileToUse(), text=text, lang='en')  # ANIMA already has a similar method for this
+    def computerSpeak(self, text, currentUser):
+        print(currentUser)
+        profilePath = animaProfilesPath + currentUser + ".animaprofile"
+        self.anima.use_profile_to_talk(profile_path=profilePath, text=text, lang=language)
 
     def registerProfile(self):
         newUser = frontendJson["speakerName"]
         self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
     
-    def profileToUse(self):
-        currentUser = frontendJson["nameOfCurrentUser"]
-        return animaProfilesPath + currentUser + ".animaprofile"
+    def converToText(self, path):
+        extension = path.split(".")[-1]
+        if(extension == "pdf"):
+            return self.pdfConverter.pdf_to_str(path)
+        elif(extension == "jpg"):
+            return self.imageConverter.img_to_str(path, "eng")
+        else:
+            return False
     
-    def convertImageToText(self, path):
-        return self.imageConverter.img_to_str(path, "eng")
+    def registerProfileFromImport(self, path):
+        name = path.split("\\")[-1].split(".")[0]
+        self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
 
 if __name__ == "__main__":
+    currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
     while(True):
         changes = observer.detectChanges()
+        print(changes)
         if(changes != []):
             for change in changes:
 
                 # Setting which voice profile to use
                 if(change[0] == "nameOfCurrentUser"):
-                    functions.profileToUse()
+                    currentUser = change[1]
 
                 # Talking
                 elif(change[0] == "content"):
                     print("speak")
                     try:
-                        functions.computerSpeak(change[1])
+                        functions.computerSpeak(change[1], currentUser)
                         backendJson["speechSuccess"] = "true"
                         writeToBackendJson()
                     except Exception as e:
@@ -78,10 +88,24 @@ if __name__ == "__main__":
                 elif(change[0] == "readFilePath"):
                     print("read file and speak")
                     try:
-                        text = functions.convertImageToText(change[1])
+                        text = functions.converToText(change[1])
                         functions.computerSpeak(text)
-                        backendJson["readFileSuccess"] = ""
+                        backendJson["readFileSuccess"] = "true"
                         writeToBackendJson()
                     except:
                         print("Failed to read file")
+                        backendJson["readFileSuccess"] = "false"
+                        writeToBackendJson()
+
+                elif(change[0] == "importFilePath"):
+                    print("import file")
+                    try:
+                        text = functions.registerProfileFromImport(change[1])
+                        backendJson["importFileSuccess"] = "true"
+                        writeToBackendJson()
+                    except:
+                        print("Failed to import file")
+                        backendJson["importFileSuccess"] = "false"
+                        writeToBackendJson()
         time.sleep(1)
+    print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))

@@ -2,17 +2,18 @@ import pytesseract
 import os
 from PIL import Image
 
+
 class ImgToStrings():
     """
     Converts .jpg file text to strings.
     """
     def __init__(self) -> None:
         self.lang = ["eng", "por", "fra", "deu_frak"]
-        pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+        pytesseract.pytesseract.tesseract_cmd = '../../tesseract/tesseract.exe'
 
     def img_to_str(self, img_path: str, lang: str):
         """
-        Convert text in .jpg image to strings. English, portuguese, french and german are available.
+        Convert text in .jpg image to strings. English, Portuguese, French, and German are available.
 
         Args:
             img_path (str): image filepath in path/image format. Only allows .jpg file
@@ -21,11 +22,13 @@ class ImgToStrings():
         self.__check_file_path(img_path)
         self.__check_lang(lang)
 
-        image = Image.open(img_path)
-        
-        text = pytesseract.image_to_string(image, lang=lang)
-
-        return text
+        try:
+            image = Image.open(img_path)
+            text = pytesseract.image_to_string(image, lang=lang)
+            return repr(text)
+        except Exception as e:
+            print(f"Error occurred during OCR: {e}")
+            return ""
 
 
     def __check_file_path(self, img_path):

@@ -190,8 +190,6 @@ namespace dotnetAnima
                 if(child is RadioButton radioButton &&  radioButton.IsChecked == true)
                 {
                     frontendJsonObject["nameOfCurrentUser"] = radioButton.Content.ToString();
-                    string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
-                    File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
                     break;
                 }
             }
@@ -208,6 +206,7 @@ namespace dotnetAnima
                 }
 
             }
+            UpdateFrontendJsonFile();
             yourVoiceRadioButton.Content = currentUser;
             yourVoiceRadioButton.IsChecked = true;
 
