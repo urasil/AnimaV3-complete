@@ -69,12 +69,13 @@ if __name__ == "__main__":
                 # Talking
                 elif(change[0] == "content"):
                     print("speak")
-                    try:
-                        functions.computerSpeak(change[1], currentUser)
-                        backendJson["speechSuccess"] = "true"
-                        writeToBackendJson()
-                    except Exception as e:
-                        print("Failed to speak", e)
+                    if change[1] != "":
+                        try:
+                            functions.computerSpeak(change[1], currentUser)
+                            backendJson["speechSuccess"] = "true"
+                            writeToBackendJson()
+                        except Exception as e:
+                            print("Failed to speak", e)
                 # New profile to be registered
                 elif(change[0] == "speakerName"):
                     print("register profile")
@@ -87,25 +88,27 @@ if __name__ == "__main__":
 
                 elif(change[0] == "readFilePath"):
                     print("read file and speak")
-                    try:
-                        text = functions.converToText(change[1])
-                        functions.computerSpeak(text)
-                        backendJson["readFileSuccess"] = "true"
-                        writeToBackendJson()
-                    except:
-                        print("Failed to read file")
-                        backendJson["readFileSuccess"] = "false"
-                        writeToBackendJson()
+                    if change[1] != "":
+                        try:
+                            text = functions.converToText(change[1])
+                            functions.computerSpeak(text)
+                            backendJson["readFileSuccess"] = "true"
+                            writeToBackendJson()
+                        except:
+                            print("Failed to read file")
+                            backendJson["readFileSuccess"] = "false"
+                            writeToBackendJson()
 
                 elif(change[0] == "importFilePath"):
                     print("import file")
-                    try:
-                        text = functions.registerProfileFromImport(change[1])
-                        backendJson["importFileSuccess"] = "true"
-                        writeToBackendJson()
-                    except:
-                        print("Failed to import file")
-                        backendJson["importFileSuccess"] = "false"
-                        writeToBackendJson()
+                    if change[1] != "":
+                        try:
+                            text = functions.registerProfileFromImport(change[1])
+                            backendJson["importSuccess"] = "true"
+                            writeToBackendJson()
+                        except:
+                            print("Failed to import file")
+                            backendJson["importSuccess"] = "false"
+                            writeToBackendJson()
         time.sleep(1)
     print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))

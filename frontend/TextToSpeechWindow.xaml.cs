@@ -61,24 +61,33 @@ namespace dotnetAnima
         // Send the content typed by the user via registering it to the Json file
         private async void Speak(object sender, RoutedEventArgs e)
         {
-            string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
-            File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
+            UpdateFrontendJsonFile();
             await WaitSpeech();
             if (backendJsonObject["speechSuccess"] == "false")
             {
                 MessageBox.Show("Failed to create speech");
             }
+            backendJsonObject["speechSuccess"] = "";
+            frontendJsonObject["content"] = "";
+            updateBackendJson();
+            UpdateFrontendJsonFile();
         }
 
         private async Task WaitSpeech()
         {
-            while (backendJsonObject["speechSuccess"].ToString() == "true" || backendJsonObject["speechSuccess"] != "false")
+            int count = 0;
+            while (backendJsonObject["speechSuccess"].ToString() != "true")
             {
+                Console.WriteLine(backendJsonObject["speechSuccess"]);
                 readingBackendJson();
                 await Task.Delay(1000);
+                count++;
+                if(count > 20) 
+                {
+                    backendJsonObject["speechSuccess"] = "false";
+                    break;
+                }
             }
-            backendJsonObject["speechSuccess"] = "";
-            updateBackendJson();
         }
 
         // Send user to Manage Voice Window
@@ -101,21 +110,30 @@ namespace dotnetAnima
             if(response == true)
             {
                 string filePath = dialog.FileName;
+                Console.WriteLine(filePath);
                 frontendJsonObject["readFilePath"] = filePath;
                 UpdateFrontendJsonFile();
                 await SendFileContentBackToFrontend();
+                if (backendJsonObject["readFileSuccess"] == "false")
+                {
+                    MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough");
+                }
+                backendJsonObject["readFileSuccess"] = "";
+                frontendJsonObject["readFilePath"] = "";
+                UpdateFrontendJsonFile();
+                updateBackendJson();
             }
         }
 
         private async Task SendFileContentBackToFrontend()
         {
-            while (backendJsonObject["readFileSuccess"].ToString() == "true")
+            int count = 0;
+            while (backendJsonObject["readFileSuccess"].ToString() != "true")
             {
                 readingBackendJson();
                 await Task.Delay(1000);
             }
-            backendJsonObject["readContentSuccess"] = "";
-            updateBackendJson();
+            
         }
 
         private void MyTextBoxTextChanged(object sender, TextChangedEventArgs e)
