@@ -1,1 +1,7 @@
-{"profileCreationSuccess": "true", "readFileSuccess": "abdf", "speechSuccess": "true", "readContentSuccess": "", "importSuccess": ""}
+{
+  "profileCreationSuccess": "true",
+  "readFileSuccess": "false",
+  "speechSuccess": "",
+  "readContentSuccess": "",
+  "importSuccess": "true"
+}

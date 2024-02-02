@@ -1,6 +1,7 @@
 import pytesseract
 import os
 from PIL import Image
+import easyocr
 
 
 class ImgToStrings():

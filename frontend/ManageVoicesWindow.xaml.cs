@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using Newtonsoft.Json;
+using System.Threading;
+using System.Security.Policy;
 
 // What is left to do?
 // Import my voice
@@ -33,13 +35,32 @@ namespace dotnetAnima
         string frontendJsonFilePath = @"../../../frontend.json";
         private string frontendJsonContent = File.ReadAllText("../../../frontend.json");
         private Dictionary<string, string> frontendJsonObject;
-        string[] listOfNames;
 
 
         public ManageVoicesWindow()
         {
             InitializeComponent();
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
+            backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
+            updateVoices();
+
+        }
+
+        private void readingBackendJson()
+        {
+            string updatedJsonContent = File.ReadAllText("../../../backend.json");
+            backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(updatedJsonContent);
+        }
+
+        private void readingFrontendJson()
+        {
+            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
+        }
+
+        private void updateVoices()
+        {
+            string[] listOfNames;
             listOfNames = ExtractNames();
             string currentUser = frontendJsonObject["nameOfCurrentUser"];
             yourVoiceRadioButton.Content = currentUser;
@@ -47,7 +68,7 @@ namespace dotnetAnima
 
             foreach (string name in listOfNames)
             {
-                if(name != currentUser)
+                if (name != currentUser)
                 {
                     RadioButton radioButton = new RadioButton();
                     radioButton.Content = name;
@@ -61,9 +82,8 @@ namespace dotnetAnima
                     radioButton.GroupName = "VoiceSelection";
                     groupPanel.Children.Add(radioButton);
                 }
-                
-            }
 
+            }
         }
 
         private string[] ExtractNames()
@@ -101,16 +121,38 @@ namespace dotnetAnima
                 if(backendJsonObject["importSuccess"] == "false")
                 {
                     MessageBox.Show("Coudln't create a voice profile from uploaded file");
+                    frontendJsonObject["importFilePath"] = "";
                 }
+                if (backendJsonObject["importSuccess"] == "true")
+                {
+                    foreach (var child in groupPanel.Children.OfType<RadioButton>().ToList())
+                    {
+                        if(child.Name != "yourVoiceRadioButton")
+                        {
+                            groupPanel.Children.Remove(child);
+                        }    
+                    }
+                    frontendJsonObject["importFilePath"] = "";
+                    updateVoices();
+                }
+                backendJsonObject["importSuccess"] = "";
                 
+                UpdateFrontendJsonFile();
+                UpdateBackendJsonFile();
+
             }
         }
 
         private async Task SendFileContentBackToFrontend()
         {
-            while (backendJsonObject["importSuccess"] != "true" || backendJsonObject["importSuccess"] != "false")
+            while (backendJsonObject["importSuccess"] != "true")
             {
+                readingBackendJson();
                 await Task.Delay(1000);
+                if (backendJsonObject["importSuccess"] == "false") 
+                {
+                    break;
+                }
             }
         }
 
@@ -133,6 +175,12 @@ namespace dotnetAnima
         {
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
+        }
+
+        private void UpdateBackendJsonFile()
+        {
+            string updatedJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
+            File.WriteAllText(backendJsonFilePath, updatedJsonContent);
         }
         private void DeleteVoice(object sender, RoutedEventArgs e)
         {
