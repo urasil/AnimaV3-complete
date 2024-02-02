@@ -11,7 +11,7 @@ import os
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
 language = "en"
-animaProfilesPath = "../../animaProfiles/"  # directory of anime profiles
+animaProfilesPath = "../../animaProfiles/"
 
 with open(frontendJsonFilePath, "r") as json_file:
     frontendJson = json.load(json_file)
@@ -39,12 +39,13 @@ class BackendFunctionalites:
         newUser = frontendJson["speakerName"]
         self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
     
-    def converToText(self, path):
+    def convertToText(self, path):
         extension = path.split(".")[-1]
+        print(extension)
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
-        elif(extension == "jpg"):
-            return self.imageConverter.img_to_str(path, "eng")
+        elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
+            return self.imageConverter.img_to_str(path, "en")
         else:
             return False
     
@@ -111,4 +112,3 @@ if __name__ == "__main__":
                             backendJson["importSuccess"] = "false"
                             writeToBackendJson()
         time.sleep(1)
-    print(functions.convertImageToText("C:\\Users\\urasa\\Pictures\\try.jpg"))

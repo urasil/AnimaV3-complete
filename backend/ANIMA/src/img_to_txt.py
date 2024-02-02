@@ -1,6 +1,4 @@
-import pytesseract
 import os
-from PIL import Image
 import easyocr
 
 
@@ -9,8 +7,7 @@ class ImgToStrings():
     Converts .jpg file text to strings.
     """
     def __init__(self) -> None:
-        self.lang = ["eng", "por", "fra", "deu_frak"]
-        pytesseract.pytesseract.tesseract_cmd = '../../tesseract/tesseract.exe'
+        self.lang = ["en", "de", "tr", "fr"]
 
     def img_to_str(self, img_path: str, lang: str):
         """
@@ -20,35 +17,19 @@ class ImgToStrings():
             img_path (str): image filepath in path/image format. Only allows .jpg file
             lang (str): language code
         """
-        self.__check_file_path(img_path)
         self.__check_lang(lang)
 
+        reader = easyocr.Reader([lang])
         try:
-            image = Image.open(img_path)
-            text = pytesseract.image_to_string(image, lang=lang)
-            return repr(text)
-        except Exception as e:
-            print(f"Error occurred during OCR: {e}")
-            return ""
-
-
-    def __check_file_path(self, img_path):
-        """
-        Check is file path is valid. 
-
-        Args: 
-            img_path (str): image filepath in path/image format. Only allows .jpg file
-        """
-        img_path_len = len(img_path) 
-
-        if img_path_len < 4 or img_path[(img_path_len - 4): img_path_len] != ".jpg":
-            raise self.InvalidFilename()
-
-        parent_path = os.getcwd()
-        valid_img_path = os.path.exists(img_path)
-
-        if not valid_img_path:
-            raise self.InvalidImgPath(img_path)
+            textToReturn = ""
+            result = reader.readtext(img_path)
+            for(bbox, text, prob) in result:
+                textToReturn += (text + " ")
+            textToReturn = textToReturn.strip()
+        except:
+            print("Error: Unable to read text from image.")
+            textToReturn = ""
+        return textToReturn
 
     
     def __check_lang(self, lang):
@@ -65,13 +46,3 @@ class ImgToStrings():
     class InvalidLang(Exception):
         def __init__(self, lang) -> None:
             super().__init__(f"Invalid lang: The lang \"{lang}\" does not exist")
-
-
-    class InvalidImgPath(Exception):
-        def __init__(self, img_path) -> None:
-            super().__init__(f"Invalid image file path: The image {img_path} path does not exist")
-
-
-    class InvalidFilename(Exception):
-        def __init__(self) -> None:
-            super().__init__(f"Invalid image file format: the filename must end with \".jpg\"")
