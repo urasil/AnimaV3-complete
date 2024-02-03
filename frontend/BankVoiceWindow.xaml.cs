@@ -88,6 +88,9 @@ namespace dotnetAnima
                 info.Visibility = Visibility.Visible;
                 info2.Visibility = Visibility.Visible;
                 listenButton.Visibility = Visibility.Visible;
+
+                lovelyButton.Opacity = 0.3;   // disable this button when textbox is empty
+                lovelyButton.IsEnabled = false;   // user enables the button back by inputting a name in the textbox
             }
             // Going to the next page
             if (this.buttonClickedCount == 12)
@@ -113,7 +116,7 @@ namespace dotnetAnima
             recorder.StopSound();
         }
 
-        private async Task WaitBackendConfirmationForProfileCreation()
+        private async Task WaitBackendConfirmationForProfileCreation()    
         {
             while (backendJsonObject["profileCreationSuccess"] != "true")
             {
@@ -159,6 +162,8 @@ namespace dotnetAnima
                 }
             }
             lovelyButton.Content = "START READING";
+            lovelyButton.IsEnabled = true;  // reset the button
+            lovelyButton.Opacity = 1;
             restartButton.Visibility = Visibility.Hidden;
             listenButton.Visibility = Visibility.Hidden;
 
@@ -217,6 +222,16 @@ namespace dotnetAnima
 
         private void SpeakerNameTextChanged(object sender, TextChangedEventArgs e)
         {
+            if(speakerName.Text == "")   // disable the button when the textbox is empty
+            {
+                lovelyButton.Opacity = 0.3;
+                lovelyButton.IsEnabled = false;
+            }
+            else
+            {
+                lovelyButton.Opacity = 1;   // enable the button 
+                lovelyButton.IsEnabled = true;
+            }
             if(speakerName != null && speakerName.Visibility != Visibility.Hidden)
             {
                 frontendJsonObject["speakerName"] = speakerName.Text;
