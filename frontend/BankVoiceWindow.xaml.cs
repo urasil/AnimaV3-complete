@@ -32,9 +32,11 @@ namespace dotnetAnima
         AudioRecorder recorder;
 
         private string frontendJsonFilePath;
+        string frontendJsonContent;
         private Dictionary<string, string> frontendJsonObject;
 
         private string backendJsonFilePath;
+        string backendJsonFileContent;
         private Dictionary<string, string> backendJsonObject;
         public BankVoiceWindow()
         {
@@ -46,11 +48,11 @@ namespace dotnetAnima
             recorder = new AudioRecorder();
             
             frontendJsonFilePath = @"../../../frontend.json";
-            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
 
             backendJsonFilePath = @"../../../backend.json";
-            string backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
 
 
@@ -62,7 +64,7 @@ namespace dotnetAnima
 
         private void readingBackendJson()
         {
-            string backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
         }
 
@@ -107,11 +109,19 @@ namespace dotnetAnima
 
         private async void FinishingUpWithRegistration()
         {
+            backendJsonObject["profileCreationSuccess"] = "false";  // reset profileCreationSuccess
+            backendJsonFileContent = JsonConvert.SerializeObject(backendJsonObject);
+            File.WriteAllText(backendJsonFilePath, backendJsonFileContent);
+
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
 
+            ButtonHelper.DisableButton(lovelyButton, false);  //disable button during the waiting backend
+
             await WaitBackendConfirmationForProfileCreation();
-            
+
+            ButtonHelper.DisableButton(lovelyButton, true);
+
             this.NavigationService.Navigate(new TextToSpeechWindow());
             recorder.StopSound();
         }
