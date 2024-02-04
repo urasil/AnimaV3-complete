@@ -23,6 +23,15 @@ def writeToBackendJson():
     with open(backendJsonFilePath, "w") as jsonFile:
         json.dump(backendJson, jsonFile)
 
+
+def readyBackend():
+    backendJson["backendReady"] = "true"
+    writeToBackendJson()
+
+def quitBackend():
+    backendJson["backendReady"] = "false"
+    writeToBackendJson()
+
 class BackendFunctionalites:
 
     def __init__(self):
@@ -57,58 +66,62 @@ if __name__ == "__main__":
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
-    while(True):
-        changes = observer.detectChanges()
-        print(changes)
-        if(changes != []):
-            for change in changes:
+    readyBackend()
+    try:
+        while(True):
+            changes = observer.detectChanges()
+            print(changes)
+            if(changes != []):
+                for change in changes:
 
-                # Setting which voice profile to use
-                if(change[0] == "nameOfCurrentUser"):
-                    currentUser = change[1]
+                    # Setting which voice profile to use
+                    if(change[0] == "nameOfCurrentUser"):
+                        currentUser = change[1]
 
-                # Talking
-                elif(change[0] == "content"):
-                    print("speak")
-                    if change[1] != "":
+                    # Talking
+                    elif(change[0] == "content"):
+                        print("speak")
+                        if change[1] != "":
+                            try:
+                                functions.computerSpeak(change[1], currentUser)
+                                backendJson["speechSuccess"] = "true"
+                                writeToBackendJson()
+                            except Exception as e:
+                                print("Failed to speak", e)
+                    # New profile to be registered
+                    elif(change[0] == "speakerName"):
+                        print("register profile")
                         try:
-                            functions.computerSpeak(change[1], currentUser)
-                            backendJson["speechSuccess"] = "true"
-                            writeToBackendJson()
-                        except Exception as e:
-                            print("Failed to speak", e)
-                # New profile to be registered
-                elif(change[0] == "speakerName"):
-                    print("register profile")
-                    try:
-                        functions.registerProfile()
-                        backendJson["profileCreationSuccess"] = "true"
-                        writeToBackendJson()
-                    except:
-                        print("Failed to register profile")
-
-                elif(change[0] == "readFilePath"):
-                    print("read file and speak")
-                    if change[1] != "":
-                        try:
-                            text = functions.converToText(change[1])
-                            functions.computerSpeak(text)
-                            backendJson["readFileSuccess"] = "true"
+                            functions.registerProfile()
+                            backendJson["profileCreationSuccess"] = "true"
                             writeToBackendJson()
                         except:
-                            print("Failed to read file")
-                            backendJson["readFileSuccess"] = "false"
-                            writeToBackendJson()
+                            print("Failed to register profile")
 
-                elif(change[0] == "importFilePath"):
-                    print("import file")
-                    if change[1] != "":
-                        try:
-                            text = functions.registerProfileFromImport(change[1])
-                            backendJson["importSuccess"] = "true"
-                            writeToBackendJson()
-                        except:
-                            print("Failed to import file")
-                            backendJson["importSuccess"] = "false"
-                            writeToBackendJson()
-        time.sleep(1)
+                    elif(change[0] == "readFilePath"):
+                        print("read file and speak")
+                        if change[1] != "":
+                            try:
+                                text = functions.converToText(change[1])
+                                functions.computerSpeak(text)
+                                backendJson["readFileSuccess"] = "true"
+                                writeToBackendJson()
+                            except:
+                                print("Failed to read file")
+                                backendJson["readFileSuccess"] = "false"
+                                writeToBackendJson()
+
+                    elif(change[0] == "importFilePath"):
+                        print("import file")
+                        if change[1] != "":
+                            try:
+                                text = functions.registerProfileFromImport(change[1])
+                                backendJson["importSuccess"] = "true"
+                                writeToBackendJson()
+                            except:
+                                print("Failed to import file")
+                                backendJson["importSuccess"] = "false"
+                                writeToBackendJson()
+            time.sleep(1)
+    except:
+        quitBackend()
