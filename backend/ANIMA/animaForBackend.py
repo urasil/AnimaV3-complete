@@ -77,12 +77,14 @@ if __name__ == "__main__":
                     # Setting which voice profile to use
                     if(change[0] == "nameOfCurrentUser"):
                         currentUser = change[1]
+                        frontendJson[change[0]] = change[1]
 
                     # Talking
                     elif(change[0] == "content"):
                         print("speak")
                         if change[1] != "":
                             try:
+                                frontendJson[change[0]] = change[1]
                                 functions.computerSpeak(change[1], currentUser)
                                 backendJson["speechSuccess"] = "true"
                                 writeToBackendJson()
@@ -92,6 +94,7 @@ if __name__ == "__main__":
                     elif(change[0] == "speakerName"):
                         print("register profile")
                         try:
+                            frontendJson[change[0]] = change[1]
                             functions.registerProfile()
                             backendJson["profileCreationSuccess"] = "true"
                             writeToBackendJson()
@@ -102,6 +105,7 @@ if __name__ == "__main__":
                         print("read file and speak")
                         if change[1] != "":
                             try:
+                                frontendJson[change[0]] = change[1]
                                 text = functions.converToText(change[1])
                                 functions.computerSpeak(text)
                                 backendJson["readFileSuccess"] = "true"
@@ -115,6 +119,7 @@ if __name__ == "__main__":
                         print("import file")
                         if change[1] != "":
                             try:
+                                frontendJson[change[0]] = change[1]
                                 text = functions.registerProfileFromImport(change[1])
                                 backendJson["importSuccess"] = "true"
                                 writeToBackendJson()
