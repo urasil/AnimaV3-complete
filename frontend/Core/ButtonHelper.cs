@@ -9,9 +9,9 @@ namespace dotnetAnima.Core
 {
     public static class ButtonHelper
     {
-        public static void DisableButton(Button buttonName, bool status) 
+        public static void DisableButton(Button buttonName, bool enable) 
         {
-            if(!status)
+            if(!enable)
             {
                 buttonName.Opacity = 0.3;
                 buttonName.IsEnabled = false;

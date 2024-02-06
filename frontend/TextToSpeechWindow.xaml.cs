@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Win32;
+using dotnetAnima.Core;
 
 
 
@@ -38,6 +39,7 @@ namespace dotnetAnima
         public TextToSpeechWindow()
         {
             InitializeComponent();
+            ButtonHelper.DisableButton(speakButton, false); // disable speak button by default
             // Frontend JSON 
             frontendJsonFilePath = @"../../../frontend.json";
             frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
@@ -67,16 +69,23 @@ namespace dotnetAnima
         // Send the content typed by the user via registering it to the Json file
         private async void Speak(object sender, RoutedEventArgs e)
         {
+            ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
+            frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
             UpdateFrontendJsonFile();
+
+            backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
+            updateBackendJson();
+
             await WaitSpeech();
             if (backendJsonObject["speechSuccess"] == "false")
             {
                 MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            backendJsonObject["speechSuccess"] = "";
+            backendJsonObject["speechSuccess"] = "false"; // reset the value
             frontendJsonObject["content"] = "";
             updateBackendJson();
             UpdateFrontendJsonFile();
+            ButtonHelper.DisableButton(speakButton, true);
         }
 
         private async Task WaitSpeech()
@@ -118,13 +127,18 @@ namespace dotnetAnima
                 string filePath = dialog.FileName;
                 Console.WriteLine(filePath);
                 frontendJsonObject["readFilePath"] = filePath;
+                frontendJsonObject["readFileID"] = UUIDGenerator.NewUUID();
                 UpdateFrontendJsonFile();
+
+                backendJsonObject["readFileSuccess"] = "false"; // reset the value
+                updateBackendJson();
+
                 await SendFileContentBackToFrontend();
                 if (backendJsonObject["readFileSuccess"] == "false")
                 {
                     MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                backendJsonObject["readFileSuccess"] = "";
+                backendJsonObject["readFileSuccess"] = "false"; // reset the value
                 frontendJsonObject["readFilePath"] = "";
                 UpdateFrontendJsonFile();
                 updateBackendJson();
@@ -144,9 +158,17 @@ namespace dotnetAnima
 
         private void MyTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(myTextBox != null && myTextBox.Text != "")
+            if(myTextBox != null)
             {
                 frontendJsonObject["content"] = myTextBox.Text;
+            }
+            if(myTextBox.Text == "")
+            {
+                ButtonHelper.DisableButton(speakButton, false);   // empty text is not allowed
+            }
+            else
+            {
+                ButtonHelper.DisableButton(speakButton, true);
             }
         }
 
