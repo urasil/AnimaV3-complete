@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms;
 
 namespace dotnetAnima
 {
@@ -64,7 +63,7 @@ namespace dotnetAnima
             else
             {
                 Console.WriteLine("Error: Missed animaProfiles directory");
-                System.Windows.Forms.MessageBox.Show("Error: Missed animaProfiles directory", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Missed animaProfiles directory", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void ButtonClick(object sender, RoutedEventArgs e)

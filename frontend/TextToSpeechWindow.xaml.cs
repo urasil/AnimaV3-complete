@@ -15,6 +15,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Win32;
 
+
+
 namespace dotnetAnima
 {
     /// <summary>
@@ -28,34 +30,38 @@ namespace dotnetAnima
         private string backendJsonFilePath;
         private Dictionary<string, string> frontendJsonObject;
         private Dictionary<string, string> backendJsonObject;
+        private string frontendJsonContent;
+        private string backendJsonContent;
+
+        private string nameOfUser;
+
         public TextToSpeechWindow()
         {
             InitializeComponent();
             // Frontend JSON 
             frontendJsonFilePath = @"../../../frontend.json";
-            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
 
             // Backend JSON 
             backendJsonFilePath = @"../../../backend.json";
-            string backendJsonContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
 
-            string nameOfUser = frontendJsonObject["nameOfCurrentUser"];
-            string newText = selectedVoice.Text + nameOfUser;
-            selectedVoice.Text = newText;
+            nameOfUser = frontendJsonObject["nameOfCurrentUser"];
+            selectedVoice.Text = selectedVoice.Text + nameOfUser;
         }
 
         private void readingBackendJson()
         {
-            string backendJsonContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
         }
 
-        private void updateBackendJson()
+        private void updateBackendJson()   // write the in-program backend object into json
         {
-            string jsonData = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
-            File.WriteAllText(backendJsonFilePath, jsonData);
+            backendJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
+            File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
 
         // Send the content typed by the user via registering it to the Json file
@@ -65,7 +71,7 @@ namespace dotnetAnima
             await WaitSpeech();
             if (backendJsonObject["speechSuccess"] == "false")
             {
-                MessageBox.Show("Failed to create speech");
+                MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             backendJsonObject["speechSuccess"] = "";
             frontendJsonObject["content"] = "";
@@ -96,7 +102,7 @@ namespace dotnetAnima
             this.NavigationService.Navigate(new ManageVoicesWindow());
         }
 
-        private void UpdateFrontendJsonFile()
+        private void UpdateFrontendJsonFile()   // write the in-program frontend object into json
         {
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
@@ -116,7 +122,7 @@ namespace dotnetAnima
                 await SendFileContentBackToFrontend();
                 if (backendJsonObject["readFileSuccess"] == "false")
                 {
-                    MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough");
+                    MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 backendJsonObject["readFileSuccess"] = "";
                 frontendJsonObject["readFilePath"] = "";
