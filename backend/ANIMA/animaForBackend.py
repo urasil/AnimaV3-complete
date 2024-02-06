@@ -62,7 +62,7 @@ class BackendFunctionalites:
         name = path.split("\\")[-1].split(".")[0]
         self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
 
-if __name__ == "__main__":
+def main():
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
@@ -158,10 +158,13 @@ if __name__ == "__main__":
                             text = functions.registerProfileFromImport(changes["importFilePath"])
                             backendJson["importSuccess"] = "true"
                             writeToBackendJson()
-                        except:
-                            print("Failed to import file")
+                        except Exception as e:
+                            print("Failed to import file ", e)
                             backendJson["importSuccess"] = "false"
                             writeToBackendJson()
             time.sleep(1)
     except:
         quitBackend()
+
+if __name__ == "__main__":
+    main()

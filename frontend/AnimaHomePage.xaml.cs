@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -40,9 +41,10 @@ namespace dotnetAnima
             profileExists = false;
             InitializeComponent();
 
+
             startButton.IsEnabled = false;  // disable button before the backend is ready
             startButton.Opacity = 0.3;
-            
+
             if (Directory.Exists(path))
             {
                 string[] directoriesWithinPath = Directory.GetFiles(path, "*.animaprofile");
@@ -58,7 +60,6 @@ namespace dotnetAnima
                     profileExists = true;
                 }
                 InitialiseBackendJson();
-                StartUpBackend(); // startup the backend, but for now this should be maunally done by developers
             }
             else
             {
@@ -76,7 +77,7 @@ namespace dotnetAnima
             {
                 this.NavigationService.Navigate(new BankVoiceWindow());
             }
-           
+
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -96,15 +97,10 @@ namespace dotnetAnima
             File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
 
-        private void StartUpBackend()  // maybe a system script to startup backend
-        {
-
-        }
-
         private async Task WaitForBackendReady()
         {
             bool conditionMet = false;
-            while(!conditionMet)
+            while (!conditionMet)
             {
                 try
                 {
@@ -113,7 +109,7 @@ namespace dotnetAnima
                     if (backendJsonObject["backendReady"] == "true")
                     {
                         conditionMet = true;
-                        startButton.IsEnabled = true;  
+                        startButton.IsEnabled = true;
                         startButton.Opacity = 1;
                     }
                     else

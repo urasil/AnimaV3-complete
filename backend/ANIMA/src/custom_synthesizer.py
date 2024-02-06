@@ -355,7 +355,6 @@ class Synthesizer(object):
         audio_time = len(wavs) / self.tts_config.audio["sample_rate"]
         print(f" > Processing time: {process_time}")
         print(f" > Real-time factor: {process_time / audio_time}")
-        sf.write("dash_test3.wav", wavs, self.tts_config.audio["sample_rate"])
         return wavs
 
 
