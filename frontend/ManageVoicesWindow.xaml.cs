@@ -149,10 +149,7 @@ namespace dotnetAnima
             {
                 readingBackendJson();
                 await Task.Delay(1000);
-                if (backendJsonObject["importSuccess"] == "false") 
-                {
-                    break;
-                }
+                
             }
         }
 
