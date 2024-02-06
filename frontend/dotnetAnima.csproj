@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Core\AudioRecorder.cs" />
     <Compile Include="Core\ButtonHelper.cs" />
+    <Compile Include="Core\UUIDGenerator.cs" />
     <Compile Include="ManageVoicesWindow.xaml.cs">
       <DependentUpon>ManageVoicesWindow.xaml</DependentUpon>
     </Compile>

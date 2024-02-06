@@ -17,26 +17,47 @@ class Observer:
             jsonToLoad = json.loads(jsonFile.read())
         return jsonToLoad
 
+    '''Old detectChanges using list'''
+    # def detectChanges(self):
+    #     self.updatedFrontendJson = self.loadJson()
+    #     changes = []
+    #     if self.frontendJson != self.updatedFrontendJson:
+    #         changes = self.determineChanges()
+    #         self.frontendJson = self.updatedFrontendJson        
+    #     return changes
 
-    def detectChanges(self):
+    # def determineChanges(self):
+    #     old = self.frontendJson
+    #     new = self.updatedFrontendJson
+
+    #     changes = []
+        
+    #     for k,v in old.items():     
+    #         if k in new:
+    #             if v != new[k]:
+    #                 changes.append((k,new[k]))
+    #     return changes
+
+    '''New detectChanges using dictionary'''
+    def detectChanges(self) -> dict:
         self.updatedFrontendJson = self.loadJson()
-        changes = []
+        changes = {}
         if self.frontendJson != self.updatedFrontendJson:
             changes = self.determineChanges()
-            self.frontendJson = self.updatedFrontendJson        
+            self.frontendJson = self.updatedFrontendJson
         return changes
-
-    def determineChanges(self):
+    
+    def determineChanges(self) -> dict:
         old = self.frontendJson
         new = self.updatedFrontendJson
 
-        changes = []
-        
-        for k,v in old.items():     
-            if k in new:
-                if v != new[k]:
-                    changes.append((k,new[k]))
+        changes = {}
+
+        for (k,v) in old.items():
+            if (k in new) and (v != new[k]):
+                changes[k] = new[k]
         return changes
+
             
 def main():
     observer = Observer(frontEndJsonPath="../../frontend.json")
