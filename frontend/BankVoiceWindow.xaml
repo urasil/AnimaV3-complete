@@ -159,7 +159,7 @@
                  Name="speakerName"
                  TextWrapping="Wrap"
                  Visibility="Hidden"
-                 Text="..." 
+                 Text="" 
                  TextChanged="SpeakerNameTextChanged"
                  VerticalAlignment="Top" 
                  Width="331" Height="34" Margin="182,187,0,0"/>

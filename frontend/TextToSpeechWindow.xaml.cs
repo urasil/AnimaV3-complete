@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Win32;
+using dotnetAnima.Core;
+
+
 
 namespace dotnetAnima
 {
@@ -28,49 +31,61 @@ namespace dotnetAnima
         private string backendJsonFilePath;
         private Dictionary<string, string> frontendJsonObject;
         private Dictionary<string, string> backendJsonObject;
+        private string frontendJsonContent;
+        private string backendJsonContent;
+
+        private string nameOfUser;
+
         public TextToSpeechWindow()
         {
             InitializeComponent();
+            ButtonHelper.DisableButton(speakButton, false); // disable speak button by default
             // Frontend JSON 
             frontendJsonFilePath = @"../../../frontend.json";
-            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
 
             // Backend JSON 
             backendJsonFilePath = @"../../../backend.json";
-            string backendJsonContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
 
-            string nameOfUser = frontendJsonObject["nameOfCurrentUser"];
-            string newText = selectedVoice.Text + nameOfUser;
-            selectedVoice.Text = newText;
+            nameOfUser = frontendJsonObject["nameOfCurrentUser"];
+            selectedVoice.Text = selectedVoice.Text + nameOfUser;
         }
 
         private void readingBackendJson()
         {
-            string backendJsonContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
         }
 
-        private void updateBackendJson()
+        private void updateBackendJson()   // write the in-program backend object into json
         {
-            string jsonData = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
-            File.WriteAllText(backendJsonFilePath, jsonData);
+            backendJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
+            File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
 
         // Send the content typed by the user via registering it to the Json file
         private async void Speak(object sender, RoutedEventArgs e)
         {
+            ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
+            frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
             UpdateFrontendJsonFile();
+
+            backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
+            updateBackendJson();
+
             await WaitSpeech();
             if (backendJsonObject["speechSuccess"] == "false")
             {
-                MessageBox.Show("Failed to create speech");
+                MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            backendJsonObject["speechSuccess"] = "";
+            backendJsonObject["speechSuccess"] = "false"; // reset the value
             frontendJsonObject["content"] = "";
             updateBackendJson();
             UpdateFrontendJsonFile();
+            ButtonHelper.DisableButton(speakButton, true);
         }
 
         private async Task WaitSpeech()
@@ -96,7 +111,7 @@ namespace dotnetAnima
             this.NavigationService.Navigate(new ManageVoicesWindow());
         }
 
-        private void UpdateFrontendJsonFile()
+        private void UpdateFrontendJsonFile()   // write the in-program frontend object into json
         {
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
@@ -112,13 +127,18 @@ namespace dotnetAnima
                 string filePath = dialog.FileName;
                 Console.WriteLine(filePath);
                 frontendJsonObject["readFilePath"] = filePath;
+                frontendJsonObject["readFileID"] = UUIDGenerator.NewUUID();
                 UpdateFrontendJsonFile();
+
+                backendJsonObject["readFileSuccess"] = "false"; // reset the value
+                updateBackendJson();
+
                 await SendFileContentBackToFrontend();
                 if (backendJsonObject["readFileSuccess"] == "false")
                 {
-                    MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough");
+                    MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                backendJsonObject["readFileSuccess"] = "";
+                backendJsonObject["readFileSuccess"] = "false"; // reset the value
                 frontendJsonObject["readFilePath"] = "";
                 UpdateFrontendJsonFile();
                 updateBackendJson();
@@ -138,9 +158,17 @@ namespace dotnetAnima
 
         private void MyTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(myTextBox != null && myTextBox.Text != "")
+            if(myTextBox != null)
             {
                 frontendJsonObject["content"] = myTextBox.Text;
+            }
+            if(myTextBox.Text == "")
+            {
+                ButtonHelper.DisableButton(speakButton, false);   // empty text is not allowed
+            }
+            else
+            {
+                ButtonHelper.DisableButton(speakButton, true);
             }
         }
 

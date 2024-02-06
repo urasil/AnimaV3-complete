@@ -89,7 +89,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,210,25,160" 
+            Margin="510,210,25,160"
             Click="Speak"/>
 
             <!-- Instruction Text Block -->

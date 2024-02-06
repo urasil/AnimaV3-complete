@@ -120,7 +120,7 @@ namespace dotnetAnima
                 await SendFileContentBackToFrontend();
                 if(backendJsonObject["importSuccess"] == "false")
                 {
-                    MessageBox.Show("Coudln't create a voice profile from uploaded file");
+                    MessageBox.Show("Coudln't create a voice profile from uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     frontendJsonObject["importFilePath"] = "";
                 }
                 if (backendJsonObject["importSuccess"] == "true")
