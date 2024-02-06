@@ -191,7 +191,7 @@ def make_exe():
     # python_config.write_modules_directory_env = "/tmp/oxidized/loaded_modules"
 
     # Evaluate a string as Python code when the interpreter starts.
-    python_config.run_command = "import sys; sys.path.append('./'); from cli import test_main; test_main()"
+    python_config.run_command = "import sys; sys.path.append('./'); from animaForBackend import main; main()"
 
     # Run a Python module as __main__ when the interpreter starts.
     # python_config.run_module = "<module>"
@@ -288,7 +288,7 @@ def make_install(exe):
 
     # Add the generated executable to our install layout in the root directory.
     files.add_python_resource(".", exe)
-    templates = glob(["/Users/ARCK/Desktop/anima/ANIMA_v2/**/*"], strip_prefix="/Users/ARCK/Desktop/anima/ANIMA_v2")
+    templates = glob(["Desktop\\wholeAnima\\backend\\ANIMA\\**\\*"], strip_prefix="Desktop\\wholeAnima\\backend\\ANIMA")
     files.add_manifest(templates)
 
     return files
@@ -299,9 +299,9 @@ def make_msi(exe):
     # .msi installer when it is built.
     return exe.to_wix_msi_builder(
         # Simple identifier of your app.
-        "anima",
+        "Anima",
         # The name of your application.
-        "Anima V2",
+        "Anima V3",
         # The version of your application.
         "1.0",
         # The author/manufacturer of your application.
