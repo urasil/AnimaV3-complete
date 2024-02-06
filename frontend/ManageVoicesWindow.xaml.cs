@@ -118,7 +118,7 @@ namespace dotnetAnima
                 string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
                 File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
                 await SendFileContentBackToFrontend();
-                if(backendJsonObject["importSuccess"] == "false")
+                if (backendJsonObject["importSuccess"] == "false")
                 {
                     MessageBox.Show("Coudln't create a voice profile from uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     frontendJsonObject["importFilePath"] = "";
@@ -127,16 +127,16 @@ namespace dotnetAnima
                 {
                     foreach (var child in groupPanel.Children.OfType<RadioButton>().ToList())
                     {
-                        if(child.Name != "yourVoiceRadioButton")
+                        if (child.Name != "yourVoiceRadioButton")
                         {
                             groupPanel.Children.Remove(child);
-                        }    
+                        }
                     }
                     frontendJsonObject["importFilePath"] = "";
                     updateVoices();
                 }
                 backendJsonObject["importSuccess"] = "";
-                
+
                 UpdateFrontendJsonFile();
                 UpdateBackendJsonFile();
 
@@ -149,7 +149,7 @@ namespace dotnetAnima
             {
                 readingBackendJson();
                 await Task.Delay(1000);
-                if (backendJsonObject["importSuccess"] == "false") 
+                if (backendJsonObject["importSuccess"] == "false")
                 {
                     break;
                 }
@@ -225,9 +225,9 @@ namespace dotnetAnima
                 {
                     MessageBox.Show("Record one more voice to delete this one!");
                 }
-                    
+
             }
-            
+
         }
 
         private void SelectVoice(object sender, RoutedEventArgs e)
@@ -235,7 +235,7 @@ namespace dotnetAnima
             string oldUser = frontendJsonObject["nameOfCurrentUser"];
             foreach (var child in groupPanel.Children)
             {
-                if(child is RadioButton radioButton &&  radioButton.IsChecked == true)
+                if (child is RadioButton radioButton && radioButton.IsChecked == true)
                 {
                     frontendJsonObject["nameOfCurrentUser"] = radioButton.Content.ToString();
                     break;
@@ -246,7 +246,7 @@ namespace dotnetAnima
             {
                 if (child is RadioButton radioButton)
                 {
-                    if (radioButton.Content == currentUser) 
+                    if (radioButton.Content == currentUser)
                     {
                         radioButton.Content = oldUser;
                         break;

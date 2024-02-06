@@ -27,7 +27,7 @@ namespace dotnetAnima
     public partial class BankVoiceWindow : Page
     {
         int progressCount, textCount, buttonClickedCount;
-        
+
         List<string> stringList;
         AudioRecorder recorder;
 
@@ -41,12 +41,12 @@ namespace dotnetAnima
         public BankVoiceWindow()
         {
             InitializeComponent();
-        
+
             TextSeperator textSeperator = new TextSeperator();
             stringList = textSeperator.ReadAndSeparateText();
 
             recorder = new AudioRecorder();
-            
+
             frontendJsonFilePath = @"../../../frontend.json";
             frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
@@ -126,7 +126,7 @@ namespace dotnetAnima
             recorder.StopSound();
         }
 
-        private async Task WaitBackendConfirmationForProfileCreation()    
+        private async Task WaitBackendConfirmationForProfileCreation()
         {
             while (backendJsonObject["profileCreationSuccess"] != "true")
             {
@@ -160,12 +160,12 @@ namespace dotnetAnima
 
             foreach (var child in progress.Children)
             {
-                
+
                 if (child is Border anyBorder)
                 {
                     anyBorder.Background = Brushes.White;
                 }
-                
+
                 if (progress.Children[progressCount] is Border border)
                 {
                     border.Background = Brushes.DeepSkyBlue;
@@ -196,7 +196,7 @@ namespace dotnetAnima
                 instructions.Inlines.Add(new LineBreak());
                 instructions.Inlines.Add(new Run("read through all pages"));
                 instructions.Inlines.Add(new LineBreak());
-                instructions.Inlines.Add(new Run("ps: small mistakes are fine!") { FontSize = 14, FontWeight = FontWeights.DemiBold, FontStyle = FontStyles.Italic});
+                instructions.Inlines.Add(new Run("ps: small mistakes are fine!") { FontSize = 14, FontWeight = FontWeights.DemiBold, FontStyle = FontStyles.Italic });
             }
             else if (this.buttonClickedCount == 10)
             {
@@ -217,14 +217,14 @@ namespace dotnetAnima
         // Changing the text that the user is reading
         public void ChangeText()
         {
-            if(this.buttonClickedCount != 1) 
+            if (this.buttonClickedCount != 1)
             {
-                if(stringList.Count > this.textCount)
+                if (stringList.Count > this.textCount)
                 {
                     pageText.Text = stringList[this.textCount];
                 }
-            }  
-            else 
+            }
+            else
             {
                 this.textCount--;
             }
@@ -232,7 +232,7 @@ namespace dotnetAnima
 
         private void SpeakerNameTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(speakerName.Text == "")   // disable the button when the textbox is empty
+            if (speakerName.Text == "")   // disable the button when the textbox is empty
             {
                 lovelyButton.Opacity = 0.3;
                 lovelyButton.IsEnabled = false;
@@ -242,7 +242,7 @@ namespace dotnetAnima
                 lovelyButton.Opacity = 1;   // enable the button 
                 lovelyButton.IsEnabled = true;
             }
-            if(speakerName != null && speakerName.Visibility != Visibility.Hidden)
+            if (speakerName != null && speakerName.Visibility != Visibility.Hidden)
             {
                 frontendJsonObject["speakerName"] = speakerName.Text;
                 frontendJsonObject["nameOfCurrentUser"] = frontendJsonObject["speakerName"];
@@ -252,15 +252,15 @@ namespace dotnetAnima
         // Changing the main button name appropriately 
         public void ChangeButtonName()
         {
-            if(this.buttonClickedCount == 1) 
+            if (this.buttonClickedCount == 1)
             {
                 lovelyButton.Content = "READ NEXT PAGE";
             }
-            if(this.buttonClickedCount == 10) 
+            if (this.buttonClickedCount == 10)
             {
                 lovelyButton.Content = "FINISH READING";
             }
-            if(this.buttonClickedCount == 11)
+            if (this.buttonClickedCount == 11)
             {
                 lovelyButton.Content = "ALL DONE!";
             }

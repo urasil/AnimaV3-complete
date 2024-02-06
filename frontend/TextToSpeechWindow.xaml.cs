@@ -90,18 +90,11 @@ namespace dotnetAnima
 
         private async Task WaitSpeech()
         {
-            int count = 0;
             while (backendJsonObject["speechSuccess"].ToString() != "true")
             {
                 Console.WriteLine(backendJsonObject["speechSuccess"]);
                 readingBackendJson();
                 await Task.Delay(1000);
-                count++;
-                if(count > 20) 
-                {
-                    backendJsonObject["speechSuccess"] = "false";
-                    break;
-                }
             }
         }
 
@@ -122,7 +115,7 @@ namespace dotnetAnima
         {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             bool? response = dialog.ShowDialog();
-            if(response == true)
+            if (response == true)
             {
                 string filePath = dialog.FileName;
                 Console.WriteLine(filePath);
@@ -153,16 +146,16 @@ namespace dotnetAnima
                 readingBackendJson();
                 await Task.Delay(1000);
             }
-            
+
         }
 
         private void MyTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(myTextBox != null)
+            if (myTextBox != null)
             {
                 frontendJsonObject["content"] = myTextBox.Text;
             }
-            if(myTextBox.Text == "")
+            if (myTextBox.Text == "")
             {
                 ButtonHelper.DisableButton(speakButton, false);   // empty text is not allowed
             }
