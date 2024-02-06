@@ -32,9 +32,11 @@ namespace dotnetAnima
         AudioRecorder recorder;
 
         private string frontendJsonFilePath;
+        string frontendJsonContent;
         private Dictionary<string, string> frontendJsonObject;
 
         private string backendJsonFilePath;
+        string backendJsonFileContent;
         private Dictionary<string, string> backendJsonObject;
         public BankVoiceWindow()
         {
@@ -46,11 +48,11 @@ namespace dotnetAnima
             recorder = new AudioRecorder();
             
             frontendJsonFilePath = @"../../../frontend.json";
-            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
 
             backendJsonFilePath = @"../../../backend.json";
-            string backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
 
 
@@ -62,7 +64,7 @@ namespace dotnetAnima
 
         private void readingBackendJson()
         {
-            string backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
+            backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
         }
 
@@ -88,6 +90,9 @@ namespace dotnetAnima
                 info.Visibility = Visibility.Visible;
                 info2.Visibility = Visibility.Visible;
                 listenButton.Visibility = Visibility.Visible;
+
+                lovelyButton.Opacity = 0.3;   // disable this button when textbox is empty
+                lovelyButton.IsEnabled = false;   // user enables the button back by inputting a name in the textbox
             }
             // Going to the next page
             if (this.buttonClickedCount == 12)
@@ -104,16 +109,24 @@ namespace dotnetAnima
 
         private async void FinishingUpWithRegistration()
         {
+            backendJsonObject["profileCreationSuccess"] = "false";  // reset profileCreationSuccess
+            backendJsonFileContent = JsonConvert.SerializeObject(backendJsonObject);
+            File.WriteAllText(backendJsonFilePath, backendJsonFileContent);
+
             string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
             File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
 
+            ButtonHelper.DisableButton(lovelyButton, false);  //disable button during the waiting backend
+
             await WaitBackendConfirmationForProfileCreation();
-            
+
+            ButtonHelper.DisableButton(lovelyButton, true);
+
             this.NavigationService.Navigate(new TextToSpeechWindow());
             recorder.StopSound();
         }
 
-        private async Task WaitBackendConfirmationForProfileCreation()
+        private async Task WaitBackendConfirmationForProfileCreation()    
         {
             while (backendJsonObject["profileCreationSuccess"] != "true")
             {
@@ -159,6 +172,8 @@ namespace dotnetAnima
                 }
             }
             lovelyButton.Content = "START READING";
+            lovelyButton.IsEnabled = true;  // reset the button
+            lovelyButton.Opacity = 1;
             restartButton.Visibility = Visibility.Hidden;
             listenButton.Visibility = Visibility.Hidden;
 
@@ -217,6 +232,16 @@ namespace dotnetAnima
 
         private void SpeakerNameTextChanged(object sender, TextChangedEventArgs e)
         {
+            if(speakerName.Text == "")   // disable the button when the textbox is empty
+            {
+                lovelyButton.Opacity = 0.3;
+                lovelyButton.IsEnabled = false;
+            }
+            else
+            {
+                lovelyButton.Opacity = 1;   // enable the button 
+                lovelyButton.IsEnabled = true;
+            }
             if(speakerName != null && speakerName.Visibility != Visibility.Hidden)
             {
                 frontendJsonObject["speakerName"] = speakerName.Text;

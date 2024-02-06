@@ -25,14 +25,24 @@ namespace dotnetAnima
     {
         bool profileExists;
         private string frontendJsonFilePath = "../../../frontend.json";
+        private string backendJsonFilePath = "../../../backend.json";
         private Dictionary<string, string> frontendJsonObject;
+        private Dictionary<string, string> backendJsonObject;
+        private string frontendJsonContent;
+        private string backendJsonContent;
         public AnimaHomePage()
         {
             string path = @"../../../animaProfiles";
-            string frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
+            backendJsonContent = File.ReadAllText(backendJsonFilePath);
             frontendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(frontendJsonContent);
+            backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
             profileExists = false;
             InitializeComponent();
+
+            startButton.IsEnabled = false;  // disable button before the backend is ready
+            startButton.Opacity = 0.3;
+            
             if (Directory.Exists(path))
             {
                 string[] directoriesWithinPath = Directory.GetFiles(path, "*.animaprofile");
@@ -47,6 +57,13 @@ namespace dotnetAnima
                     startButton.Margin = new Thickness(136, 319, 282, 47);
                     profileExists = true;
                 }
+                InitialiseBackendJson();
+                StartUpBackend(); // startup the backend, but for now this should be maunally done by developers
+            }
+            else
+            {
+                Console.WriteLine("Error: Missed animaProfiles directory");
+                MessageBox.Show("Error: Missed animaProfiles directory", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void ButtonClick(object sender, RoutedEventArgs e)
@@ -60,6 +77,56 @@ namespace dotnetAnima
                 this.NavigationService.Navigate(new BankVoiceWindow());
             }
            
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await WaitForBackendReady();
+        }
+        private void InitialiseBackendJson()  // used to initialise all values in backend json file
+        {
+            backendJsonObject["profileCreationSuccess"] = "false";
+            backendJsonObject["readFileSuccess"] = "false";
+            backendJsonObject["speechSuccess"] = "false";
+            backendJsonObject["readContentSuccess"] = "false";
+            backendJsonObject["importSuccess"] = "false";
+            backendJsonObject["backendReady"] = "false";
+
+            backendJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
+            File.WriteAllText(backendJsonFilePath, backendJsonContent);
+        }
+
+        private void StartUpBackend()  // maybe a system script to startup backend
+        {
+
+        }
+
+        private async Task WaitForBackendReady()
+        {
+            bool conditionMet = false;
+            while(!conditionMet)
+            {
+                try
+                {
+                    backendJsonContent = File.ReadAllText(backendJsonFilePath);
+                    backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonContent);
+                    if (backendJsonObject["backendReady"] == "true")
+                    {
+                        conditionMet = true;
+                        startButton.IsEnabled = true;  
+                        startButton.Opacity = 1;
+                    }
+                    else
+                    {
+                        await Task.Delay(1000);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    await Task.Delay(1000);
+                }
+            }
         }
     }
 }

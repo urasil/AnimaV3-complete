@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:dotnetAnima"
       mc:Ignorable="d" 
       Height="600" Width="920"
+      Loaded="Page_Loaded"
       Title="AnimaHomePage">
 
     <Border Background="Beige" >
