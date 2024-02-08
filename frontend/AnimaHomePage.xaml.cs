@@ -51,13 +51,17 @@ namespace dotnetAnima
                 if (directoriesWithinPath.Length > 0)
                 {
                     string userName = frontendJsonObject["nameOfCurrentUser"];
-                    int userNameLength = userName.Length;
-                    string spaces = String.Concat(Enumerable.Repeat(" ", 52 - userNameLength));
-                    desc.Inlines.Clear();
-                    desc.Inlines.Add(new Run(spaces + "Welcome Back " + userName + "!") { FontWeight = FontWeights.Bold });
-                    startButton.Content = "Text-to-Speech";
-                    startButton.Margin = new Thickness(136, 319, 282, 47);
-                    profileExists = true;
+                    if(File.Exists(path + "/" + userName + ".animaprofile"))
+                    {
+                        int userNameLength = userName.Length;
+                        string spaces = String.Concat(Enumerable.Repeat(" ", 52 - userNameLength));
+                        desc.Inlines.Clear();
+                        desc.Inlines.Add(new Run(spaces + "Welcome Back " + userName + "!") { FontWeight = FontWeights.Bold });
+                        startButton.Content = "Text-to-Speech";
+                        startButton.Margin = new Thickness(136, 319, 282, 47);
+                        profileExists = true;
+                    }
+                    
                 }
                 InitialiseBackendJson();
             }

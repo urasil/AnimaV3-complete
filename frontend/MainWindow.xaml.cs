@@ -37,8 +37,9 @@ namespace dotnetAnima
             {
                 Console.WriteLine(Directory.GetCurrentDirectory());
                 string executablePath = "..\\..\\..\\backend\\ANIMA\\anima.exe";
+
                 ProcessStartInfo startInfo = new ProcessStartInfo(executablePath);
-                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;  // hide the backend terminal window
                 startInfo.CreateNoWindow = true;
                 startInfo.WorkingDirectory = "..\\..\\..\\backend\\ANIMA\\";
 
