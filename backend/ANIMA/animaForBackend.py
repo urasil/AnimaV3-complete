@@ -7,11 +7,14 @@ from src.pdf_to_txt import PdfToStrings
 from src.img_to_txt import ImgToStrings
 from observer import Observer
 import os
+import sounddevice as sd
+import numpy as np
 
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
 language = "en"
 animaProfilesPath = "../../animaProfiles/"
+detectPeriod = 0.5  # unit of second
 
 with open(frontendJsonFilePath, "r") as json_file:
     frontendJson = json.load(json_file)
@@ -38,11 +41,14 @@ class BackendFunctionalites:
         self.anima = ANIMA()
         self.imageConverter = ImgToStrings()
         self.pdfConverter = PdfToStrings()
+        self.audioLength = 0  # the length of generated audio, unit of second
 
     def computerSpeak(self, text, currentUser):
         print(currentUser)
         profilePath = animaProfilesPath + currentUser + ".animaprofile"
-        self.anima.use_profile_to_talk(profile_path=profilePath, text=text, lang=language)
+        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=language, text=text)
+        self.audioLength = len(wav)/16000
+        sd.play(np.array(wav), 16000)
 
     def registerProfile(self):
         newUser = frontendJson["speakerName"]
@@ -62,6 +68,8 @@ class BackendFunctionalites:
         name = path.split("\\")[-1].split(".")[0]
         self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
 
+    def stopSpeak(self):
+        sd.stop()
 def main():
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
@@ -87,6 +95,7 @@ def main():
                                 frontendJson["content"] = changes["content"]
                                 functions.computerSpeak(frontendJson["content"], currentUser)
                                 backendJson["speechSuccess"] = "true"
+                                backendJson["audioLength"] = str(functions.audioLength)
                                 writeToBackendJson()
                             except Exception as e:
                                 print("Failed to speak", e)
@@ -119,6 +128,8 @@ def main():
                         writeToBackendJson()
                     except Exception as e:
                         print("Failed to register profile ",e)
+                
+                # A file to be read
                 if ("readFileID" in changes):
                     if("readFilePath" in changes):
                         print("read file and speak")
@@ -128,6 +139,7 @@ def main():
                                 text = functions.convertToText(changes["readFilePath"])
                                 functions.computerSpeak(text, currentUser)
                                 backendJson["readFileSuccess"] = "true"
+                                backendJson["audioLength"] = str(functions.audioLength)
                                 writeToBackendJson()
                             except Exception as e:
                                 print("Failed to read file ",e)
@@ -149,7 +161,7 @@ def main():
                                 writeToBackendJson()
                         else:
                             raise ValueError("Invalid path")
-
+                # An animaprofile to be imported
                 if("importFilePath" in changes):
                     print("import file")
                     if changes["importFilePath"] != "":
@@ -162,7 +174,22 @@ def main():
                             print("Failed to import file ", e)
                             backendJson["importSuccess"] = "false"
                             writeToBackendJson()
-            time.sleep(1)
+                # Stop the current speak
+                if("stopSpeakTrigger" in changes):
+                    print("stop speak")
+                    if changes["stopSpeakTrigger"] != "":
+                        try:
+                            if changes["stopSpeakTrigger"] == "true":
+                                functions.stopSpeak()
+                                frontendJson["stopSpeakTrigger"] = changes["stopSpeakTrigger"]
+                                backendJson["stopSpeakSuccess"] = "true"
+                                writeToBackendJson()
+                        except Exception as e:
+                            print("Failed to stop speak: ", e)
+                            backendJson["stopSpeakSuccess"] = "false"
+                            writeToBackendJson()
+                
+            time.sleep(detectPeriod)
     except:
         quitBackend()
 
