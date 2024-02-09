@@ -63,6 +63,7 @@ namespace dotnetAnima
                     }
                     
                 }
+                InitialiseFrontendJson();
                 InitialiseBackendJson();
             }
             else
@@ -96,11 +97,22 @@ namespace dotnetAnima
             backendJsonObject["readContentSuccess"] = "false";
             backendJsonObject["importSuccess"] = "false";
             backendJsonObject["backendReady"] = "false";
+            backendJsonObject["stopSpeakSuccess"] = "false";
+            backendJsonObject["audioLength"] = "";
 
             backendJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
             File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
+        private void InitialiseFrontendJson()
+        {
+            frontendJsonObject["stopSpeakTrigger"] = "false";
+            frontendJsonObject["content"] = "";
+            frontendJsonObject["readFilePath"] = "";
+            frontendJsonObject["importFilePath"] = "";
 
+            frontendJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
+            File.WriteAllText(frontendJsonFilePath, frontendJsonContent);
+        }
         private async Task WaitForBackendReady()
         {
             bool conditionMet = false;

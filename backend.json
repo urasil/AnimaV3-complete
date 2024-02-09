@@ -1,8 +1,1 @@
-{
-  "profileCreationSuccess": "false",
-  "readFileSuccess": "false",
-  "speechSuccess": "false",
-  "readContentSuccess": "false",
-  "importSuccess": "false",
-  "backendReady": "false"
-}
+{"profileCreationSuccess": "false", "readFileSuccess": "false", "speechSuccess": "false", "readContentSuccess": "false", "importSuccess": "false", "backendReady": "false", "stopSpeakSuccess": "false", "audioLength": ""}

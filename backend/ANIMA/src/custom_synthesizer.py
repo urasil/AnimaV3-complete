@@ -354,6 +354,7 @@ class Synthesizer(object):
         process_time = time.time() - start_time
         audio_time = len(wavs) / self.tts_config.audio["sample_rate"]
         print(f" > Processing time: {process_time}")
+        print(f" > Audio time: {audio_time}")
         print(f" > Real-time factor: {process_time / audio_time}")
         return wavs
 
