@@ -35,7 +35,8 @@ namespace dotnetAnima
         private string backendJsonContent;
 
         private string nameOfUser;
-
+        private bool speakingState; // true means audio is playing
+        
         public TextToSpeechWindow()
         {
             InitializeComponent();
@@ -52,6 +53,8 @@ namespace dotnetAnima
 
             nameOfUser = frontendJsonObject["nameOfCurrentUser"];
             selectedVoice.Text = selectedVoice.Text + nameOfUser;
+
+            speakingState = false;
         }
 
         private void readingBackendJson()
@@ -69,23 +72,65 @@ namespace dotnetAnima
         // Send the content typed by the user via registering it to the Json file
         private async void Speak(object sender, RoutedEventArgs e)
         {
-            ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
-            frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
-            UpdateFrontendJsonFile();
-
-            backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
-            updateBackendJson();
-
-            await WaitSpeech();
-            if (backendJsonObject["speechSuccess"] == "false")
+            if(!speakingState)
             {
-                MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
+                frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
+                UpdateFrontendJsonFile();
+
+                backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
+                updateBackendJson();
+
+                await WaitSpeech();
+                if (backendJsonObject["speechSuccess"] == "false")
+                {
+                    MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                ButtonHelper.DisableButton(speakButton, true);
+                changeSpeakState();
+                await ResetSpeakButtonTimer((int)double.Parse(backendJsonObject["audioLength"]) * 1000);
+                backendJsonObject["speechSuccess"] = "false"; // reset the value
+                //frontendJsonObject["content"] = "";
+                updateBackendJson();
+                UpdateFrontendJsonFile();
+                
             }
-            backendJsonObject["speechSuccess"] = "false"; // reset the value
-            frontendJsonObject["content"] = "";
+            else
+            {
+                StopSpeak();
+            }
+
+        }
+        // The timer used to automatically restore the speak button, based on the length of audio
+        private async Task ResetSpeakButtonTimer(int time)
+        {
+            await Task.Delay(time);
+            if (speakingState)
+            {
+                changeSpeakState();
+            }
+        }
+
+        // if speaking, then stop the speak
+        private async void StopSpeak()
+        {
+            ButtonHelper.DisableButton(speakButton, false);
+            backendJsonObject["stopSpeakSuccess"] = "false";  //reset the value before sending the request
+            updateBackendJson();
+            frontendJsonObject["stopSpeakTrigger"] = "true";
+            UpdateFrontendJsonFile();
+
+            await WaitStopSpeech();
+            if (backendJsonObject["stopSpeakSuccess"] == "false")
+            {
+                MessageBox.Show("Failed to stop speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            ButtonHelper.DisableButton(speakButton, true);
+            changeSpeakState();
+            backendJsonObject["stopSpeakSuccess"] = "false"; // reset the value
+            frontendJsonObject["stopSpeakTrigger"] = "false";
             updateBackendJson();
             UpdateFrontendJsonFile();
-            ButtonHelper.DisableButton(speakButton, true);
         }
 
         private async Task WaitSpeech()
@@ -94,13 +139,27 @@ namespace dotnetAnima
             {
                 Console.WriteLine(backendJsonObject["speechSuccess"]);
                 readingBackendJson();
-                await Task.Delay(1000);
+                await Task.Delay(200);
+            }
+        }
+
+        private async Task WaitStopSpeech()
+        {
+            while (backendJsonObject["stopSpeakSuccess"] != "true")
+            {
+                Console.WriteLine(backendJsonObject["stopSpeakSuccess"]);
+                readingBackendJson();
+                await Task.Delay(200);
             }
         }
 
         // Send user to Manage Voice Window
         private void ManageVoices(object sender, RoutedEventArgs e)
         {
+            if(speakingState)
+            {
+               StopSpeak();
+            }
             this.NavigationService.Navigate(new ManageVoicesWindow());
         }
 
@@ -113,10 +172,17 @@ namespace dotnetAnima
         // Read from image button - Implement backend functionality for this to work
         private async void ReadFromImageButton(object sender, RoutedEventArgs e)
         {
+            if (speakingState)
+            {
+                StopSpeak();
+            }
+
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             bool? response = dialog.ShowDialog();
             if (response == true)
             {
+                ButtonHelper.DisableButton(speakButton, false);
+
                 string filePath = dialog.FileName;
                 Console.WriteLine(filePath);
                 frontendJsonObject["readFilePath"] = filePath;
@@ -131,6 +197,12 @@ namespace dotnetAnima
                 {
                     MessageBox.Show("Failed to read file, make sure the extension is jpg or pdf, and make sure the quality is good enough", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+
+                ButtonHelper.DisableButton(speakButton, true);
+                changeSpeakState();
+                await ResetSpeakButtonTimer((int)double.Parse(backendJsonObject["audioLength"]) * 1000);
+
+
                 backendJsonObject["readFileSuccess"] = "false"; // reset the value
                 frontendJsonObject["readFilePath"] = "";
                 UpdateFrontendJsonFile();
@@ -140,11 +212,11 @@ namespace dotnetAnima
 
         private async Task SendFileContentBackToFrontend()
         {
-            int count = 0;
+            
             while (backendJsonObject["readFileSuccess"].ToString() != "true")
             {
                 readingBackendJson();
-                await Task.Delay(1000);
+                await Task.Delay(200);
             }
 
         }
@@ -178,6 +250,30 @@ namespace dotnetAnima
                     textBox.CaretIndex = textBox.GetCharacterIndexFromLineIndex(lineNumber + 1);
 
                     e.Handled = true; // Prevents the Enter key from inserting a newline in the TextBox
+                }
+            }
+        }
+
+
+        // change the style of speak button between SPEAK and STOP
+        private void changeSpeakState()  
+        {
+            speakingState = !speakingState;
+            var rectangleOverlay = speakButton.Template.FindName("RectangleOverlay", speakButton) as Rectangle;  // change the attribute in style file
+            if (speakingState)
+            {
+                speakButton.Content = "STOP";
+                if (rectangleOverlay != null)
+                {
+                    rectangleOverlay.Fill = new SolidColorBrush(Colors.Red);
+                }
+            }
+            else
+            {
+                speakButton.Content = "SPEAK";
+                if (rectangleOverlay != null)
+                {
+                    rectangleOverlay.Fill = new SolidColorBrush(Colors.LimeGreen);
                 }
             }
         }

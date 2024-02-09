@@ -188,15 +188,7 @@ class ANIMA():
             wavs = synthesizer.ttsFromProfile(profile_path=profile_path, text=line)
             sd.play(np.array(wavs), 16000)
             sd.wait()
-
-    def use_profile_to_talk(self, profile_path: str, text: str, lang: str):
-        self.__check_profile(profile_path)
-        self.__check_lang_len(lang)
-
-        synthesizer = self.init_synthesizer(lang)
-        wavs = synthesizer.ttsFromProfile(profile_path=profile_path, text=text)
-        sd.play(np.array(wavs), 16000)
-        sd.wait()
+        
 
     def voice_clone(self, text: str, speaker_wav: str, filename: str, lang: str):
         """
