@@ -51,14 +51,19 @@ namespace dotnetAnima
                 if (directoriesWithinPath.Length > 0)
                 {
                     string userName = frontendJsonObject["nameOfCurrentUser"];
-                    int userNameLength = userName.Length;
-                    string spaces = String.Concat(Enumerable.Repeat(" ", 52 - userNameLength));
-                    desc.Inlines.Clear();
-                    desc.Inlines.Add(new Run(spaces + "Welcome Back " + userName + "!") { FontWeight = FontWeights.Bold });
-                    startButton.Content = "Text-to-Speech";
-                    startButton.Margin = new Thickness(136, 319, 282, 47);
-                    profileExists = true;
+                    if(File.Exists(path + "/" + userName + ".animaprofile"))
+                    {
+                        int userNameLength = userName.Length;
+                        string spaces = String.Concat(Enumerable.Repeat(" ", 52 - userNameLength));
+                        desc.Inlines.Clear();
+                        desc.Inlines.Add(new Run(spaces + "Welcome Back " + userName + "!") { FontWeight = FontWeights.Bold });
+                        startButton.Content = "Text-to-Speech";
+                        startButton.Margin = new Thickness(136, 319, 282, 47);
+                        profileExists = true;
+                    }
+                    
                 }
+                InitialiseFrontendJson();
                 InitialiseBackendJson();
             }
             else
@@ -92,11 +97,22 @@ namespace dotnetAnima
             backendJsonObject["readContentSuccess"] = "false";
             backendJsonObject["importSuccess"] = "false";
             backendJsonObject["backendReady"] = "false";
+            backendJsonObject["stopSpeakSuccess"] = "false";
+            backendJsonObject["audioLength"] = "";
 
             backendJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
             File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
+        private void InitialiseFrontendJson()
+        {
+            frontendJsonObject["stopSpeakTrigger"] = "false";
+            frontendJsonObject["content"] = "";
+            frontendJsonObject["readFilePath"] = "";
+            frontendJsonObject["importFilePath"] = "";
 
+            frontendJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
+            File.WriteAllText(frontendJsonFilePath, frontendJsonContent);
+        }
         private async Task WaitForBackendReady()
         {
             bool conditionMet = false;
