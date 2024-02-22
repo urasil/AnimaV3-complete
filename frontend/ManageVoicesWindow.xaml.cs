@@ -15,9 +15,8 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Threading;
 using System.Security.Policy;
+using dotnetAnima.Core;
 
-// What is left to do?
-// Import my voice
 
 namespace dotnetAnima
 {
@@ -113,11 +112,13 @@ namespace dotnetAnima
             bool? response = dialog.ShowDialog();
             if (response == true)
             {
+                ButtonHelper.DisableButton(importVoice, false);
                 string filePath = dialog.FileName;
                 frontendJsonObject["importFilePath"] = filePath;
                 string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
                 File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
                 await SendFileContentBackToFrontend();
+                ButtonHelper.DisableButton(importVoice, true);
                 if (backendJsonObject["importSuccess"] == "false")
                 {
                     MessageBox.Show("Coudln't create a voice profile from uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -134,6 +135,7 @@ namespace dotnetAnima
                     }
                     frontendJsonObject["importFilePath"] = "";
                     updateVoices();
+                    MessageBox.Show("Anima Profile Generated", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 backendJsonObject["importSuccess"] = "";
 
