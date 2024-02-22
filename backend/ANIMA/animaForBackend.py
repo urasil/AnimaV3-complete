@@ -163,9 +163,10 @@ def main():
                             raise ValueError("Invalid path")
                 # An animaprofile to be imported
                 if("importFilePath" in changes):
-                    print("import file")
+                    
                     if changes["importFilePath"] != "":
                         try:
+                            print("import file")
                             frontendJson["importFilePath"] = changes["importFilePath"]
                             text = functions.registerProfileFromImport(changes["importFilePath"])
                             backendJson["importSuccess"] = "true"

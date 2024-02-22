@@ -95,7 +95,7 @@ namespace dotnetAnima
             backendJsonObject["readFileSuccess"] = "false";
             backendJsonObject["speechSuccess"] = "false";
             backendJsonObject["readContentSuccess"] = "false";
-            backendJsonObject["importSuccess"] = "false";
+            backendJsonObject["importSuccess"] = "NULL";
             backendJsonObject["backendReady"] = "false";
             backendJsonObject["stopSpeakSuccess"] = "false";
             backendJsonObject["audioLength"] = "";
