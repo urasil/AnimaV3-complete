@@ -134,6 +134,17 @@
             Height="50"
             Margin="234,347,301,23" Click="StartRecording"/>
 
+            <!-- Return to Menu Button -->
+            <Button Content="RETURN TO MENU"
+            Name="stopVoicebankingButton"
+            Foreground="White"
+            Style="{StaticResource StartOverButtonTheme}" 
+            Grid.Column="1" 
+            Grid.Row="1"
+            Visibility="Visible"
+            Margin="551,11,4,45" 
+            Click="StopVoicebanking"/>
+
             <!-- Listen Button -->
             <Button Content="LISTEN RECORDING"
             Name="listenButton"
