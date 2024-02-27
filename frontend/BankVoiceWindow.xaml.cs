@@ -68,6 +68,21 @@ namespace dotnetAnima
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
         }
 
+        // Return to Menu Button
+        public void StopVoicebanking(object sender, RoutedEventArgs e)
+        {
+            string[] animaFiles = Directory.GetFiles("../../../animaProfiles", "*.animaprofile");
+            if (animaFiles.Length >= 1)
+            {
+                recorder.StopRecording();
+                this.NavigationService.Navigate(new ManageVoicesWindow());
+            }
+            else
+            {
+                recorder.StopRecording();
+                this.NavigationService.Navigate(new AnimaHomePage());
+            }
+        }
 
         // The method that runs when the START RECORDING button is pressed
         private void StartRecording(object sender, RoutedEventArgs e)
