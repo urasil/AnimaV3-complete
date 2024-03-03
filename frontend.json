@@ -6,5 +6,6 @@
   "readFilePath": "",
   "readFileID": "xxxx",
   "importFilePath": "xxxx",
-  "stopSpeakTrigger": "false"
+  "stopSpeakTrigger": "false",
+  "language": "en"
 }

@@ -60,13 +60,13 @@ class BackendFunctionalites:
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
         elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
-            return self.imageConverter.img_to_str(path, "en")
+            return self.imageConverter.img_to_str(img_path=path, lang=language)
         else:
             return False
     
     def registerProfileFromImport(self, path):
         name = path.split("\\")[-1].split(".")[0]
-        self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{name}.animaprofile", speaker_wav=path, lang=language)
 
     def stopSpeak(self):
         sd.stop()
@@ -190,6 +190,15 @@ def main():
                             backendJson["stopSpeakSuccess"] = "false"
                             writeToBackendJson()
                 
+                # change speaking langauge
+                if("language" in changes):
+                    print("Language changed")
+                    if changes["language"] != "":
+                        try:
+                            language = changes["language"]
+                        except Exception as e:
+                            print("Failed to change speaking language", e)
+                            
             time.sleep(detectPeriod)
     except:
         quitBackend()
