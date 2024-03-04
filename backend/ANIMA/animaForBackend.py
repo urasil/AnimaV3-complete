@@ -44,6 +44,9 @@ class BackendFunctionalites:
         self.audioLength = 0  # the length of generated audio, unit of second
 
     def computerSpeak(self, text, currentUser):
+        """
+        Use animaprofile to speak
+        """
         print(currentUser)
         profilePath = animaProfilesPath + currentUser + ".animaprofile"
         wav = self.anima.wav_from_profile(profile_path=profilePath, lang=language, text=text)
@@ -51,10 +54,16 @@ class BackendFunctionalites:
         sd.play(np.array(wav), 16000)
 
     def registerProfile(self):
+        """
+        Use a recorded wav to generate an animaprofile
+        """
         newUser = frontendJson["speakerName"]
         self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
     
     def convertToText(self, path):
+        """
+        Use OCR to convert a pdf/image into texts
+        """
         extension = path.split(".")[-1]
         print(extension)
         if(extension == "pdf"):
