@@ -363,4 +363,5 @@ def testProfileCreation():
 
 if __name__ == "__main__":
     #testProfileCreation()
-    test_main()
+    #test_main()
+    main()
