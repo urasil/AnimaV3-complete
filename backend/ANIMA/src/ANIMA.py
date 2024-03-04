@@ -365,12 +365,12 @@ class ANIMA():
 
     def __check_lang_len(self, lang):
         """
-        Check if language code length is 2
+        Check if language code length is greate than 2
 
         Args: 
             lang (str): language code 
         """
-        if len(lang) != 2:
+        if len(lang) < 2:
             raise self.InvalidLanguageCodeLength()
     
 
@@ -423,7 +423,7 @@ class ANIMA():
 
     class InvalidLanguageCodeLength(Exception):
         def __init__(self) -> None:
-            super().__init__(f"Invalid language code: the language code must only consist of two alphabets")
+            super().__init__(f"Invalid language code: the language code must only consist of two and more than two alphabets")
 
 
     class InvalidModelType(Exception):
