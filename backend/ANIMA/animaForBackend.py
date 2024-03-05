@@ -12,7 +12,7 @@ import numpy as np
 
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
-language = "en"
+language = "en"  # default language
 animaProfilesPath = "../../animaProfiles/"
 detectPeriod = 0.5  # unit of second
 
@@ -22,6 +22,7 @@ with open(frontendJsonFilePath, "r") as json_file:
 with open(backendJsonFilePath, "r") as json_file:
     backendJson = json.load(json_file)
 
+language = frontendJson["language"] # update the language to match with json
 def writeToBackendJson():
     with open(backendJsonFilePath, "w") as jsonFile:
         json.dump(backendJson, jsonFile)
@@ -42,14 +43,15 @@ class BackendFunctionalites:
         self.imageConverter = ImgToStrings()
         self.pdfConverter = PdfToStrings()
         self.audioLength = 0  # the length of generated audio, unit of second
+        self.language = language
 
     def computerSpeak(self, text, currentUser):
         """
         Use animaprofile to speak
         """
-        print(currentUser)
+        print(currentUser+" speaking in "+self.language)
         profilePath = animaProfilesPath + currentUser + ".animaprofile"
-        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=language, text=text)
+        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=self.language, text=text)
         self.audioLength = len(wav)/16000
         sd.play(np.array(wav), 16000)
 
@@ -58,7 +60,7 @@ class BackendFunctionalites:
         Use a recorded wav to generate an animaprofile
         """
         newUser = frontendJson["speakerName"]
-        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=self.language)
     
     def convertToText(self, path):
         """
@@ -69,16 +71,19 @@ class BackendFunctionalites:
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
         elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
-            return self.imageConverter.img_to_str(img_path=path, lang=language)
+            return self.imageConverter.img_to_str(img_path=path, lang=self.language)
         else:
             return False
     
     def registerProfileFromImport(self, path):
         name = path.split("\\")[-1].split(".")[0]
-        self.anima.create_profile(profile_path=f"{animaProfilesPath}{name}.animaprofile", speaker_wav=path, lang=language)
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{name}.animaprofile", speaker_wav=path, lang=self.language)
 
     def stopSpeak(self):
         sd.stop()
+
+    def changeLanguage(self,lang):
+        self.language = lang
 def main():
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
@@ -204,7 +209,7 @@ def main():
                     print("Language changed")
                     if changes["language"] != "":
                         try:
-                            language = changes["language"]
+                            functions.changeLanguage(changes["language"])
                         except Exception as e:
                             print("Failed to change speaking language", e)
                             
