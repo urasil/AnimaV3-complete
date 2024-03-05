@@ -82,7 +82,11 @@ namespace dotnetAnima
                 {
                     RadioButton radioButton = new RadioButton();
                     radioButton.Content = name;
-                    radioButton.Name = name;
+
+                    string cleanedName = name.Replace(" ", "_");  // RadioButton.Name only supports number, alphabet, and underline
+                    cleanedName = System.Text.RegularExpressions.Regex.Replace(cleanedName, @"[^\w]", "");
+                    radioButton.Name = cleanedName;
+
                     radioButton.Foreground = Brushes.AntiqueWhite;
                     radioButton.Margin = new Thickness(0, 0, 0, 10);
                     radioButton.FontSize = 25;
