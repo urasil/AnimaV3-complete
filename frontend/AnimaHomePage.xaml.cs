@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using dotnetAnima.Core;
 
 namespace dotnetAnima
 {
@@ -44,6 +45,8 @@ namespace dotnetAnima
 
             startButton.IsEnabled = false;  // disable button before the backend is ready
             startButton.Opacity = 0.3;
+            speakingLang.IsEnabled = false;
+            speakingLang.Opacity = 0.3;
 
             if (Directory.Exists(path))
             {
@@ -65,6 +68,27 @@ namespace dotnetAnima
                 }
                 InitialiseFrontendJson();
                 InitialiseBackendJson();
+
+                List<LanguageItem> languageItems = new List<LanguageItem>  // language dropdown list sources
+                {
+                    new LanguageItem("Images\\icons\\country flag\\united_kingdom_640.png", "English"),
+                    new LanguageItem("Images\\icons\\country flag\\france_640.png", "French"),
+                    new LanguageItem("Images\\icons\\country flag\\portugal_640.png", "Portuguese"),
+                };
+                speakingLang.ItemsSource = languageItems;
+                switch (DefaultLanguageSelected())
+                {
+                    case "en":
+                        speakingLang.SelectedItem = languageItems[0];
+                        break;
+                    case "fr-fr":
+                        speakingLang.SelectedItem = languageItems[1];
+                        break;
+                    case "pt-br":
+                        speakingLang.SelectedItem = languageItems[2];
+                        break;
+                }
+
             }
             else
             {
@@ -72,6 +96,10 @@ namespace dotnetAnima
                 MessageBox.Show("Error: Missed animaProfiles directory", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+
+
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             if (profileExists)
@@ -127,6 +155,8 @@ namespace dotnetAnima
                         conditionMet = true;
                         startButton.IsEnabled = true;
                         startButton.Opacity = 1;
+                        speakingLang.IsEnabled = true;
+                        speakingLang.Opacity = 1;
                     }
                     else
                     {
@@ -140,5 +170,41 @@ namespace dotnetAnima
                 }
             }
         }
+        private void SpeakingLanguageChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string language;
+            LanguageItem selectedItem = speakingLang.SelectedItem as LanguageItem;
+            if(selectedItem != null)
+            {
+                language = selectedItem.text;
+                switch(language)
+                {
+                    case "English":
+                        frontendJsonObject["language"] = "en";
+                        break;
+                    case "French":
+                        frontendJsonObject["language"] = "fr-fr";
+                        break;
+                    case "Portuguese":
+                        frontendJsonObject["language"] = "pt-br";
+                        break;
+                }
+
+                frontendJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
+                File.WriteAllText(frontendJsonFilePath, frontendJsonContent);
+            }
+            else
+            {
+                return;
+            }
+            
+        }
+
+        private string DefaultLanguageSelected()
+        {
+            return frontendJsonObject["language"];
+        }
     }
+
+
 }

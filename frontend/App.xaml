@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Theme/StartOverButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ListenButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RoundedTextBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/RoundedComboBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
