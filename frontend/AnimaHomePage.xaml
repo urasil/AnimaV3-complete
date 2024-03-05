@@ -90,6 +90,28 @@
             <Run Text="digital voice that can read text for you"/>
             </TextBlock>
 
+            <ComboBox x:Name="speakingLang"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Right"
+                      Style="{StaticResource RoundedComboBoxTheme}"
+                      Width="120" 
+                      Height="25"
+                      Margin="0,16,9,0" 
+                      Grid.Column="1" 
+                      Grid.Row="0"
+                      SelectionChanged="SpeakingLanguageChanged">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding icon}" Width="20" Height="20"/>
+                            <TextBlock Text="{Binding text}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+
         </Grid>
     </Border>
 </Page>
