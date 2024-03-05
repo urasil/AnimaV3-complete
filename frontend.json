@@ -1,11 +1,11 @@
 {
-  "nameOfCurrentUser": "",
+  "nameOfCurrentUser": "hayatim",
   "content": "",
-  "speakerName": "dddd",
-  "speakID": "xxxx",
+  "speakerName": "ask",
+  "speakID": "fc24378d-1c17-4159-9e58-b7a3b61c5324",
   "readFilePath": "",
   "readFileID": "xxxx",
-  "importFilePath": "xxxx",
+  "importFilePath": "",
   "stopSpeakTrigger": "false",
-  "language": "en"
+  "language": "fr-fr"
 }
