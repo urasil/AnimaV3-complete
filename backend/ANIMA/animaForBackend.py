@@ -35,6 +35,9 @@ def writeToProfileLanguageJson():
     with open(profileLanguagePath, "w") as profJsonFile:
         json.dump(languageJson, profJsonFile)
 
+def parseContent(content):
+    return content.replace("\n", "").replace("\r", "")
+
 def readyBackend():
     backendJson["backendReady"] = "true"
     writeToBackendJson()
@@ -64,10 +67,11 @@ class BackendFunctionalites:
 
         # determine the language of the user
         userLanguage = self.retrieveLanguage(currentUser)
-        
+
+        parsedText = parseContent(text)
         print(currentUser+" speaking in "+userLanguage)
         profilePath = animaProfilesPath + currentUser + ".animaprofile"
-        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=userLanguage, text=text)
+        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=userLanguage, text=parsedText)
         self.audioLength = len(wav)/16000
         sd.play(np.array(wav), 16000)
 
