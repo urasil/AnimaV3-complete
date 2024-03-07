@@ -35,6 +35,11 @@ namespace dotnetAnima
         private string frontendJsonContent = File.ReadAllText("../../../frontend.json");
         private Dictionary<string, string> frontendJsonObject;
 
+        // Profile Languages
+        string profileLanguagesJsonFilePath = @"../../../profileLanguages.json";
+        private string profileLanguagesJsonContent = File.ReadAllText("../../../profileLanguages.json");
+        private Dictionary<string, List<string>> profileLanguagesObject;
+
 
         public ManageVoicesWindow()
         {
@@ -49,6 +54,12 @@ namespace dotnetAnima
         {
             string updatedJsonContent = File.ReadAllText("../../../backend.json");
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(updatedJsonContent);
+        }
+
+        private void readingProfileLanguageJson()
+        {
+            string updatedJsonContent = File.ReadAllText("../../../profileLanguages.json");
+            profileLanguagesObject = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(updatedJsonContent);
         }
 
         private void readingFrontendJson()
@@ -71,7 +82,11 @@ namespace dotnetAnima
                 {
                     RadioButton radioButton = new RadioButton();
                     radioButton.Content = name;
-                    radioButton.Name = name;
+
+                    string cleanedName = name.Replace(" ", "_");  // RadioButton.Name only supports number, alphabet, and underline
+                    cleanedName = System.Text.RegularExpressions.Regex.Replace(cleanedName, @"[^\w]", "");
+                    radioButton.Name = cleanedName;
+
                     radioButton.Foreground = Brushes.AntiqueWhite;
                     radioButton.Margin = new Thickness(0, 0, 0, 10);
                     radioButton.FontSize = 25;
@@ -184,15 +199,39 @@ namespace dotnetAnima
             string updatedJsonContent = JsonConvert.SerializeObject(backendJsonObject, Formatting.Indented);
             File.WriteAllText(backendJsonFilePath, updatedJsonContent);
         }
+
+        private void UpdateProfileLanguagesFile()
+        {
+            string updatedContent = JsonConvert.SerializeObject(profileLanguagesObject, Formatting.Indented);
+            File.WriteAllText(profileLanguagesJsonFilePath, updatedContent);
+        }
         private void DeleteVoice(object sender, RoutedEventArgs e)
         {
             RadioButton checkedRadioButton = FindCheckedRadioButton();
 
             if (checkedRadioButton != null)
             {
-                string animaProfileName = checkedRadioButton.Content.ToString() + ".animaprofile";
+                string username = checkedRadioButton.Content.ToString();
+                string animaProfileName = username + ".animaprofile";
                 int radioButtonCount = groupPanel.Children.OfType<RadioButton>().Count();
                 string animaProfilePath = System.IO.Path.Combine("../../../animaProfiles", animaProfileName);
+                string valueToDeleteKey = "";
+                readingProfileLanguageJson();
+                foreach (var kvp in profileLanguagesObject)
+                {
+                    if (kvp.Value.Contains(username))
+                    {
+                        valueToDeleteKey = kvp.Key.ToString();
+                        break; // Exit loop after removing first occurrence
+                    }
+                }
+                Console.WriteLine("asdasdf" + valueToDeleteKey);
+                if (valueToDeleteKey != "")
+                {
+                    profileLanguagesObject[valueToDeleteKey].Remove(username);
+                }
+
+                UpdateProfileLanguagesFile();
 
                 if (File.Exists(animaProfilePath) && radioButtonCount > 1)
                 {

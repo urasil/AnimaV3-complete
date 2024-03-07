@@ -14,7 +14,10 @@
         "en": {
             "tts_model": "tts_models/multilingual/multi-dataset/your_tts"
         },
-        "pt": {
+        "pt-br": {
+            "tts_model": "tts_models/multilingual/multi-dataset/your_tts"
+        },
+        "fr-fr": {
             "tts_model": "tts_models/multilingual/multi-dataset/your_tts"
         }
     }

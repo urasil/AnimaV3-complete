@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Core\AudioRecorder.cs" />
     <Compile Include="Core\ButtonHelper.cs" />
+    <Compile Include="Core\LanguageItem.cs" />
     <Compile Include="Core\UUIDGenerator.cs" />
     <Compile Include="ManageVoicesWindow.xaml.cs">
       <DependentUpon>ManageVoicesWindow.xaml</DependentUpon>
@@ -152,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TextToSpeechWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\RoundedComboBoxTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +250,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ThingsToInclude.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icons\country flag\france_640.png" />
+    <Resource Include="Images\icons\country flag\portugal_640.png" />
+    <Resource Include="Images\icons\country flag\united_kingdom_640.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
