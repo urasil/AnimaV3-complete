@@ -71,7 +71,26 @@
                 <LineBreak/>
                 <Run Text="the text below"/>
             </TextBlock>
+            <ComboBox x:Name="speakingLang"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Right"
+                      Style="{StaticResource RoundedComboBoxTheme}"
+                      Width="120" 
+                      Height="25"
+                      Margin="0,16,9,0" 
+                      Grid.Column="1" 
+                      Grid.Row="0"
+                      SelectionChanged="SpeakingLanguageChanged">
 
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding icon}" Width="20" Height="20"/>
+                            <TextBlock Text="{Binding text}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <!-- Guy Speaking Image -->
             <Image Margin="236,75,14,25" Grid.Column="1" Source="Images/guySpeaking.png" Grid.RowSpan="2"/>
 

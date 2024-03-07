@@ -55,6 +55,25 @@ namespace dotnetAnima
             backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
             backendJsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(backendJsonFileContent);
 
+            List<LanguageItem> languageItems = new List<LanguageItem>  // language dropdown list sources
+            {
+                new LanguageItem("Images\\icons\\country flag\\united_kingdom_640.png", "English"),
+                new LanguageItem("Images\\icons\\country flag\\france_640.png", "French"),
+                new LanguageItem("Images\\icons\\country flag\\portugal_640.png", "Portuguese"),
+            };
+            speakingLang.ItemsSource = languageItems;
+            switch (DefaultLanguageSelected())
+            {
+                case "en":
+                    speakingLang.SelectedItem = languageItems[0];
+                    break;
+                case "fr-fr":
+                    speakingLang.SelectedItem = languageItems[1];
+                    break;
+                case "pt-br":
+                    speakingLang.SelectedItem = languageItems[2];
+                    break;
+            }
 
             this.progressCount = 0;
             this.buttonClickedCount = 0;
@@ -301,6 +320,41 @@ namespace dotnetAnima
                 }
                 this.progressCount++;
             }
+        }
+
+        private void SpeakingLanguageChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string language;
+            LanguageItem selectedItem = speakingLang.SelectedItem as LanguageItem;
+            if (selectedItem != null)
+            {
+                language = selectedItem.text;
+                switch (language)
+                {
+                    case "English":
+                        frontendJsonObject["language"] = "en";
+                        break;
+                    case "French":
+                        frontendJsonObject["language"] = "fr-fr";
+                        break;
+                    case "Portuguese":
+                        frontendJsonObject["language"] = "pt-br";
+                        break;
+                }
+
+                frontendJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
+                File.WriteAllText(frontendJsonFilePath, frontendJsonContent);
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        private string DefaultLanguageSelected()
+        {
+            return frontendJsonObject["language"];
         }
     }
 }

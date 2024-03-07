@@ -12,7 +12,8 @@ import numpy as np
 
 frontendJsonFilePath = "../../frontend.json"
 backendJsonFilePath = "../../backend.json"
-language = "en"
+profileLanguagePath = "../../profileLanguages.json"
+language = "en"  # default language
 animaProfilesPath = "../../animaProfiles/"
 detectPeriod = 0.5  # unit of second
 
@@ -22,10 +23,17 @@ with open(frontendJsonFilePath, "r") as json_file:
 with open(backendJsonFilePath, "r") as json_file:
     backendJson = json.load(json_file)
 
+with open(profileLanguagePath, "r") as json_file:
+    languageJson = json.load(json_file)
+
+language = frontendJson["language"] # update the language to match with json
 def writeToBackendJson():
     with open(backendJsonFilePath, "w") as jsonFile:
         json.dump(backendJson, jsonFile)
 
+def writeToProfileLanguageJson():
+    with open(profileLanguagePath, "w") as profJsonFile:
+        json.dump(languageJson, profJsonFile)
 
 def readyBackend():
     backendJson["backendReady"] = "true"
@@ -42,39 +50,81 @@ class BackendFunctionalites:
         self.imageConverter = ImgToStrings()
         self.pdfConverter = PdfToStrings()
         self.audioLength = 0  # the length of generated audio, unit of second
+        self.language = language
+
+    def retrieveLanguage(self, user):
+        for key, value in languageJson.items():
+            if user in value:
+                return key
 
     def computerSpeak(self, text, currentUser):
-        print(currentUser)
+        """
+        Use animaprofile to speak
+        """
+
+        # determine the language of the user
+        userLanguage = self.retrieveLanguage(currentUser)
+        
+        print(currentUser+" speaking in "+userLanguage)
         profilePath = animaProfilesPath + currentUser + ".animaprofile"
-        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=language, text=text)
+        wav = self.anima.wav_from_profile(profile_path=profilePath, lang=userLanguage, text=text)
         self.audioLength = len(wav)/16000
         sd.play(np.array(wav), 16000)
 
+    def registerHelper(self, user):
+        """
+        Updating the languageJson with new user and language
+        """
+        if user not in languageJson.values():
+            languageJson[self.language].append(user)
+        else:
+            for _, value in languageJson.items():
+                if user in value:
+                    value.remove(user)
+                    break
+            languageJson[self.language].append(user)
+
     def registerProfile(self):
+        """
+        Use a recorded wav to generate an animaprofile
+        """
         newUser = frontendJson["speakerName"]
-        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=language)
+        self.registerHelper(newUser)
+        writeToProfileLanguageJson()
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=self.language)
     
     def convertToText(self, path):
+        """
+        Use OCR to convert a pdf/image into texts
+        """
         extension = path.split(".")[-1]
         print(extension)
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
         elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
-            return self.imageConverter.img_to_str(path, "en")
+            return self.imageConverter.img_to_str(img_path=path, lang=self.language)
         else:
             return False
     
     def registerProfileFromImport(self, path):
         name = path.split("\\")[-1].split(".")[0]
-        self.anima.create_profile(profile_path=f"../../animaProfiles/{name}.animaprofile", speaker_wav=path, lang="en")
+        
+        self.registerHelper(name)
+        writeToProfileLanguageJson()
+
+        self.anima.create_profile(profile_path=f"{animaProfilesPath}{name}.animaprofile", speaker_wav=path, lang=self.language)
 
     def stopSpeak(self):
         sd.stop()
+
+    def changeLanguage(self,lang):
+        self.language = lang
 def main():
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
     readyBackend()
+    print("lets see:", languageJson)
     try:
         while(True):
             changes = observer.detectChanges()
@@ -190,6 +240,15 @@ def main():
                             backendJson["stopSpeakSuccess"] = "false"
                             writeToBackendJson()
                 
+                # change speaking langauge
+                if("language" in changes):
+                    print("Language changed")
+                    if changes["language"] != "":
+                        try:
+                            functions.changeLanguage(changes["language"])
+                        except Exception as e:
+                            print("Failed to change speaking language", e)
+                            
             time.sleep(detectPeriod)
     except:
         quitBackend()
