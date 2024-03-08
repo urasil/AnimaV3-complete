@@ -1,11 +1,11 @@
 {
-  "nameOfCurrentUser": "test",
+  "nameOfCurrentUser": "test-fr",
   "content": "",
-  "speakerName": "testen",
+  "speakerName": "test-pt",
   "speakID": "906b01ec-a70e-4eee-b1f1-16538ea50d9b",
   "readFilePath": "",
-  "readFileID": "59aa6baf-6209-463e-9d8a-dc3e9a17ce12",
+  "readFileID": "3b8513f5-9407-432a-a3eb-60363058228c",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
-  "language": "en"
+  "language": "fr-fr"
 }
