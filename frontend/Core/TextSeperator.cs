@@ -8,10 +8,12 @@ namespace dotnetAnima.Core
     public class TextSeperator
     {
         public List<string> SeperatedText { get; private set; }
+        private string current_language;
 
-        public TextSeperator()
+        public TextSeperator(string currentLanguage)
         {
             SeperatedText = new List<string>();
+            current_language = currentLanguage;
         }
 
         // Yes this can still method can still be broken however that is not the point. Any good text should not break this function.
@@ -19,7 +21,14 @@ namespace dotnetAnima.Core
         {
             SeperatedText.Clear();
 
-            string text = File.ReadAllText("../../VoiceBankingText.txt");
+            string text = "";
+            if (current_language == "en"){
+                text  = File.ReadAllText("../../VoiceBankingText.txt");
+            } else if (current_language == "fr-fr"){
+                text  = File.ReadAllText("../../VoiceBankingText-Fr.txt");
+            } else if (current_language == "pt-br"){
+                text  = File.ReadAllText("../../VoiceBankingText-Pt.txt");
+            }
             string[] sentences = Regex.Split(text, @"(?<=[.!?])");
 
             int totalWords = CountWords(text);
