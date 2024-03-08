@@ -1,10 +1,10 @@
 {
-  "nameOfCurrentUser": "urasuzun",
+  "nameOfCurrentUser": "test",
   "content": "",
-  "speakerName": "urasbab",
-  "speakID": "d009baf9-0502-4dc1-8b0b-bae8e41ec9da",
+  "speakerName": "testen",
+  "speakID": "906b01ec-a70e-4eee-b1f1-16538ea50d9b",
   "readFilePath": "",
-  "readFileID": "xxxx",
+  "readFileID": "59aa6baf-6209-463e-9d8a-dc3e9a17ce12",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
   "language": "en"
