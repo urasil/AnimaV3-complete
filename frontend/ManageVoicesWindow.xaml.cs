@@ -133,10 +133,13 @@ namespace dotnetAnima
                 string updatedJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
                 File.WriteAllText(frontendJsonFilePath, updatedJsonContent);
                 await SendFileContentBackToFrontend();
+
+                // Re-enable the button regardless of import success or failure
                 ButtonHelper.DisableButton(importVoice, true);
+
                 if (backendJsonObject["importSuccess"] == "false")
                 {
-                    MessageBox.Show("Coudln't create a voice profile from uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Couldn't create a voice profile from the uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     frontendJsonObject["importFilePath"] = "";
                 }
                 if (backendJsonObject["importSuccess"] == "true")
@@ -156,9 +159,9 @@ namespace dotnetAnima
 
                 UpdateFrontendJsonFile();
                 UpdateBackendJsonFile();
-
             }
         }
+
 
         private async Task SendFileContentBackToFrontend()
         {
