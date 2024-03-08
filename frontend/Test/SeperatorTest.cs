@@ -11,7 +11,7 @@ namespace dotnetAnima.Test
     {
         static void Main(string[] args)
         {
-            TextSeperator textSeperator = new TextSeperator();
+            TextSeperator textSeperator = new TextSeperator("en");
 
             List<string> separatedText = textSeperator.ReadAndSeparateText();
 

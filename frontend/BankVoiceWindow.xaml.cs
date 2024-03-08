@@ -42,9 +42,6 @@ namespace dotnetAnima
         {
             InitializeComponent();
 
-            TextSeperator textSeperator = new TextSeperator();
-            stringList = textSeperator.ReadAndSeparateText();
-
             recorder = new AudioRecorder();
 
             frontendJsonFilePath = @"../../../frontend.json";
@@ -74,6 +71,11 @@ namespace dotnetAnima
                     speakingLang.SelectedItem = languageItems[2];
                     break;
             }
+
+            // load text to read
+            string current_language = frontendJsonObject["language"];
+            TextSeperator textSeperator = new TextSeperator(current_language);
+            stringList = textSeperator.ReadAndSeparateText();
 
             this.progressCount = 0;
             this.buttonClickedCount = 0;
