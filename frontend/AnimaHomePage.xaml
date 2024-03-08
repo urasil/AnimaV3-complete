@@ -89,16 +89,25 @@
             <Run Language="en-gb" Text="&#x9;&#x9;    "/>
             <Run Text="digital voice that can read text for you"/>
             </TextBlock>
+            <!-- Select Language TextBlock -->
+            <TextBlock Text="I want to speak in:" 
+                       Grid.Column="1" 
+                       Grid.Row="0" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Right" 
+                       Margin="0,20,20,0" 
+                       FontWeight="Bold"/>
 
+            <!-- Speaking Language ComboBox -->
             <ComboBox x:Name="speakingLang"
-                      VerticalAlignment="Top"
+                      Grid.Column="1" 
+                      Grid.Row="0" 
+                      VerticalAlignment="Top" 
                       HorizontalAlignment="Right"
                       Style="{StaticResource RoundedComboBoxTheme}"
                       Width="120" 
-                      Height="25"
-                      Margin="0,16,9,0" 
-                      Grid.Column="1" 
-                      Grid.Row="0"
+                      Height="35"
+                      Margin="0,50,20,0" 
                       SelectionChanged="SpeakingLanguageChanged">
 
                 <ComboBox.ItemTemplate>
@@ -110,7 +119,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
 
         </Grid>
     </Border>
