@@ -105,6 +105,20 @@ namespace dotnetAnima
             }
         }
 
+        private string[] ExtractNames()
+        {
+            string[] filePaths = Directory.GetFiles("../../../animaProfiles", "*.animaprofile");  //only get files with extension of 'animeprofile'
+            string[] namesList = new string[filePaths.Length];
+
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(filePaths[i]);
+                namesList[i] = fileName;
+            }
+
+            return namesList;
+        }
+
         // The method that runs when the START RECORDING button is pressed
         private void StartRecording(object sender, RoutedEventArgs e)
         {
@@ -131,10 +145,19 @@ namespace dotnetAnima
                 lovelyButton.IsEnabled = false;   // user enables the button back by inputting a name in the textbox
             }
             // Going to the next page
-            if (this.buttonClickedCount == 12)
+            if (this.buttonClickedCount >= 12)
             {
-                // needs an aysnc function that awaits confirmation from backend
-                FinishingUpWithRegistration();
+                string[] names = ExtractNames();
+                if (names.Contains(frontendJsonObject["speakerName"]))
+                {
+                    MessageBox.Show($"The name {frontendJsonObject["speakerName"]} has already been taken. Please select another name.");
+                }
+                else 
+                {
+                    // needs an aysnc function that awaits confirmation from backend
+                    FinishingUpWithRegistration();
+                }
+                
             }
             this.textCount++;
             ChangeInstructions();
@@ -158,8 +181,9 @@ namespace dotnetAnima
 
             ButtonHelper.DisableButton(lovelyButton, true);
 
-            this.NavigationService.Navigate(new TextToSpeechWindow());
             recorder.StopSound();
+            this.NavigationService.Navigate(new TextToSpeechWindow());
+            
         }
 
         private async Task WaitBackendConfirmationForProfileCreation()
