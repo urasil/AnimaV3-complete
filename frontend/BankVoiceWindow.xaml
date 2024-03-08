@@ -71,15 +71,26 @@
                 <LineBreak/>
                 <Run Text="the text below"/>
             </TextBlock>
+            
+            <!-- Select Language TextBlock -->
+            <TextBlock Text="I want to speak in:" 
+                       Grid.Column="1" 
+                       Grid.Row="0" 
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Right" 
+                       Margin="0,20,20,0" 
+                       FontWeight="Bold"/>
+
+            <!-- Speaking Language ComboBox -->
             <ComboBox x:Name="speakingLang"
-                      VerticalAlignment="Top"
+                      Grid.Column="1" 
+                      Grid.Row="0" 
+                      VerticalAlignment="Top" 
                       HorizontalAlignment="Right"
                       Style="{StaticResource RoundedComboBoxTheme}"
                       Width="120" 
-                      Height="25"
-                      Margin="0,16,9,0" 
-                      Grid.Column="1" 
-                      Grid.Row="0"
+                      Height="35"
+                      Margin="0,50,20,0" 
                       SelectionChanged="SpeakingLanguageChanged">
 
                 <ComboBox.ItemTemplate>
@@ -91,6 +102,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+
             <!-- Guy Speaking Image -->
             <Image Margin="236,75,14,25" Grid.Column="1" Source="Images/guySpeaking.png" Grid.RowSpan="2"/>
 
