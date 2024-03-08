@@ -26,6 +26,7 @@ namespace dotnetAnima
     public partial class AnimaHomePage : Page
     {
         bool profileExists;
+        private static int loadedCount = 0;
         private string frontendJsonFilePath = "../../../frontend.json";
         private string backendJsonFilePath = "../../../backend.json";
         private Dictionary<string, string> frontendJsonObject;
@@ -42,11 +43,23 @@ namespace dotnetAnima
             profileExists = false;
             InitializeComponent();
 
-
-            startButton.IsEnabled = false;  // disable button before the backend is ready
-            startButton.Opacity = 0.3;
-            speakingLang.IsEnabled = false;
-            speakingLang.Opacity = 0.3;
+            if(loadedCount == 0)
+            {
+                startButton.IsEnabled = false;  // disable button before the backend is ready
+                startButton.Opacity = 0.3;
+                speakingLang.IsEnabled = false;
+                speakingLang.Opacity = 0.3;
+                loadedCount++;
+            }
+            else 
+            {
+                startButton.IsEnabled = true;
+                startButton.Opacity = 1.0;
+                speakingLang.IsEnabled = true;
+                speakingLang.Opacity = 1.0;
+                loadedCount++;
+            }
+            
 
             if (Directory.Exists(path))
             {

@@ -123,6 +123,7 @@ class BackendFunctionalites:
 
     def changeLanguage(self,lang):
         self.language = lang
+        
 def main():
     currentUser = frontendJson["nameOfCurrentUser"]
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
