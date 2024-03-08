@@ -109,7 +109,7 @@ namespace dotnetAnima
         private void StartRecording(object sender, RoutedEventArgs e)
         {
             this.buttonClickedCount++;
-
+            speakingLang.IsEnabled = false;
             // Starting the voice recording
             if (this.buttonClickedCount == 1)
             {
@@ -212,6 +212,7 @@ namespace dotnetAnima
             lovelyButton.Opacity = 1;
             restartButton.Visibility = Visibility.Hidden;
             listenButton.Visibility = Visibility.Hidden;
+            speakingLang.IsEnabled = true;
 
         }
 
@@ -346,6 +347,25 @@ namespace dotnetAnima
 
                 frontendJsonContent = JsonConvert.SerializeObject(frontendJsonObject, Formatting.Indented);
                 File.WriteAllText(frontendJsonFilePath, frontendJsonContent);
+                string currentLanguage = frontendJsonObject["language"];
+                string textFilePath = "";
+                if (currentLanguage == "en")
+                {
+                    textFilePath = "../../VoiceBankingText.txt";
+                }
+                else if (currentLanguage == "fr-fr")
+                {
+                    textFilePath = "../../VoiceBankingText-Fr.txt";
+                }
+                else if (currentLanguage == "pt-br")
+                {
+                    textFilePath = "../../VoiceBankingText-Pt.txt";
+                }
+
+                // Read and separate text from the chosen file
+                TextSeperator textSeperator = new TextSeperator(currentLanguage);
+                stringList = textSeperator.ReadAndSeparateText();
+                ChangeText();
             }
             else
             {
