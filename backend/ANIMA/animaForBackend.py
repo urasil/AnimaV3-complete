@@ -109,10 +109,18 @@ class BackendFunctionalites:
             return self.imageConverter.img_to_str(img_path=path, lang=self.language)
         else:
             return False
-    
+
     def registerProfileFromImport(self, path):
+        file_extension = path.split(".")[-1]
+        # dont update profileLanguages.json if invalid file type :(
+        # import fail
+        if file_extension != "animaprofile":
+            print("Invalid file type. Please import a valid .animaprofile file.")
+            # backendJson["importSuccess"] == "false"
+            raise ImportError
+        # import successful
+        # backendJson["importSuccess"] = "true"
         name = path.split("\\")[-1].split(".")[0]
-        
         self.registerHelper(name)
         writeToProfileLanguageJson()
 
