@@ -109,7 +109,7 @@
             Margin="510,40,25,10" Click="Speak"/>
 
             <!-- Redo Voice Button -->
-            <Button Content="REDO MY VOICE"
+            <Button Content="RECORD ANOTHER"
             Name="redoVoice"
             Foreground="White"
             Style="{StaticResource MenuButtonTheme}" 

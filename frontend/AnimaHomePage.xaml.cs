@@ -55,8 +55,13 @@ namespace dotnetAnima
             {
                 startButton.IsEnabled = true;
                 startButton.Opacity = 1.0;
-                speakingLang.IsEnabled = true;
-                speakingLang.Opacity = 1.0;
+                if (profileExists){
+                    speakingLang.IsEnabled = false;
+                    speakingLang.Opacity = 0.3;
+                } else {
+                    speakingLang.IsEnabled = true;
+                    speakingLang.Opacity = 1.0;
+                }
                 loadedCount++;
             }
             
@@ -76,6 +81,7 @@ namespace dotnetAnima
                         startButton.Content = "Text-to-Speech";
                         startButton.Margin = new Thickness(136, 319, 282, 47);
                         profileExists = true;
+                        // Console.WriteLine("profile exists");
                     }
                     
                 }
@@ -168,8 +174,13 @@ namespace dotnetAnima
                         conditionMet = true;
                         startButton.IsEnabled = true;
                         startButton.Opacity = 1;
-                        speakingLang.IsEnabled = true;
-                        speakingLang.Opacity = 1;
+                        if (profileExists){
+                            speakingLang.IsEnabled = false;
+                            speakingLang.Opacity = 0.3;
+                        } else {
+                            speakingLang.IsEnabled = true;
+                            speakingLang.Opacity = 1.0;
+                        }
                     }
                     else
                     {
