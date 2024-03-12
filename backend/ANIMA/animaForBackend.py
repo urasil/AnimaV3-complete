@@ -114,8 +114,8 @@ class BackendFunctionalites:
         file_extension = path.split(".")[-1]
         # dont update profileLanguages.json if invalid file type :(
         # import fail
-        if file_extension != "animaprofile":
-            print("Invalid file type. Please import a valid .animaprofile file.")
+        if file_extension != "wav":
+            print("Invalid file type. Please import a valid .wav file.")
             # backendJson["importSuccess"] == "false"
             raise ImportError
         # import successful
