@@ -7,7 +7,7 @@ class ImgToStrings():
     Converts .jpg file text to strings.
     """
     def __init__(self) -> None:
-        self.lang = ["en", "de", "tr", "fr"]
+        self.lang = ["en", "fr", "pt"]
 
     def img_to_str(self, img_path: str, lang: str):
         """
@@ -24,8 +24,11 @@ class ImgToStrings():
             textToReturn = ""
             result = reader.readtext(img_path)
             for(bbox, text, prob) in result:
-                textToReturn += (text + " ")
+                if text != None:
+                    print(text)
+                    textToReturn += (text + " ")
             textToReturn = textToReturn.strip()
+            print(textToReturn)
         except:
             print("Error: Unable to read text from image.")
             textToReturn = ""

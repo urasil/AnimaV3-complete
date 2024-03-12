@@ -106,7 +106,12 @@ class BackendFunctionalites:
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
         elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
-            return self.imageConverter.img_to_str(img_path=path, lang=self.language)
+            if self.language == "en":
+                return self.imageConverter.img_to_str(img_path=path, lang="en")
+            elif self.language == "pt-br":
+                return self.imageConverter.img_to_str(img_path=path, lang="pt")
+            elif self.language == "fr-fr":
+                return self.imageConverter.img_to_str(img_path=path, lang="fr") 
         else:
             return False
 
