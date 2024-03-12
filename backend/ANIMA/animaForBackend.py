@@ -102,15 +102,17 @@ class BackendFunctionalites:
         Use OCR to convert a pdf/image into texts
         """
         extension = path.split(".")[-1]
+        retrievedLanguage = self.retrieveLanguage(frontendJson["nameOfCurrentUser"])
+        print("language", retrievedLanguage)
         print(extension)
         if(extension == "pdf"):
             return self.pdfConverter.pdf_to_str(path)
         elif(extension == "jpg" or extension == "jpeg" or extension == "png"):
-            if self.language == "en":
+            if retrievedLanguage == "en":
                 return self.imageConverter.img_to_str(img_path=path, lang="en")
-            elif self.language == "pt-br":
+            elif retrievedLanguage == "pt-br":
                 return self.imageConverter.img_to_str(img_path=path, lang="pt")
-            elif self.language == "fr-fr":
+            elif retrievedLanguage == "fr-fr":
                 return self.imageConverter.img_to_str(img_path=path, lang="fr") 
         else:
             return False
