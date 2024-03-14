@@ -211,7 +211,7 @@ namespace dotnetAnima
             info2.Visibility = Visibility.Hidden;
             pageText.Text = stringList[0];
             instructions.Inlines.Clear();
-            instructions.Inlines.Add(new Run("Select START READING") { FontWeight = FontWeights.Bold });
+            instructions.Inlines.Add(new Run("Click START READING") { FontWeight = FontWeights.Bold });
             instructions.Inlines.Add(new LineBreak());
             instructions.Inlines.Add(new Run("then begin reading"));
             instructions.Inlines.Add(new LineBreak());
@@ -262,14 +262,14 @@ namespace dotnetAnima
             else if (this.buttonClickedCount == 10)
             {
                 instructions.Inlines.Clear();
-                instructions.Inlines.Add(new Run("Select FINISH READING") { FontWeight = FontWeights.Bold });
+                instructions.Inlines.Add(new Run("Click FINISH READING") { FontWeight = FontWeights.Bold });
                 instructions.Inlines.Add(new LineBreak());
                 instructions.Inlines.Add(new Run("to stop recording"));
             }
             else if (this.buttonClickedCount == 11)
             {
                 instructions.Inlines.Clear();
-                instructions.Inlines.Add(new Run("     Select ALL DONE!") { FontWeight = FontWeights.Bold });
+                instructions.Inlines.Add(new Run("     Click ALL DONE!") { FontWeight = FontWeights.Bold });
                 instructions.Inlines.Add(new LineBreak());
                 instructions.Inlines.Add(new Run("     to continue"));
             }

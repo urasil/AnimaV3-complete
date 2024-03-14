@@ -59,6 +59,7 @@
              HorizontalAlignment="Left"
              Grid.Row="2"
              Grid.ColumnSpan="2" 
+             Padding="10"
              Margin="20,24,0,0" TextChanged="MyTextBoxTextChanged"/>
 
             <!-- Manage Voices Button -->
