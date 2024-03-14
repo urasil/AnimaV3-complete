@@ -38,6 +38,18 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Main menu button -->
+            <Button 
+            Name="MainMenuButton"
+            Foreground="White"
+            Style="{StaticResource CirclButtonTheme}" 
+            Grid.Row="0"
+            Visibility="Visible"
+            Width="40"
+            Height="40"
+            Click="GoHome" Margin="0,15,710,45" Grid.Column="1"/>
+            
+            
             <!-- Voice Selector -->
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Grid.Row="1"
@@ -92,10 +104,10 @@
             <TextBlock Text="MANAGE VOICES"
              Grid.Row="0"
              Grid.Column="1"
-             Margin="49,69,413,0"
+             Margin="23,64,389,0"
              VerticalAlignment="Top"
              Foreground="Black"
-             FontSize="35"
+             FontSize="40"
              FontWeight="Bold" Grid.RowSpan="2"/>
 
             <!-- Delete Voice Button -->

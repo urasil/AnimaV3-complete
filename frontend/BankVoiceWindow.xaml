@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotnetAnima"
+        xmlns:components="clr-namespace:dotnetAnima.Components"
         mc:Ignorable="d"
         Title="Bank Your Voice" 
         Height="600" Width="920">
@@ -39,6 +40,16 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Main menu button -->
+            <Button 
+            Name="MainMenuButton"
+            Foreground="White"
+            Style="{StaticResource CirclButtonTheme}" 
+            Grid.Row="0"
+            Visibility="Visible"
+            Width="40"
+            Height="40"
+            Click="GoHome" Margin="0,33,710,27" Grid.Column="1"/>
 
 
             <!-- Setting up voice TextBlock -->
@@ -71,7 +82,7 @@
                 <LineBreak/>
                 <Run Text="the text below"/>
             </TextBlock>
-            
+
             <!-- Select Language TextBlock -->
             <TextBlock Text="I want to speak in:" 
                        Grid.Column="1" 
