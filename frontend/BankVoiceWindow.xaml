@@ -57,7 +57,7 @@
             <TextBlock
                        Name="instructions"
                        Grid.Column="1"
-                       Margin="235,82,0,0"
+                       Margin="238,80,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
                        TextAlignment="Center"
@@ -65,7 +65,7 @@
                        FontSize="18"
                        FontWeight="Normal"
                        Height="80" Grid.RowSpan="2">
-                <Run FontWeight="Bold" Text="Select START READING"/>
+                <Run FontWeight="Bold" Text="Click START READING"/>
                 <Run/><LineBreak/>
                 <Run Text="then begin reading"/>
                 <LineBreak/>
@@ -202,6 +202,7 @@
                  TextWrapping="Wrap"
                  Visibility="Hidden"
                  Text="" 
+                 Padding="3"
                  TextChanged="SpeakerNameTextChanged"
                  VerticalAlignment="Top" 
                  Width="331" Height="34" Margin="182,187,0,0"/>
