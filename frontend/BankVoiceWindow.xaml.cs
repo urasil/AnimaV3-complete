@@ -72,6 +72,17 @@ namespace dotnetAnima
                     break;
             }
 
+            // RETURN button rename
+            string[] animaFiles = Directory.GetFiles("../../../animaProfiles", "*.animaprofile");
+            if (animaFiles.Length > 0)
+            {
+                stopVoicebankingButton.Content = "RETURN TO MANAGE";
+            }
+            else
+            {
+                stopVoicebankingButton.Content = "RETURN TO MENU";
+            }
+
             // load text to read
             string current_language = frontendJsonObject["language"];
             TextSeperator textSeperator = new TextSeperator(current_language);
@@ -401,6 +412,13 @@ namespace dotnetAnima
         private string DefaultLanguageSelected()
         {
             return frontendJsonObject["language"];
+        }
+
+        // Go to the home page
+        private void GoHome(object sender, RoutedEventArgs e)
+        {
+            recorder.StopRecording();
+            this.NavigationService.Navigate(new AnimaHomePage());
         }
     }
 }
