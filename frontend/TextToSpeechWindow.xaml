@@ -81,7 +81,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,30,25,340" Click="ManageVoices"/>
+            Margin="510,60,25,310" Click="ManageVoices"/>
 
             <!-- Read From Image Button -->
             <Button Content="READ FROM IMAGE"
@@ -91,7 +91,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,120,25,250" Click="ReadFromImageButton"/>
+            Margin="510,160,25,210" Click="ReadFromImageButton"/>
 
             <!-- Speak Button -->
             <Button Content="SPEAK"
@@ -101,7 +101,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,210,25,160"
+            Margin="510,260,25,110"
             Click="Speak"/>
 
             <!-- Instruction Text Block -->
