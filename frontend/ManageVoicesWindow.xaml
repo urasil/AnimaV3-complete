@@ -120,7 +120,7 @@
             Margin="572,7,2,43" Click="Speak"/>
 
             <!-- Redo Voice Button -->
-            <Button Content="RECORD NEW"
+            <Button Content="BANK VOICE"
             Name="redoVoice"
             Foreground="White"
             Style="{StaticResource MenuButtonTheme}" 
@@ -136,7 +136,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,177,25,193" Click="ImportVoice"/>
+            Margin="510,167,25,203" Click="ImportVoice"/>
 
             <!-- Delete Voice Button -->
             <Button Content="DELETE VOICE"
@@ -146,7 +146,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,247,25,123" Click="DeleteVoice"/>
+            Margin="510,237,25,133" Click="DeleteVoice"/>
 
             <!-- Select Voice Button -->
             <Button Content="SELECT AS DEFAULT"
@@ -156,7 +156,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,319,25,51" Click="SelectVoice"/>
+            Margin="510,309,25,61" Click="SelectVoice"/>
         </Grid>
     </Border>
 
