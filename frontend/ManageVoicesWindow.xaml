@@ -48,15 +48,15 @@
             Width="40"
             Height="40"
             Click="GoHome" Margin="0,15,710,45" Grid.Column="1"/>
-            
-            
+
+
             <!-- Voice Selector -->
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Grid.Row="1"
                           Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="2" Margin="0,7,245,26">
-                <Border Background="DeepSkyBlue" CornerRadius="20" Margin="20">
+                <Border Background="DeepSkyBlue" CornerRadius="20" Margin="20" Height="420" Width="575">
                     <StackPanel Margin="20,20,0,0"
                                 Name="groupPanel"
                                 HorizontalAlignment="Center"
@@ -101,32 +101,30 @@
             </ScrollViewer>
 
             <!-- Title Text Block -->
-            <TextBlock Text="MANAGE VOICES"
+            <TextBlock
              Grid.Row="0"
              Grid.Column="1"
-             Margin="23,64,389,0"
+             Margin="23,58,389,0"
              VerticalAlignment="Top"
              Foreground="Black"
              FontSize="40"
-             FontWeight="Bold" Grid.RowSpan="2"/>
+             FontWeight="Bold" Grid.RowSpan="2"><Run Text="Manage Voices"/><LineBreak/><Run/></TextBlock>
 
-            <!-- Delete Voice Button -->
+
             <Button Content="TEXT-TO-SPEECH"
             Name="speak"
             Foreground="White"
             Style="{StaticResource ListenButtonTheme}" 
-            Grid.Column="1" 
-            Height="50"
-            Margin="572,7,2,43" Click="Speak"/>
+            Grid.Column="1"
+            Margin="593,66,-11,96" Click="Speak" Grid.RowSpan="2"/>
 
             <!-- Redo Voice Button -->
             <Button Content="BANK VOICE"
-            Name="redoVoice"
+            Name="bank"
             Foreground="White"
             Style="{StaticResource MenuButtonTheme}" 
-            Grid.Column="1" 
-            Height="50"
-            Margin="405,7,195,43" Click="RedoVoice"/>
+            Grid.Column="1"
+            Margin="428,68,184,96" Click="RedoVoice" Grid.RowSpan="2"/>
 
             <!-- Import Voice Button -->
             <Button Content="IMPORT VOICE"
@@ -136,7 +134,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,167,25,203" Click="ImportVoice"/>
+            Margin="510,26,25,344" Click="ImportVoice"/>
 
             <!-- Delete Voice Button -->
             <Button Content="DELETE VOICE"
@@ -146,7 +144,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,237,25,133" Click="DeleteVoice"/>
+            Margin="510,117,25,253" Click="DeleteVoice"/>
 
             <!-- Select Voice Button -->
             <Button Content="SELECT AS DEFAULT"
@@ -156,7 +154,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,309,25,61" Click="SelectVoice"/>
+            Margin="510,210,25,160" Click="SelectVoice"/>
         </Grid>
     </Border>
 

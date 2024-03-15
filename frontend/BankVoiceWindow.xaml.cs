@@ -41,7 +41,14 @@ namespace dotnetAnima
         public BankVoiceWindow()
         {
             InitializeComponent();
-
+            textToSpeech.Visibility = Visibility.Hidden;
+            manageVoicesButton.Visibility = Visibility.Hidden;
+            int len = this.ExtractNames().Length;
+            if (len > 0)
+            {
+                textToSpeech.Visibility = Visibility.Visible;
+                manageVoicesButton.Visibility = Visibility.Visible;
+            }
             recorder = new AudioRecorder();
 
             frontendJsonFilePath = @"../../../frontend.json";
@@ -74,14 +81,6 @@ namespace dotnetAnima
 
             // RETURN button rename
             string[] animaFiles = Directory.GetFiles("../../../animaProfiles", "*.animaprofile");
-            if (animaFiles.Length > 0)
-            {
-                stopVoicebankingButton.Content = "RETURN TO MANAGE";
-            }
-            else
-            {
-                stopVoicebankingButton.Content = "RETURN TO MENU";
-            }
 
             // load text to read
             string current_language = frontendJsonObject["language"];
@@ -407,6 +406,35 @@ namespace dotnetAnima
                 return;
             }
 
+        }
+
+        private void manage_voices(object sender, RoutedEventArgs e)
+        {
+            int len = this.ExtractNames().Length;
+            recorder.StopRecording();
+            if(len > 0)
+            {
+               this.NavigationService.Navigate(new ManageVoicesWindow());
+            }
+            else
+            {
+                MessageBox.Show("You have not recorded any voice to manage!");
+            }
+        }
+
+        private void text_to_speech(object sender, RoutedEventArgs e)
+        {
+            recorder.StopRecording();
+            int len = this.ExtractNames().Length;
+            if(len > 0)
+            {
+                this.NavigationService.Navigate(new TextToSpeechWindow());
+            }
+            else
+            {
+                MessageBox.Show("You have not recorded a voice to speak with!");
+            }
+            
         }
 
         private string DefaultLanguageSelected()

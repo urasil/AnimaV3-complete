@@ -24,11 +24,11 @@
             <TextBlock Text="Text-To-Speech"
              Grid.Row="0"
              Grid.Column="1"
-             Margin="175,20,322,0"
+             Margin="56,62,441,0"
              VerticalAlignment="Top"
              Foreground="Black"
              FontSize="35"
-             FontWeight="Bold"/>
+             FontWeight="Bold" Grid.RowSpan="2"/>
 
             <!-- Anima Logo -->
             <TextBlock Text="Anima v3"
@@ -58,7 +58,7 @@
             Width="40"
             Height="40"
             Click="GoHome" Margin="0,15,710,45" Grid.Column="1"/>
-            
+
             <!-- Text Box For User Input -->
             <TextBox Name="myTextBox"
              Style="{StaticResource RoundedTextBoxTheme}"
@@ -78,10 +78,15 @@
             Name="manageVoicesButton"
             Foreground="White"
             Style="{StaticResource MenuButtonTheme}" 
-            Grid.Column="1" 
-            Grid.Row="2" 
-            Height="50"
-            Margin="510,60,25,310" Click="ManageVoices"/>
+            Grid.Column="1"
+            Margin="589,66,-4,96" Click="ManageVoices" Grid.RowSpan="2"/>
+
+            <Button Content="BANK VOICE"
+            Name="bank"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1"
+            Margin="421,66,191,96" Click="bankvoice" Grid.RowSpan="2"/>
 
             <!-- Read From Image Button -->
             <Button Content="READ FROM IMAGE"
@@ -91,7 +96,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,160,25,210" Click="ReadFromImageButton"/>
+            Margin="510,110,25,260" Click="ReadFromImageButton"/>
 
             <!-- Speak Button -->
             <Button Content="SPEAK"
@@ -101,7 +106,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,260,25,110"
+            Margin="510,185,25,185"
             Click="Speak"/>
 
             <!-- Instruction Text Block -->
@@ -128,9 +133,9 @@
             FontSize="25"
             FontWeight="DemiBold"
             Height="36" 
-            Width="768" Grid.ColumnSpan="2"/>   
+            Width="768" Grid.ColumnSpan="2"/>
 
         </Grid>
     </Border>
-    
+
 </Page>
