@@ -23,11 +23,11 @@ namespace dotnetAnima.Core
 
             string text = "";
             if (current_language == "en"){
-                text  = File.ReadAllText("../../VoiceBankingText.txt");
+                text  = File.ReadAllText("../../texts/VoiceBankingText-En.txt");
             } else if (current_language == "fr-fr"){
-                text  = File.ReadAllText("../../VoiceBankingText-Fr.txt");
+                text  = File.ReadAllText("../../texts/VoiceBankingText-Fr.txt");
             } else if (current_language == "pt-br"){
-                text  = File.ReadAllText("../../VoiceBankingText-Pt.txt");
+                text  = File.ReadAllText("../../texts/VoiceBankingText-Pt.txt");
             }
             string[] sentences = Regex.Split(text, @"(?<=[.!?])");
 

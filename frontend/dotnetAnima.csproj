@@ -246,9 +246,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="VoiceBankingText.txt" />
-  </ItemGroup>
+  <!-- <ItemGroup>
+    <Resource Include="texts/VoiceBankingText.txt" />
+  </ItemGroup> -->
   <ItemGroup>
     <Resource Include="requirements.txt" />
   </ItemGroup>
