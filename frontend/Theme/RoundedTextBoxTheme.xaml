@@ -9,7 +9,7 @@
                 <ControlTemplate TargetType="TextBox">
                     <Border BorderBrush="Black"
                             BorderThickness="3"
-                            Background="Ivory"
+                            Background="#FBF4EB"
                             CornerRadius="20">
                         <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
                     </Border>

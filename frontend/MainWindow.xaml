@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Anima V3" 
         Height="640" Width="920"
-        Background="Beige">
+        Background="#FBF4EB">
     <Viewbox>
         <Grid>
             <Frame Name="MainFrame" NavigationUIVisibility="Hidden"/>
