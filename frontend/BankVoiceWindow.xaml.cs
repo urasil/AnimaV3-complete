@@ -239,7 +239,8 @@ namespace dotnetAnima
 
                 if (progress.Children[progressCount] is Border border)
                 {
-                    border.Background = Brushes.DeepSkyBlue;
+                    var colour = (Color)ColorConverter.ConvertFromString("#097ffc");
+                    border.Background = new SolidColorBrush(colour);
                 }
             }
             lovelyButton.Content = "START READING";
@@ -354,7 +355,8 @@ namespace dotnetAnima
                 // Set the selected border color to blue
                 if (progress.Children[progressCount] is Border border)
                 {
-                    border.Background = Brushes.DeepSkyBlue;
+                    var colour = (Color)ColorConverter.ConvertFromString("#097ffc");
+                    border.Background = new SolidColorBrush(colour);
                 }
                 this.progressCount++;
             }

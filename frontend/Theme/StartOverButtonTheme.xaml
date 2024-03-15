@@ -7,6 +7,7 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect Color="#80000000" Direction="270" ShadowDepth="2" Opacity="0.5"/>
@@ -18,7 +19,7 @@
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Rectangle x:Name="RectangleOverlay"
-                                Fill="Red"
+                                Fill="#F50404"
                                 RadiusX="20" RadiusY="20"
                                 Opacity="1"/>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
