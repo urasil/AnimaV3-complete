@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Theme/ListenButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RoundedTextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RoundedComboBoxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/CircleButtonTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

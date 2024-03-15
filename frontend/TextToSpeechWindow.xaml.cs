@@ -277,5 +277,12 @@ namespace dotnetAnima
                 }
             }
         }
+
+        // Go to the home page
+        private void GoHome(object sender, RoutedEventArgs e)
+        {
+            
+            this.NavigationService.Navigate(new AnimaHomePage());
+        }
     }
 }
