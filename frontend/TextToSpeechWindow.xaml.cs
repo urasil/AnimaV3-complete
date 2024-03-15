@@ -284,5 +284,14 @@ namespace dotnetAnima
             
             this.NavigationService.Navigate(new AnimaHomePage());
         }
+
+        private void bankvoice(object sender, RoutedEventArgs e)
+        {
+            if(speakingState)
+            {
+                StopSpeak();
+            }
+            this.NavigationService.Navigate(new BankVoiceWindow()); 
+        }
     }
 }
