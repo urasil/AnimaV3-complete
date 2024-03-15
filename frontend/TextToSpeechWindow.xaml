@@ -48,6 +48,17 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Main menu button -->
+            <Button 
+            Name="MainMenuButton"
+            Foreground="White"
+            Style="{StaticResource CirclButtonTheme}" 
+            Grid.Row="0"
+            Visibility="Visible"
+            Width="40"
+            Height="40"
+            Click="GoHome" Margin="0,15,710,45" Grid.Column="1"/>
+            
             <!-- Text Box For User Input -->
             <TextBox Name="myTextBox"
              Style="{StaticResource RoundedTextBoxTheme}"
@@ -59,6 +70,7 @@
              HorizontalAlignment="Left"
              Grid.Row="2"
              Grid.ColumnSpan="2" 
+             Padding="10"
              Margin="20,24,0,0" TextChanged="MyTextBoxTextChanged"/>
 
             <!-- Manage Voices Button -->
@@ -69,7 +81,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,30,25,340" Click="ManageVoices"/>
+            Margin="510,60,25,310" Click="ManageVoices"/>
 
             <!-- Read From Image Button -->
             <Button Content="READ FROM IMAGE"
@@ -79,7 +91,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,120,25,250" Click="ReadFromImageButton"/>
+            Margin="510,160,25,210" Click="ReadFromImageButton"/>
 
             <!-- Speak Button -->
             <Button Content="SPEAK"
@@ -89,7 +101,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,210,25,160"
+            Margin="510,260,25,110"
             Click="Speak"/>
 
             <!-- Instruction Text Block -->

@@ -38,6 +38,18 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Main menu button -->
+            <Button 
+            Name="MainMenuButton"
+            Foreground="White"
+            Style="{StaticResource CirclButtonTheme}" 
+            Grid.Row="0"
+            Visibility="Visible"
+            Width="40"
+            Height="40"
+            Click="GoHome" Margin="0,15,710,45" Grid.Column="1"/>
+            
+            
             <!-- Voice Selector -->
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Grid.Row="1"
@@ -92,11 +104,11 @@
             <TextBlock Text="MANAGE VOICES"
              Grid.Row="0"
              Grid.Column="1"
-             Margin="175,20,287,0"
+             Margin="23,64,389,0"
              VerticalAlignment="Top"
              Foreground="Black"
-             FontSize="35"
-             FontWeight="Bold"/>
+             FontSize="40"
+             FontWeight="Bold" Grid.RowSpan="2"/>
 
             <!-- Delete Voice Button -->
             <Button Content="TEXT-TO-SPEECH"
@@ -104,19 +116,17 @@
             Foreground="White"
             Style="{StaticResource ListenButtonTheme}" 
             Grid.Column="1" 
-            Grid.Row="1" 
             Height="50"
-            Margin="510,40,25,10" Click="Speak"/>
+            Margin="572,7,2,43" Click="Speak"/>
 
             <!-- Redo Voice Button -->
-            <Button Content="RECORD ANOTHER"
+            <Button Content="BANK VOICE"
             Name="redoVoice"
             Foreground="White"
             Style="{StaticResource MenuButtonTheme}" 
             Grid.Column="1" 
-            Grid.Row="2" 
             Height="50"
-            Margin="510,30,25,340" Click="RedoVoice"/>
+            Margin="405,7,195,43" Click="RedoVoice"/>
 
             <!-- Import Voice Button -->
             <Button Content="IMPORT VOICE"
@@ -126,7 +136,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,120,25,250" Click="ImportVoice"/>
+            Margin="510,167,25,203" Click="ImportVoice"/>
 
             <!-- Delete Voice Button -->
             <Button Content="DELETE VOICE"
@@ -136,7 +146,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,210,25,160" Click="DeleteVoice"/>
+            Margin="510,237,25,133" Click="DeleteVoice"/>
 
             <!-- Select Voice Button -->
             <Button Content="SELECT AS DEFAULT"
@@ -146,7 +156,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,300,25,70" Click="SelectVoice"/>
+            Margin="510,309,25,61" Click="SelectVoice"/>
         </Grid>
     </Border>
 
