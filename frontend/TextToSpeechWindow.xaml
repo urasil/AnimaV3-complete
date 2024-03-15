@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Text to Speech"
         Height="600" Width="920">
-    <Border Background="Beige">
+    <Border Background="#FCF6E5">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>

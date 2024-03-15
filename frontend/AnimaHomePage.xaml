@@ -9,7 +9,7 @@
       Loaded="Page_Loaded"
       Title="AnimaHomePage">
 
-    <Border Background="Beige" >
+    <Border Background="#FCF6E5" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
