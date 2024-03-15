@@ -386,15 +386,15 @@ namespace dotnetAnima
                 string textFilePath = "";
                 if (currentLanguage == "en")
                 {
-                    textFilePath = "../../VoiceBankingText.txt";
+                    textFilePath = "../../texts/VoiceBankingText-En.txt";
                 }
                 else if (currentLanguage == "fr-fr")
                 {
-                    textFilePath = "../../VoiceBankingText-Fr.txt";
+                    textFilePath = "../../texts/VoiceBankingText-Fr.txt";
                 }
                 else if (currentLanguage == "pt-br")
                 {
-                    textFilePath = "../../VoiceBankingText-Pt.txt";
+                    textFilePath = "../../texts/VoiceBankingText-Pt.txt";
                 }
 
                 // Read and separate text from the chosen file
