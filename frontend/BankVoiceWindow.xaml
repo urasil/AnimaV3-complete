@@ -68,7 +68,7 @@
             <TextBlock
                        Name="instructions"
                        Grid.Column="1"
-                       Margin="238,80,0,0"
+                       Margin="120,80,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
                        TextAlignment="Center"
@@ -86,23 +86,22 @@
             <!-- Select Language TextBlock -->
             <TextBlock Text="I want to speak in:" 
                        Grid.Column="1" 
-                       Grid.Row="0" 
+                       Grid.Row="1" 
                        VerticalAlignment="Top" 
                        HorizontalAlignment="Right" 
-                       Margin="0,20,20,0" 
+                       Margin="0,12,104,0" 
                        FontWeight="Bold"/>
 
             <!-- Speaking Language ComboBox -->
             <ComboBox x:Name="speakingLang"
                       Grid.Column="1" 
-                      Grid.Row="0" 
                       VerticalAlignment="Top" 
-                      HorizontalAlignment="Right"
+                      HorizontalAlignment="Left"
                       Style="{StaticResource RoundedComboBoxTheme}"
                       Width="120" 
-                      Height="35"
-                      Margin="0,50,20,0" 
-                      SelectionChanged="SpeakingLanguageChanged">
+                      Height="36"
+                      Margin="532,35,0,0" 
+                      SelectionChanged="SpeakingLanguageChanged" Grid.Row="1">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -115,7 +114,7 @@
             </ComboBox>
 
             <!-- Guy Speaking Image -->
-            <Image Margin="236,75,14,25" Grid.Column="1" Source="Images/guySpeaking.png" Grid.RowSpan="2"/>
+            <Image Margin="121,70,129,30" Grid.Column="1" Source="Images/guySpeaking.png" Grid.RowSpan="2"/>
 
             <!-- Passage Progress Bar -->
             <StackPanel Name="progress" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,78,0,0">
@@ -166,7 +165,7 @@
                 Width="730" Margin="6,26,0,0"/>
 
             <!-- Speaking Line -->
-            <Image Source="Images/speechBubble.png" Margin="84,49,167,394" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="3"/>
+            <Image Source="Images/speechBubble.png" Margin="115,46,286,397" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
             <Button Content="START READING"
             Name="lovelyButton"
             Foreground="White"
@@ -176,16 +175,23 @@
             Height="50"
             Margin="234,347,301,23" Click="StartRecording"/>
 
-            <!-- Return to Menu Button -->
-            <Button Content="RETURN TO MENU"
-            Name="stopVoicebankingButton"
+            <Button Content="TEXT-TO-SPEECH"
+            Name="textToSpeech"
             Foreground="White"
-            Style="{StaticResource StartOverButtonTheme}" 
-            Grid.Column="1" 
-            Grid.Row="1"
+            Style="{StaticResource ListenButtonTheme}" 
+            Grid.Column="1"
             Visibility="Visible"
-            Margin="551,11,4,45" 
-            Click="StopVoicebanking"/>
+            Margin="431,64,166,96" 
+            Click="text_to_speech" Grid.RowSpan="2"/>
+
+            <Button Content="MANAGE VOICES"
+            Name="manageVoicesButton"
+            Foreground="White"
+            Style="{StaticResource MenuButtonTheme}" 
+            Grid.Column="1"
+            Visibility="Visible"
+            Margin="608,64,-18,96" 
+            Click="manage_voices" Grid.RowSpan="2"/>
 
             <!-- Listen Button -->
             <Button Content="LISTEN RECORDING"
