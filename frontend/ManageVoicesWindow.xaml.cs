@@ -139,7 +139,7 @@ namespace dotnetAnima
 
                 if (backendJsonObject["importSuccess"] == "false")
                 {
-                    MessageBox.Show("Couldn't create a voice profile from the uploaded file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Couldn't create a voice profile from the uploaded file, please upload a .wav file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     frontendJsonObject["importFilePath"] = "";
                 }
                 if (backendJsonObject["importSuccess"] == "true")
