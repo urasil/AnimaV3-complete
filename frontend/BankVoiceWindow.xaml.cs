@@ -160,7 +160,7 @@ namespace dotnetAnima
                 string[] names = ExtractNames();
                 if (names.Contains(frontendJsonObject["speakerName"]))
                 {
-                    MessageBox.Show($"The name {frontendJsonObject["speakerName"]} has already been taken. Please select another name.");
+                    MessageBox.Show($"The name {frontendJsonObject["speakerName"]} has already been taken. Please select another name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else 
                 {
