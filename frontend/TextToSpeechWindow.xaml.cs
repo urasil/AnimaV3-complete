@@ -69,16 +69,30 @@ namespace dotnetAnima
             File.WriteAllText(backendJsonFilePath, backendJsonContent);
         }
 
-        // Send the content typed by the user via registering it to the Json file
+
+        // Add this method to extract the highlighted text from the TextBox
+        private string GetHighlightedText()
+        {
+            int selectionStart = myTextBox.SelectionStart;
+            int selectionLength = myTextBox.SelectionLength;
+            return myTextBox.Text.Substring(selectionStart, selectionLength);
+        }
+
+        // Modify the Speak method to use the highlighted text instead of the entire content
         private async void Speak(object sender, RoutedEventArgs e)
         {
-            if(!speakingState)
+            if (!speakingState)
             {
-                ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
-                frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
+                ButtonHelper.DisableButton(speakButton, false);
+                frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();
+                
+                // Use highlighted text if available, otherwise use entire content
+                string contentToSpeak = string.IsNullOrEmpty(GetHighlightedText()) ? myTextBox.Text : GetHighlightedText();
+
+                frontendJsonObject["content"] = contentToSpeak;
                 UpdateFrontendJsonFile();
 
-                backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
+                backendJsonObject["speechSuccess"] = "false";
                 updateBackendJson();
 
                 await WaitSpeech();
@@ -86,21 +100,52 @@ namespace dotnetAnima
                 {
                     MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                
                 ButtonHelper.DisableButton(speakButton, true);
                 changeSpeakState();
                 await ResetSpeakButtonTimer((int)double.Parse(backendJsonObject["audioLength"]) * 1000);
-                backendJsonObject["speechSuccess"] = "false"; // reset the value
-                //frontendJsonObject["content"] = "";
+                backendJsonObject["speechSuccess"] = "false";
                 updateBackendJson();
                 UpdateFrontendJsonFile();
-                
             }
             else
             {
                 StopSpeak();
             }
-
         }
+
+        // // Send the content typed by the user via registering it to the Json file
+        // private async void Speak(object sender, RoutedEventArgs e)
+        // {
+        //     if(!speakingState)
+        //     {
+        //         ButtonHelper.DisableButton(speakButton, false); // disable button to avoid clicking many times
+        //         frontendJsonObject["speakID"] = UUIDGenerator.NewUUID();  // UUID to recognise the same content but function call at diferent moment
+        //         UpdateFrontendJsonFile();
+
+        //         backendJsonObject["speechSuccess"] = "false"; //reset the value before sending the request
+        //         updateBackendJson();
+
+        //         await WaitSpeech();
+        //         if (backendJsonObject["speechSuccess"] == "false")
+        //         {
+        //             MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //         }
+        //         ButtonHelper.DisableButton(speakButton, true);
+        //         changeSpeakState();
+        //         await ResetSpeakButtonTimer((int)double.Parse(backendJsonObject["audioLength"]) * 1000);
+        //         backendJsonObject["speechSuccess"] = "false"; // reset the value
+        //         //frontendJsonObject["content"] = "";
+        //         updateBackendJson();
+        //         UpdateFrontendJsonFile();
+                
+        //     }
+        //     else
+        //     {
+        //         StopSpeak();
+        //     }
+
+        // }
         // The timer used to automatically restore the speak button, based on the length of audio
         private async Task ResetSpeakButtonTimer(int time)
         {
