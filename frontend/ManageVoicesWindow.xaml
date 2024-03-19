@@ -38,6 +38,27 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Speaking Language ComboBox -->
+            <ComboBox x:Name="speakingLang"
+          Grid.Column="1" 
+          VerticalAlignment="Top" 
+          HorizontalAlignment="Left"
+          Style="{StaticResource RoundedComboBoxTheme}"
+          Width="120" 
+          Height="36"
+          Margin="560,30,0,0" 
+          SelectionChanged="SpeakingLanguageChanged" Grid.Row="1">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding icon}" Width="20" Height="20"/>
+                            <TextBlock Text="{Binding text}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
             <!-- Main menu button -->
             <Button 
             Name="MainMenuButton"
@@ -134,7 +155,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,26,25,344" Click="ImportVoice"/>
+            Margin="510,32,25,338" Click="ImportVoice"/>
 
             <!-- Delete Voice Button -->
             <Button Content="DELETE VOICE"
@@ -144,7 +165,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,117,25,253" Click="DeleteVoice"/>
+            Margin="510,123,25,247" Click="DeleteVoice"/>
 
             <!-- Select Voice Button -->
             <Button Content="SELECT AS DEFAULT"
@@ -154,7 +175,7 @@
             Grid.Column="1" 
             Grid.Row="2" 
             Height="50"
-            Margin="510,210,25,160" Click="SelectVoice"/>
+            Margin="510,216,25,154" Click="SelectVoice"/>
         </Grid>
     </Border>
 
