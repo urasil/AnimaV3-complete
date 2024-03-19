@@ -31,6 +31,10 @@ def writeToBackendJson():
     with open(backendJsonFilePath, "w") as jsonFile:
         json.dump(backendJson, jsonFile)
 
+def readFromProfile():
+    with open(profileLanguagePath, "r") as profJsonFile:
+        return json.load(profJsonFile)
+
 def writeToProfileLanguageJson():
     with open(profileLanguagePath, "w") as profJsonFile:
         json.dump(languageJson, profJsonFile)
@@ -79,6 +83,7 @@ class BackendFunctionalites:
         """
         Updating the languageJson with new user and language
         """
+        languageJson = readFromProfile()
         if user not in languageJson.values():
             languageJson[self.language].append(user)
         else:
