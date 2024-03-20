@@ -83,11 +83,23 @@
             FontWeight="Medium" 
             Grid.Row="2" 
             Grid.ColumnSpan="2" 
-            Margin="130,257,0,0">
+            Margin="130,269,0,0">
             <Run Text="Voice banking involves recording your own voice, this can then be used to create a "/>
             <LineBreak/>
             <Run Language="en-gb" Text="&#x9;&#x9;    "/>
             <Run Text="digital voice that can read text for you"/>
+            </TextBlock>
+
+            <TextBlock
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Foreground="Black"
+            FontSize="18"
+            Name="abc"
+            FontWeight="Bold" 
+            Grid.Row="2" 
+            Margin="22,225,0,0" Grid.Column="1">
+            <Run Text="Ensure you are connected to the internet first time you are using Anima!"/>
             </TextBlock>
             <!-- Select Language TextBlock -->
             <TextBlock Text="I want to speak in:" 

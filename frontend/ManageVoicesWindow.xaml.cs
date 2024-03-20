@@ -276,10 +276,11 @@ namespace dotnetAnima
                         break; // Exit loop after removing first occurrence
                     }
                 }
-                Console.WriteLine("asdasdf" + valueToDeleteKey);
+
                 if (valueToDeleteKey != "")
                 {
                     profileLanguagesObject[valueToDeleteKey].Remove(username);
+                    Console.WriteLine(profileLanguagesObject.ToString());
                 }
 
                 UpdateProfileLanguagesFile();

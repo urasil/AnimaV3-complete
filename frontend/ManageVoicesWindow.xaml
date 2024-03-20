@@ -38,6 +38,15 @@
                 </TextBlock.Effect>
             </TextBlock>
 
+            <!-- Select Language TextBlock -->
+            <TextBlock 
+           Grid.Column="1" 
+           Grid.Row="1" 
+           VerticalAlignment="Top" 
+           HorizontalAlignment="Right" 
+           Margin="0,14,63,0" 
+           FontWeight="Bold"><Run Language="en-gb" Text="Import voice language"/><Run Text=":"/></TextBlock>
+
             <!-- Speaking Language ComboBox -->
             <ComboBox x:Name="speakingLang"
           Grid.Column="1" 
