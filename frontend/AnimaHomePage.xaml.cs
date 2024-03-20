@@ -71,6 +71,7 @@ namespace dotnetAnima
                 string[] directoriesWithinPath = Directory.GetFiles(path, "*.animaprofile");
                 if (directoriesWithinPath.Length > 0)
                 {
+                    abc.Visibility = Visibility.Hidden;
                     string userName = frontendJsonObject["nameOfCurrentUser"];
                     if(File.Exists(path + "/" + userName + ".animaprofile"))
                     {

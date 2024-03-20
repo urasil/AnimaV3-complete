@@ -1,10 +1,10 @@
 {
-  "nameOfCurrentUser": "donaldTrump",
-  "content": "how are you doing my fellow Americans?",
-  "speakerName": "deneme2",
-  "speakID": "7fd3dd1c-6aac-49c7-a17b-f2a91dbc86a7",
+  "nameOfCurrentUser": "Uras",
+  "content": "Hello, this is a demonstration for the newest version of Anima, \r\nAnima version three. Thank you for using our product, we hope\r\nthat you enjoy it!",
+  "speakerName": "Uras",
+  "speakID": "4cec6e0b-2978-47de-b73e-90839a9c2dc9",
   "readFilePath": "",
-  "readFileID": "",
+  "readFileID": "7be0f55b-4658-4198-9ca4-02561bc87862",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
   "language": "en"
