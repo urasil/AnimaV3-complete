@@ -35,9 +35,9 @@ def readFromProfile():
     with open(profileLanguagePath, "r") as profJsonFile:
         return json.load(profJsonFile)
 
-def writeToProfileLanguageJson():
+def writeToProfileLanguageJson(langJson):
     with open(profileLanguagePath, "w") as profJsonFile:
-        json.dump(languageJson, profJsonFile)
+        json.dump(langJson, profJsonFile)
 
 def parseContent(content):
     return content.replace("\n", "").replace("\r", "")
@@ -60,7 +60,8 @@ class BackendFunctionalites:
         self.language = language
 
     def retrieveLanguage(self, user):
-        for key, value in languageJson.items():
+        langJson = readFromProfile()
+        for key, value in langJson.items():
             if user in value:
                 return key
 
@@ -86,12 +87,15 @@ class BackendFunctionalites:
         languageJson = readFromProfile()
         if user not in languageJson.values():
             languageJson[self.language].append(user)
+            writeToProfileLanguageJson(languageJson)
         else:
             for _, value in languageJson.items():
                 if user in value:
                     value.remove(user)
                     break
             languageJson[self.language].append(user)
+            writeToProfileLanguageJson(languageJson)
+        
 
     def registerProfile(self):
         """
@@ -99,7 +103,6 @@ class BackendFunctionalites:
         """
         newUser = frontendJson["speakerName"]
         self.registerHelper(newUser)
-        writeToProfileLanguageJson()
         self.anima.create_profile(profile_path=f"{animaProfilesPath}{newUser}.animaprofile", speaker_wav="../../output.wav", lang=self.language)
     
     def convertToText(self, path):
@@ -134,7 +137,6 @@ class BackendFunctionalites:
         # backendJson["importSuccess"] = "true"
         name = path.split("\\")[-1].split(".")[0]
         self.registerHelper(name)
-        writeToProfileLanguageJson()
 
         self.anima.create_profile(profile_path=f"{animaProfilesPath}{name}.animaprofile", speaker_wav=path, lang=self.language)
 
