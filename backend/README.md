@@ -1,23 +1,22 @@
-# ANIMA
+# ANIMA CLI
 ## Voice Integration and TTS of MotionInput
 
-ANIMA is a voicebanking tool aimed at patients with MND or ALS, allowing them to preserve their voice. It uses Coqui TTS to process an synthesise voice. ANIMA will work as a standalone program, as  well as provide a voice integration layer to UCL MotionInput. ANIMA currently only supports Enlish but has the potential and will eventually have multi-language support.
+ANIMA is a voicebanking tool aimed at patients with MND or ALS, allowing them to preserve their voice. It uses Coqui TTS to process an synthesise voice. ANIMA will work as a standalone program, as  well as provide a voice integration layer to UCL MotionInput. 
 
 ## Features
 
-- Voice banking and sysnthesis in English
+- Voice banking and sysnthesis in English, French and Portuguese
 - Built-in image OCR with direct speech from selection
 - Generation of a custom ANIMA voiceprint file for distribution and preservation
 
 
 ## Installation
 
-ANIMA currently requires the following to run:
-- Python 3.9.11
-- Visual studio C++ build
+ANIMA CLI currently requires the following to run:
+- Python 3.9.X
 - ffmpeg (free)
 - Tesseract-OCR exe (C:\\Program Files) (optional - required for some files kept from v1 but redundant in v2)
-- Docker (optional - for building and running the back-end with the front-end MFC)
+
 
 Then run:
 ```sh
@@ -86,37 +85,3 @@ $ py cli.py --tts --text "example text" --lang "lang_code" --out_file "out_filen
         }
     }
 
-## UI option
-
-ANIMA also has a front-end MFC application that can be used to interact with the app in a user-friendly way. To run the UI option, it has to be built first.
-
-To build the python-MFC app, you must first understand the system architecture. 
-
-The steps for building are: 
-
-
-1. Navigate using terminal to the project directory
-2. Create a python virtual environment with the correct version of python
-3. Ensure that a "data" file is present with the following structure:
-##### 
-    | data
-        | data.json
-        | status.json
-        | profiles
-            | "profileName".animaProfile
-(This file structure is already present in this repo)
-
-4. Launch docker
-
-5. Create the docker image using the python
-```sh
-docker image build -t anima .
-```
-
-6. Create a .tar of the image to place into the MFC app (optional for personal use, required to create distributable file)
-```sh
-docker save anima > Anima.tar
-```
-This will produce a file named "Anima.tar". Place this into the MFC compiled ANIMA folder.
-
-7. Download the MFC front-end compiled executable for ANIMA and run it using the "Anima.exe"
