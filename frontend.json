@@ -1,10 +1,10 @@
 {
-  "nameOfCurrentUser": "Uras",
-  "content": "Hello, this is a demonstration for the newest version of Anima, \r\nAnima version three. Thank you for using our product, we hope\r\nthat you enjoy it!",
-  "speakerName": "Uras",
-  "speakID": "4cec6e0b-2978-47de-b73e-90839a9c2dc9",
+  "nameOfCurrentUser": "les see",
+  "content": "hey how are you\r\n",
+  "speakerName": "les see",
+  "speakID": "d9538ff1-b4a8-4601-82ab-33d4de06acf5",
   "readFilePath": "",
-  "readFileID": "7be0f55b-4658-4198-9ca4-02561bc87862",
+  "readFileID": "9817b89c-d1cd-4672-b60b-c18efa6a232f",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
   "language": "en"
