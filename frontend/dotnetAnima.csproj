@@ -253,12 +253,6 @@
     <Resource Include="texts/VoiceBankingText.txt" />
   </ItemGroup> -->
   <ItemGroup>
-    <Resource Include="requirements.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ThingsToInclude.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\icons\country flag\france_640.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
