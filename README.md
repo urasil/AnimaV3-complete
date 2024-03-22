@@ -84,7 +84,7 @@ PyOxidizer is a Python library and packaging tool that creates standalone execut
 ## License
 Tesseract OCR uses [Apache License Version 2.0](/doc/Tesseract%20OCR%20LICENSE/LICENSE).  
 EasyOCR uses [Apache License Version 2.0](/doc/Tesseract%20OCR%20LICENSE/LICENSE).  
-Pyoxidizer uses [MPL-2.0 License](doc\Coqui-TTS%20LICENSE\LICENSE).  
-Coqui-TTS uses [MPL-2.0 License](doc\Coqui-TTS%20LICENSE\LICENSE).  
+Pyoxidizer uses [MPL-2.0 License](/doc/Coqui-TTS%20LICENSE/LICENSE).  
+Coqui-TTS uses [MPL-2.0 License](/doc/Coqui-TTS%20LICENSE/LICENSE).  
 
 
