@@ -43,6 +43,7 @@ def parseContent(content):
     return content.replace("\n", "").replace("\r", "")
 
 def readyBackend():
+    """Set the backendReady field to true and write to the backend JSON file."""
     backendJson["backendReady"] = "true"
     writeToBackendJson()
 
@@ -127,12 +128,15 @@ class BackendFunctionalites:
 
     def registerProfileFromImport(self, path):
         file_extension = path.split(".")[-1]
+        
         # dont update profileLanguages.json if invalid file type :(
         # import fail
         if file_extension != "wav":
             print("Invalid file type. Please import a valid .wav file.")
             # backendJson["importSuccess"] == "false"
             raise ImportError
+        
+
         # import successful
         # backendJson["importSuccess"] = "true"
         name = path.split("\\")[-1].split(".")[0]
@@ -152,10 +156,13 @@ def main():
     functions = BackendFunctionalites()
     readyBackend()
     print("lets see:", languageJson)
+
     try:
         while(True):
             changes = observer.detectChanges()
             print(changes)
+
+            # Different changes result in different behaviours
             if(changes):
                 # Setting which voice profile to use
                 if("nameOfCurrentUser" in changes):
@@ -238,6 +245,7 @@ def main():
                                 writeToBackendJson()
                         else:
                             raise ValueError("Invalid path")
+                        
                 # An animaprofile to be imported
                 if("importFilePath" in changes):
                     
@@ -252,6 +260,7 @@ def main():
                             print("Failed to import file ", e)
                             backendJson["importSuccess"] = "false"
                             writeToBackendJson()
+
                 # Stop the current speak
                 if("stopSpeakTrigger" in changes):
                     print("stop speak")
