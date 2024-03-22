@@ -153,9 +153,7 @@ public partial class BankVoiceWindow : Page {
         if (this.buttonClickedCount >= 12) {
             string[] names = ExtractNames();
             if (names.Contains(frontendJsonObject["speakerName"])) {
-                MessageBox.Show(
-                    $"The name {frontendJsonObject[" speakerName
-                    "]} has already been taken. Please select another name.",
+                MessageBox.Show($"The name {frontendJsonObject["speakerName"]} has already been taken. Please select another name.",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             } else {
                 // needs an aysnc function that awaits confirmation from backend
