@@ -22,7 +22,7 @@ Anima V3 is an offline and secure voice banking solution. Anima V3 preserves the
 With Anima V3, you can record your voice, and we can create a blueprint of it, giving those in need a way to speak with Anima V3 is our vision.
 ## System Architecture
 The design of Anima v3 consists of a frontend, backend, JSON files and a local data folder.
-[![System architecture](doc\img\overview.png "System architecture")](doc\img\overview.png "System architecture")
+![System architecture](/doc/img/overview.png "System architecture")
 ### Frontend
 The frontend is built on the .NET framework. It serves as the user interface tool where users interact with the system. It provides a user-friendly environment for engaging with the system's features and functionalities, facilitating smooth communication between users and the backend processes.
 ### Backend
@@ -57,9 +57,9 @@ To use it in Visual Studio, the backend([animaForBackend.py](/backend/ANIMA/anim
 ## Anima CLI
 [Anima CLI](/backend/ANIMA "/backend/ANIMA") can be used as a standalone Python program, which also provides APIs to be incorporated in other projects.
 ## Deployment Manual
-![Deployment manual](/doc/Deployment_Manual.pdf "Deployment manual")
+[Deployment manual.pdf](/doc/Deployment_Manual.pdf "Deployment manual")
 ## User Manual
-![User Manual](/doc/User_manual.pdf "User Manual")
+[User Manual.pdf](/doc/User_manual.pdf "User Manual")
 ## Supported Languages
 | Language | Status |
 | --- | :---: |
