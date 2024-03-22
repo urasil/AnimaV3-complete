@@ -185,7 +185,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CreateJSON.cs" />
     <Compile Include="Core\TextSeperator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

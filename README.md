@@ -1,4 +1,4 @@
-# Anima V3- [Anima V3](#anima-v3)
+# Anima V3
 ## Index
 - [Introdcution](#introdcution)
 - [System Architecture](#system-architecture)
