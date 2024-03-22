@@ -185,7 +185,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CreateJSON.cs" />
     <Compile Include="Core\TextSeperator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -252,12 +251,6 @@
   <!-- <ItemGroup>
     <Resource Include="texts/VoiceBankingText.txt" />
   </ItemGroup> -->
-  <ItemGroup>
-    <Resource Include="requirements.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ThingsToInclude.txt" />
-  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icons\country flag\france_640.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

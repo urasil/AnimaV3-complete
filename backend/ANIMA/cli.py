@@ -7,6 +7,7 @@ from src.manage_audio import AudioManager
 from src.pdf_to_txt import PdfToStrings
 from src.img_to_txt import ImgToStrings
 
+
 def main():
     # Create the parser
     description = """
@@ -66,159 +67,157 @@ def main():
         $py cli.py --delete_audio --voice_name "voice_name" --lang "lang_code" --in_file "in_filename"
     """
 
-    parser = argparse.ArgumentParser(prog="anima", description=description, allow_abbrev=False, epilog="Enjoy ANIMA ;)", formatter_class=RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(
+        prog="anima",
+        description=description,
+        allow_abbrev=False,
+        epilog="Enjoy ANIMA ;)",
+        formatter_class=RawTextHelpFormatter,
+    )
 
     # Add arguments
-    parser.add_argument("--list_models",
-                        action="store_true",
-                        help="List all downloaded TTS models and voice cloning models.")
+    parser.add_argument(
+        "--list_models",
+        action="store_true",
+        help="List all downloaded TTS models and voice cloning models.",
+    )
 
-    parser.add_argument("--list_audios",
-                        action="store_true",
-                        help="List all saved audios (.wav).")
+    parser.add_argument(
+        "--list_audios", action="store_true", help="List all saved audios (.wav)."
+    )
 
-    parser.add_argument("--voice_clone",
-                        nargs='?',
-                        const=True,
-                        help="Call voice clone.")
+    parser.add_argument(
+        "--voice_clone", nargs="?", const=True, help="Call voice clone."
+    )
 
-    parser.add_argument("--tts",
-                        nargs='?',
-                        const=True,
-                        help="Call TTS.")
+    parser.add_argument("--tts", nargs="?", const=True, help="Call TTS.")
 
-    parser.add_argument("--voice_clone_pdf",
-                        nargs='?',
-                        const=True,
-                        help="Convert pdf to voice-clone speech.")
+    parser.add_argument(
+        "--voice_clone_pdf",
+        nargs="?",
+        const=True,
+        help="Convert pdf to voice-clone speech.",
+    )
 
-    parser.add_argument("--voice_clone_img",
-                        nargs='?',
-                        const=True,
-                        help="Convert image to voice-clone speech.")
+    parser.add_argument(
+        "--voice_clone_img",
+        nargs="?",
+        const=True,
+        help="Convert image to voice-clone speech.",
+    )
 
-    parser.add_argument("--tts_pdf",
-                        nargs='?',
-                        const=True,
-                        help="Convert pdf to tts.")
+    parser.add_argument("--tts_pdf", nargs="?", const=True, help="Convert pdf to tts.")
 
-    parser.add_argument("--tts_img",
-                        nargs='?',
-                        const=True,
-                        help="Convert image to tts.")
+    parser.add_argument(
+        "--tts_img", nargs="?", const=True, help="Convert image to tts."
+    )
 
-    parser.add_argument("--play",
-                        nargs='?',
-                        const=True,
-                        help="Play audio.")
+    parser.add_argument("--play", nargs="?", const=True, help="Play audio.")
 
+    parser.add_argument(
+        "--add_model",
+        nargs="?",
+        const=True,
+        help="Add tts model or voice cloning model.",
+    )
 
-    parser.add_argument("--add_model",
-                        nargs='?',
-                        const=True,
-                        help="Add tts model or voice cloning model.")
+    parser.add_argument(
+        "--create", nargs="?", const=True, help="Create voice for voice cloning"
+    )
 
-    parser.add_argument("--create",
-                        nargs='?',
-                        const=True,
-                        help="Create voice for voice cloning")
+    parser.add_argument(
+        "--edit_voice_name", nargs="?", const=True, help="Edit voice name"
+    )
 
-    parser.add_argument("--edit_voice_name",
-                        nargs='?',
-                        const=True,
-                        help="Edit voice name")
+    parser.add_argument(
+        "--edit_audio_name", nargs="?", const=True, help="Edit audio name"
+    )
 
-    parser.add_argument("--edit_audio_name",
-                        nargs='?',
-                        const=True,
-                        help="Edit audio name")
+    parser.add_argument("--delete_voice", nargs="?", const=True, help="Delete voice")
 
-    parser.add_argument("--delete_voice",
-                        nargs='?',
-                        const=True,
-                        help="Delete voice")
+    parser.add_argument(
+        "--delete_lang", nargs="?", const=True, help="Delete language of a voice"
+    )
 
-    parser.add_argument("--delete_lang",
-                        nargs='?',
-                        const=True,
-                        help="Delete language of a voice")
-    
-    parser.add_argument("--delete_audio",
-                        nargs='?',
-                        const=True,
-                        help="Delete audio")
-    
-    parser.add_argument("--text",
-                        type=str,
-                        default=None,
-                        help="Text for voice conversion or voice cloning.")
+    parser.add_argument("--delete_audio", nargs="?", const=True, help="Delete audio")
 
-    parser.add_argument("--voice_name",
-                        type=str,
-                        default="default_speaker",
-                        help="Voice input for speech generation.")
+    parser.add_argument(
+        "--text",
+        type=str,
+        default=None,
+        help="Text for voice conversion or voice cloning.",
+    )
 
-    parser.add_argument("--out_file",
-                        type=str,
-                        default=None,
-                        help="Output .wav filename.")
+    parser.add_argument(
+        "--voice_name",
+        type=str,
+        default="default_speaker",
+        help="Voice input for speech generation.",
+    )
 
-    parser.add_argument("--lang",
-                        type=str,
-                        default=None,
-                        help="Language for voice conversion or voice cloning.")
+    parser.add_argument(
+        "--out_file", type=str, default=None, help="Output .wav filename."
+    )
 
-    parser.add_argument("--text_file",
-                        type=str,
-                        default=None,
-                        help="Text filename.")
+    parser.add_argument(
+        "--lang",
+        type=str,
+        default=None,
+        help="Language for voice conversion or voice cloning.",
+    )
 
-    parser.add_argument("--model_type",
-                        type=str,
-                        default=None,
-                        help="TTS model or voice cloning model.")
+    parser.add_argument("--text_file", type=str, default=None, help="Text filename.")
 
-    parser.add_argument("--model_path",
-                        type=str,
-                        default=None,
-                        help="Deep learning models path for speech generation.")
+    parser.add_argument(
+        "--model_type", type=str, default=None, help="TTS model or voice cloning model."
+    )
 
-    parser.add_argument("--in_file",
-                        type=str,
-                        default=None,
-                        help="Input .wav filename.")
+    parser.add_argument(
+        "--model_path",
+        type=str,
+        default=None,
+        help="Deep learning models path for speech generation.",
+    )
 
-    parser.add_argument("--in_file_list",
-                        nargs="+",
-                        type=str,
-                        default=[],
-                        help="Input .wav files.")
+    parser.add_argument(
+        "--in_file", type=str, default=None, help="Input .wav filename."
+    )
 
+    parser.add_argument(
+        "--in_file_list", nargs="+", type=str, default=[], help="Input .wav files."
+    )
 
-    parser.add_argument("--create_profile",
-                        nargs='?',
-                        const=True,
-                        help="Create voice profile (experimental).")
+    parser.add_argument(
+        "--create_profile",
+        nargs="?",
+        const=True,
+        help="Create voice profile (experimental).",
+    )
 
-    parser.add_argument("--use_profile",
-                        nargs='?',
-                        const=True,
-                        help="Generate speech using voice profile (experimental).")
+    parser.add_argument(
+        "--use_profile",
+        nargs="?",
+        const=True,
+        help="Generate speech using voice profile (experimental).",
+    )
 
-    parser.add_argument("--profile_path",
-                        nargs='?',
-                        const=True,
-                        help="Path to voice profile.")
+    parser.add_argument(
+        "--profile_path", nargs="?", const=True, help="Path to voice profile."
+    )
 
-    parser.add_argument("--input_voice_path",
-                        nargs='?',
-                        const=True,
-                        help="Path to recorded input voice.")
-    
-    parser.add_argument("--use_json",
-                        nargs='?',
-                        const=True,
-                        help="Use JSON file to run TTS. Requires path of JSON file.")
+    parser.add_argument(
+        "--input_voice_path",
+        nargs="?",
+        const=True,
+        help="Path to recorded input voice.",
+    )
+
+    parser.add_argument(
+        "--use_json",
+        nargs="?",
+        const=True,
+        help="Use JSON file to run TTS. Requires path of JSON file.",
+    )
 
     # Execute the parse_args() method
     args = parser.parse_args()
@@ -228,18 +227,18 @@ def main():
     pdf_to_str = PdfToStrings()
     img_to_str = ImgToStrings()
 
-    #list models for TTS and voice cloning
+    # list models for TTS and voice cloning
     if args.list_models:
         anima.list_language_models()
         sys.exit()
 
-    #list all saved audios 
+    # list all saved audios
     if args.list_audios:
         audio_manager.list_audio()
         sys.exit()
 
     lang = args.lang
-    text = args.text 
+    text = args.text
     text_file = args.text_file
     voice_name = args.voice_name
     in_file_list = args.in_file_list
@@ -251,11 +250,13 @@ def main():
     profile_path = args.profile_path
     input_voice_path = args.input_voice_path
     json_path = args.use_json
-    
+
     # py cli.py --create_profile --profile_path "full path including .animaprofile to write to" --input_voice_path "full path to .wav file" --lang "en"
 
     if args.create_profile is not None:
-        anima.create_profile(profile_path=profile_path, speaker_wav=input_voice_path, lang=lang)
+        anima.create_profile(
+            profile_path=profile_path, speaker_wav=input_voice_path, lang=lang
+        )
         sys.exit()
 
     # py cli.py --use_profile --profile_path "full path to .animaprofile" --lang "en"
@@ -266,8 +267,8 @@ def main():
 
     # py cli.py --use_json "full path to json file"
 
-    if args.use_json is not None: 
-        #TODO MOVE TO ANIMA.PY 
+    if args.use_json is not None:
+        # TODO MOVE TO ANIMA.PY
         f = open(str(json_path), "r")
         data = json.load(f)
         print(data)
@@ -284,7 +285,7 @@ def main():
         in_dir, out_dir = audio_manager.dir_audio_to_folder(lang, out_file, voice_name)
         anima.voice_clone(text, in_dir, out_dir, lang)
         sys.exit()
-    
+
     if args.tts is not None:
         in_dir, out_dir = audio_manager.dir_audio_to_folder(lang, out_file)
         anima.tts_default_voice(text, out_dir, lang)
@@ -322,7 +323,7 @@ def main():
         if in_file is not None:
             audio_manager.create_voice(voice_name, lang, in_file)
             sys.exit()
-        
+
         if in_file_list is not None:
             file_path = audio_manager.combine_wav_files(in_file_list)
             audio_manager.create_voice(voice_name, lang, file_path)
@@ -352,16 +353,6 @@ def main():
         audio_manager.delete_voice(voice_name, lang, in_file)
         sys.exit()
 
-def test_main():
-    anima = ANIMA()
-    anima.use_profile_continuous(profile_path='data/yunus.animaprofile', lang='en')
-    sys.exit()
-
-def testProfileCreation():
-    anima = ANIMA()
-    anima.create_profile(profile_path="data/yunus.animaprofile", speaker_wav="C:\\Users\\urasa\\Downloads\\yunus.wav", lang="en")
 
 if __name__ == "__main__":
-    #testProfileCreation()
-    #test_main()
     main()
