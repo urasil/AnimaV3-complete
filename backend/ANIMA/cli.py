@@ -352,16 +352,7 @@ def main():
         audio_manager.delete_voice(voice_name, lang, in_file)
         sys.exit()
 
-def test_main():
-    anima = ANIMA()
-    anima.use_profile_continuous(profile_path='data/yunus.animaprofile', lang='en')
-    sys.exit()
 
-def testProfileCreation():
-    anima = ANIMA()
-    anima.create_profile(profile_path="data/yunus.animaprofile", speaker_wav="C:\\Users\\urasa\\Downloads\\yunus.wav", lang="en")
 
 if __name__ == "__main__":
-    #testProfileCreation()
-    #test_main()
     main()
