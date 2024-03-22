@@ -55,7 +55,7 @@ The key features of Anima can be split into 2 sections:
 ## Usage in Visual Studio
 To use it in Visual Studio, the backend([animaForBackend.py](/backend/ANIMA/animaForBackend.py)) has to be started manually, after starting the frontend.
 ## Anima CLI
-[Anima CLI](/backend/ANIMA "/backend/ANIMA") can be used as a standalone Python program, which also provides APIs to be incorporated in other projects.
+[Anima CLI](/backend "/backend") can be used as a standalone Python program, which also provides APIs to be incorporated in other projects.
 ## Deployment Manual
 [Deployment manual.pdf](/doc/Deployment_Manual.pdf "Deployment manual")
 ## User Manual
