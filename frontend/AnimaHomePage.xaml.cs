@@ -1,22 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using dotnetAnima.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using dotnetAnima.Core;
 
 namespace dotnetAnima
 {
@@ -43,7 +34,7 @@ namespace dotnetAnima
             profileExists = false;
             InitializeComponent();
 
-            if(loadedCount == 0)
+            if (loadedCount == 0)
             {
                 startButton.IsEnabled = false;  // disable button before the backend is ready
                 startButton.Opacity = 0.3;
@@ -51,20 +42,23 @@ namespace dotnetAnima
                 speakingLang.Opacity = 0.3;
                 loadedCount++;
             }
-            else 
+            else
             {
                 startButton.IsEnabled = true;
                 startButton.Opacity = 1.0;
-                if (profileExists){
+                if (profileExists)
+                {
                     speakingLang.IsEnabled = false;
                     speakingLang.Opacity = 0.3;
-                } else {
+                }
+                else
+                {
                     speakingLang.IsEnabled = true;
                     speakingLang.Opacity = 1.0;
                 }
                 loadedCount++;
             }
-            
+
 
             if (Directory.Exists(path))
             {
@@ -73,7 +67,7 @@ namespace dotnetAnima
                 {
                     abc.Visibility = Visibility.Hidden;
                     string userName = frontendJsonObject["nameOfCurrentUser"];
-                    if(File.Exists(path + "/" + userName + ".animaprofile"))
+                    if (File.Exists(path + "/" + userName + ".animaprofile"))
                     {
                         int userNameLength = userName.Length;
                         string spaces = String.Concat(Enumerable.Repeat(" ", 52 - userNameLength));
@@ -84,7 +78,7 @@ namespace dotnetAnima
                         profileExists = true;
                         // Console.WriteLine("profile exists");
                     }
-                    
+
                 }
                 InitialiseFrontendJson();
                 InitialiseBackendJson();
@@ -175,10 +169,13 @@ namespace dotnetAnima
                         conditionMet = true;
                         startButton.IsEnabled = true;
                         startButton.Opacity = 1;
-                        if (profileExists){
+                        if (profileExists)
+                        {
                             speakingLang.IsEnabled = false;
                             speakingLang.Opacity = 0.3;
-                        } else {
+                        }
+                        else
+                        {
                             speakingLang.IsEnabled = true;
                             speakingLang.Opacity = 1.0;
                         }
@@ -199,10 +196,10 @@ namespace dotnetAnima
         {
             string language;
             LanguageItem selectedItem = speakingLang.SelectedItem as LanguageItem;
-            if(selectedItem != null)
+            if (selectedItem != null)
             {
                 language = selectedItem.text;
-                switch(language)
+                switch (language)
                 {
                     case "English":
                         frontendJsonObject["language"] = "en";
@@ -222,7 +219,7 @@ namespace dotnetAnima
             {
                 return;
             }
-            
+
         }
 
         private string DefaultLanguageSelected()

@@ -1,20 +1,14 @@
-﻿using System;
+﻿using dotnetAnima.Core;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.IO;
-using Newtonsoft.Json;
-using Microsoft.Win32;
-using dotnetAnima.Core;
 
 
 
@@ -36,7 +30,7 @@ namespace dotnetAnima
 
         private string nameOfUser;
         private bool speakingState; // true means audio is playing
-        
+
         public TextToSpeechWindow()
         {
             InitializeComponent();
@@ -85,7 +79,7 @@ namespace dotnetAnima
             {
                 ButtonHelper.DisableButton(speakButton, false);
                 frontendJsonObject["speakID"] = UUIDGenerator.NewUUID(); // UUID to recognise the same content but function call at diferent moment
-                
+
                 // Use highlighted text if available, otherwise use entire content
                 string contentToSpeak = string.IsNullOrEmpty(GetHighlightedText()) ? myTextBox.Text : GetHighlightedText();
 
@@ -100,7 +94,7 @@ namespace dotnetAnima
                 {
                     MessageBox.Show("Failed to create speech", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
+
                 ButtonHelper.DisableButton(speakButton, true);
                 changeSpeakState();
                 await ResetSpeakButtonTimer((int)double.Parse(backendJsonObject["audioLength"]) * 1000);
@@ -170,9 +164,9 @@ namespace dotnetAnima
         // Send user to Manage Voice Window
         private void ManageVoices(object sender, RoutedEventArgs e)
         {
-            if(speakingState)
+            if (speakingState)
             {
-               StopSpeak();
+                StopSpeak();
             }
             this.NavigationService.Navigate(new ManageVoicesWindow());
         }
@@ -226,7 +220,7 @@ namespace dotnetAnima
 
         private async Task SendFileContentBackToFrontend()
         {
-            
+
             while (backendJsonObject["readFileSuccess"].ToString() != "true")
             {
                 readingBackendJson();
@@ -270,7 +264,7 @@ namespace dotnetAnima
 
 
         // change the style of speak button between SPEAK and STOP
-        private void changeSpeakState()  
+        private void changeSpeakState()
         {
             speakingState = !speakingState;
             var rectangleOverlay = speakButton.Template.FindName("RectangleOverlay", speakButton) as Rectangle;  // change the attribute in style file
@@ -295,17 +289,17 @@ namespace dotnetAnima
         // Go to the home page
         private void GoHome(object sender, RoutedEventArgs e)
         {
-            
+
             this.NavigationService.Navigate(new AnimaHomePage());
         }
 
         private void bankvoice(object sender, RoutedEventArgs e)
         {
-            if(speakingState)
+            if (speakingState)
             {
                 StopSpeak();
             }
-            this.NavigationService.Navigate(new BankVoiceWindow()); 
+            this.NavigationService.Navigate(new BankVoiceWindow());
         }
     }
 }

@@ -1,23 +1,13 @@
 ﻿using dotnetAnima.Core;
-using System;
-using System.IO;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
-using Newtonsoft.Json;
 
 namespace dotnetAnima
 {
@@ -162,12 +152,12 @@ namespace dotnetAnima
                 {
                     MessageBox.Show($"The name {frontendJsonObject["speakerName"]} has already been taken. Please select another name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else 
+                else
                 {
                     // needs an aysnc function that awaits confirmation from backend
                     FinishingUpWithRegistration();
                 }
-                
+
             }
             this.textCount++;
             ChangeInstructions();
@@ -193,7 +183,7 @@ namespace dotnetAnima
 
             recorder.StopSound();
             this.NavigationService.Navigate(new TextToSpeechWindow());
-            
+
         }
 
         private async Task WaitBackendConfirmationForProfileCreation()
@@ -414,9 +404,9 @@ namespace dotnetAnima
         {
             int len = this.ExtractNames().Length;
             recorder.StopRecording();
-            if(len > 0)
+            if (len > 0)
             {
-               this.NavigationService.Navigate(new ManageVoicesWindow());
+                this.NavigationService.Navigate(new ManageVoicesWindow());
             }
             else
             {
@@ -428,7 +418,7 @@ namespace dotnetAnima
         {
             recorder.StopRecording();
             int len = this.ExtractNames().Length;
-            if(len > 0)
+            if (len > 0)
             {
                 this.NavigationService.Navigate(new TextToSpeechWindow());
             }
@@ -436,7 +426,7 @@ namespace dotnetAnima
             {
                 MessageBox.Show("You have not recorded a voice to speak with!");
             }
-            
+
         }
 
         private string DefaultLanguageSelected()
