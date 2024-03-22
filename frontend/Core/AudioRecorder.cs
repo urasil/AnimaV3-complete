@@ -1,11 +1,7 @@
 ﻿using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Media;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 
 namespace dotnetAnima.Core
@@ -16,9 +12,9 @@ namespace dotnetAnima.Core
         private WaveFileWriter writer;
         private SoundPlayer soundPlayer;
         private string audioPath;
-        
 
-        
+
+
 
         // Write recorded audio data to file
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
@@ -27,7 +23,7 @@ namespace dotnetAnima.Core
         }
         public void StartRecording(string outputPath)
         {
-            audioPath = outputPath;  
+            audioPath = outputPath;
             CleanUp(); // Make sure the previous resources are disposed.
             waveIn = new WaveInEvent();
             waveIn.DataAvailable += WaveIn_DataAvailable;
@@ -38,22 +34,22 @@ namespace dotnetAnima.Core
             {
                 waveIn.StartRecording();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine($"Error starting recording: {e.Message}");
                 MessageBox.Show($"Error starting recording: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 CleanUp();
             }
-            
+
         }
 
-        public void StopRecording() 
+        public void StopRecording()
         {
             try
             {
                 waveIn?.StopRecording();   // if waveIn != null, then waveIn.StopRecording()
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine($"Error stopping recording: {e.Message}");
                 MessageBox.Show($"Error stopping recording: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -62,12 +58,12 @@ namespace dotnetAnima.Core
             {
                 CleanUp();
             }
-            
+
         }
 
         public void PlaySound()
         {
-            if(File.Exists(audioPath))
+            if (File.Exists(audioPath))
             {
                 try
                 {
@@ -85,21 +81,21 @@ namespace dotnetAnima.Core
                 Console.WriteLine("Audio file does not exist");
                 MessageBox.Show($"Audio file does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
-        public void StopSound() 
+        public void StopSound()
         {
             try
             {
                 soundPlayer?.Stop();
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
                 Console.WriteLine($"Error stopping sound: {e.Message}");
                 MessageBox.Show($"Error stopping sound: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void CleanUp()  // clean up the resources used in recording

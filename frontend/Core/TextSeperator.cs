@@ -22,17 +22,22 @@ namespace dotnetAnima.Core
             SeperatedText.Clear();
 
             string text = "";
-            if (current_language == "en"){
-                text  = File.ReadAllText("../../texts/VoiceBankingText-En.txt");
-            } else if (current_language == "fr-fr"){
-                text  = File.ReadAllText("../../texts/VoiceBankingText-Fr.txt");
-            } else if (current_language == "pt-br"){
-                text  = File.ReadAllText("../../texts/VoiceBankingText-Pt.txt");
+            if (current_language == "en")
+            {
+                text = File.ReadAllText("../../texts/VoiceBankingText-En.txt");
+            }
+            else if (current_language == "fr-fr")
+            {
+                text = File.ReadAllText("../../texts/VoiceBankingText-Fr.txt");
+            }
+            else if (current_language == "pt-br")
+            {
+                text = File.ReadAllText("../../texts/VoiceBankingText-Pt.txt");
             }
             string[] sentences = Regex.Split(text, @"(?<=[.!?])");
 
             int totalWords = CountWords(text);
-            int targetWordsPerBlock = totalWords < 3000 ? totalWords/10 : 300;
+            int targetWordsPerBlock = totalWords < 3000 ? totalWords / 10 : 300;
 
             int currentBlockWordCount = 0;
             string currentBlock = "";
@@ -72,10 +77,10 @@ namespace dotnetAnima.Core
                     SeperatedText.RemoveAt(SeperatedText.Count - 1);
                 }
             }
-            
-            while(SeperatedText.Count <10)
+
+            while (SeperatedText.Count < 10)
             {
-                if(SeperatedText.Count == 7)
+                if (SeperatedText.Count == 7)
                 {
                     SeperatedText.Add("Wow, you are done quite early, please keep hitting the buttton located at the bottom of the window after you are done reading this text.");
                     SeperatedText.Add("We weren't expecting you to be so good at this, hence our preparation was not enough. Congratulations!");
