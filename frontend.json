@@ -1,10 +1,10 @@
 {
-  "nameOfCurrentUser": "les see",
-  "content": "hey how are you\r\n",
-  "speakerName": "les see",
-  "speakID": "d9538ff1-b4a8-4601-82ab-33d4de06acf5",
+  "nameOfCurrentUser": "",
+  "content": "",
+  "speakerName": "",
+  "speakID": "",
   "readFilePath": "",
-  "readFileID": "9817b89c-d1cd-4672-b60b-c18efa6a232f",
+  "readFileID": "",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
   "language": "en"
