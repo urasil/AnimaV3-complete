@@ -88,12 +88,15 @@ public partial class TextToSpeechWindow : Page {
                                         ? myTextBox.Text
                                         : GetHighlightedText();
 
-            frontendJsonObject["content"] = contentToSpeak;
-            UpdateFrontendJsonFile();
-
+            
             backendJsonObject["speechSuccess"] =
                 "false";  // reset the value before sending the request
             updateBackendJson();
+
+            frontendJsonObject["content"] = contentToSpeak;
+            UpdateFrontendJsonFile();
+
+            
 
             await WaitSpeech();
             if (backendJsonObject["speechSuccess"] == "false") {
