@@ -149,7 +149,7 @@ public partial class BankVoiceWindow : Page {
             lovelyButton.IsEnabled = false;  // user enables the button back by
                                              // inputting a name in the textbox
         }
-        // Going to the next page
+        // Finishing the voice profile registeration
         if (this.buttonClickedCount >= 12) {
             string[] names = ExtractNames();
             if (names.Contains(frontendJsonObject["speakerName"])) {

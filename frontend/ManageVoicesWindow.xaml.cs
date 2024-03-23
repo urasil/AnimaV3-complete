@@ -167,7 +167,7 @@ public partial class ManageVoicesWindow : Page {
         this.NavigationService.Navigate(new BankVoiceWindow());
     }
 
-    // Needs backend functionality
+    // Create digital voice from selected .wav file
     private async void ImportVoice(object sender, RoutedEventArgs e) {
         Microsoft.Win32.OpenFileDialog dialog =
             new Microsoft.Win32.OpenFileDialog();
