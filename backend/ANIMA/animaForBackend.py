@@ -172,7 +172,6 @@ def main():
     observer = Observer(frontEndJsonPath=frontendJsonFilePath)
     functions = BackendFunctionalites()
     readyBackend()
-    print("lets see:", languageJson)
 
     try:
         while True:
