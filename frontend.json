@@ -1,11 +1,11 @@
 {
-  "nameOfCurrentUser": "deneme",
-  "content": "",
-  "speakerName": "deneme",
-  "speakID": "d5020409-9f39-46f1-98aa-e677a941fb14",
+  "nameOfCurrentUser": "abc",
+  "content": "hello how are you today",
+  "speakerName": "calis",
+  "speakID": "5bf0fc09-a6b6-4ce8-844f-793e9b130c9f",
   "readFilePath": "",
-  "readFileID": "32d7c1ac-b925-4a1e-9c4d-95c9654e5f04",
+  "readFileID": "3ad54d3b-4b87-49fb-bb75-e59a19329031",
   "importFilePath": "",
-  "stopSpeakTrigger": "false",
+  "stopSpeakTrigger": "true",
   "language": "en"
 }

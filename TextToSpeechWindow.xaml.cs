@@ -34,14 +34,14 @@ public partial class TextToSpeechWindow : Page {
         ButtonHelper.DisableButton(speakButton,
                                    false);  // disable speak button by default
         // Frontend JSON
-        frontendJsonFilePath = @"../frontend.json";
+        frontendJsonFilePath = @"frontend.json";
         frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
         frontendJsonObject =
             JsonConvert.DeserializeObject<Dictionary<string, string>>(
                 frontendJsonContent);
 
         // Backend JSON
-        backendJsonFilePath = @"../backend.json";
+        backendJsonFilePath = @"backend.json";
         backendJsonContent = File.ReadAllText(backendJsonFilePath);
         backendJsonObject =
             JsonConvert.DeserializeObject<Dictionary<string, string>>(
