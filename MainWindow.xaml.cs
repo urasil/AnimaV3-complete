@@ -19,13 +19,13 @@ public partial class MainWindow : Window {
     static void StartExecutable() {
         try {
             Console.WriteLine(Directory.GetCurrentDirectory());
-            string executablePath = "..\\..\\..\\backend\\ANIMA\\anima.exe";
+            string executablePath = "backend\\ANIMA\\anima.exe";
 
             ProcessStartInfo startInfo = new ProcessStartInfo(executablePath);
             startInfo.WindowStyle =
                 ProcessWindowStyle.Hidden;  // hide the backend terminal window
             startInfo.CreateNoWindow = true;
-            startInfo.WorkingDirectory = "..\\..\\..\\backend\\ANIMA\\";
+            startInfo.WorkingDirectory = "backend\\ANIMA\\";
 
             executableProcess = Process.Start(startInfo);
             Console.WriteLine("Executable started successfully.");

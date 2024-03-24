@@ -15,21 +15,21 @@ namespace dotnetAnima {
 /// </summary>
 public partial class ManageVoicesWindow : Page {
     // Back end
-    string backendJsonFilePath = @"../../../backend.json";
+    string backendJsonFilePath = @"backend.json";
     private string backendJsonContent =
-        File.ReadAllText("../../../backend.json");
+        File.ReadAllText("backend.json");
     private Dictionary<string, string> backendJsonObject;
 
     // Front end
-    string frontendJsonFilePath = @"../../../frontend.json";
+    string frontendJsonFilePath = @"frontend.json";
     private string frontendJsonContent =
-        File.ReadAllText("../../../frontend.json");
+        File.ReadAllText("frontend.json");
     private Dictionary<string, string> frontendJsonObject;
 
     // Profile Languages
-    string profileLanguagesJsonFilePath = @"../../../profileLanguages.json";
+    string profileLanguagesJsonFilePath = @"profileLanguages.json";
     private string profileLanguagesJsonContent =
-        File.ReadAllText("../../../profileLanguages.json");
+        File.ReadAllText("profileLanguages.json");
     private Dictionary<string, List<string>> profileLanguagesObject;
 
     public ManageVoicesWindow() {
@@ -68,7 +68,7 @@ public partial class ManageVoicesWindow : Page {
     }
 
     private void readingBackendJson() {
-        string updatedJsonContent = File.ReadAllText("../../../backend.json");
+        string updatedJsonContent = File.ReadAllText("backend.json");
         backendJsonObject =
             JsonConvert.DeserializeObject<Dictionary<string, string>>(
                 updatedJsonContent);
@@ -76,7 +76,7 @@ public partial class ManageVoicesWindow : Page {
 
     private void readingProfileLanguageJson() {
         string updatedJsonContent =
-            File.ReadAllText("../../../profileLanguages.json");
+            File.ReadAllText("profileLanguages.json");
         profileLanguagesObject =
             JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(
                 updatedJsonContent);
@@ -149,7 +149,7 @@ public partial class ManageVoicesWindow : Page {
 
     private string[] ExtractNames() {
         string[] filePaths =
-            Directory.GetFiles("../../../animaProfiles",
+            Directory.GetFiles("animaProfiles",
                                "*.animaprofile");  // only get files with
                                                    // extension of 'animeprofile'
         string[] namesList = new string[filePaths.Length];
@@ -256,7 +256,7 @@ public partial class ManageVoicesWindow : Page {
             int radioButtonCount =
                 groupPanel.Children.OfType<RadioButton>().Count();
             string animaProfilePath = System.IO.Path.Combine(
-                "../../../animaProfiles", animaProfileName);
+                "animaProfiles", animaProfileName);
             string valueToDeleteKey = "";
             readingProfileLanguageJson();
             foreach (var kvp in profileLanguagesObject) {

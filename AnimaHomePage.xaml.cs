@@ -16,14 +16,14 @@ namespace dotnetAnima {
 public partial class AnimaHomePage : Page {
     bool profileExists;
     private static int loadedCount = 0;
-    private string frontendJsonFilePath = "../../../frontend.json";
-    private string backendJsonFilePath = "../../../backend.json";
+    private string frontendJsonFilePath = "frontend.json";
+    private string backendJsonFilePath = "backend.json";
     private Dictionary<string, string> frontendJsonObject;
     private Dictionary<string, string> backendJsonObject;
     private string frontendJsonContent;
     private string backendJsonContent;
     public AnimaHomePage() {
-        string path = @"../../../animaProfiles";
+        string path = @"animaProfiles";
         frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
         backendJsonContent = File.ReadAllText(backendJsonFilePath);
         frontendJsonObject =
