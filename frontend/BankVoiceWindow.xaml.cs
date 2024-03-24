@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Runtime;
+using System;
 
 namespace dotnetAnima {
 /// <summary>
@@ -28,7 +30,8 @@ public partial class BankVoiceWindow : Page {
     private Dictionary<string, string> backendJsonObject;
     public BankVoiceWindow() {
         InitializeComponent();
-        textToSpeech.Visibility = Visibility.Hidden;
+            Console.WriteLine("what");
+            textToSpeech.Visibility = Visibility.Hidden;
         manageVoicesButton.Visibility = Visibility.Hidden;
         int len = this.ExtractNames().Length;
         if (len > 0) {
@@ -37,13 +40,13 @@ public partial class BankVoiceWindow : Page {
         }
         recorder = new AudioRecorder();
 
-        frontendJsonFilePath = @"../../../frontend.json";
+        frontendJsonFilePath = @"../frontend.json";
         frontendJsonContent = File.ReadAllText(frontendJsonFilePath);
         frontendJsonObject =
             JsonConvert.DeserializeObject<Dictionary<string, string>>(
                 frontendJsonContent);
 
-        backendJsonFilePath = @"../../../backend.json";
+        backendJsonFilePath = @"../backend.json";
         backendJsonFileContent = File.ReadAllText(backendJsonFilePath);
         backendJsonObject =
             JsonConvert.DeserializeObject<Dictionary<string, string>>(
@@ -76,7 +79,7 @@ public partial class BankVoiceWindow : Page {
 
         // RETURN button rename
         string[] animaFiles =
-            Directory.GetFiles("../../../animaProfiles", "*.animaprofile");
+            Directory.GetFiles("../animaProfiles", "*.animaprofile");
 
         // load text to read
         string current_language = frontendJsonObject["language"];
@@ -99,7 +102,7 @@ public partial class BankVoiceWindow : Page {
     // Return to Menu Button
     public void StopVoicebanking(object sender, RoutedEventArgs e) {
         string[] animaFiles =
-            Directory.GetFiles("../../../animaProfiles", "*.animaprofile");
+            Directory.GetFiles("../animaProfiles", "*.animaprofile");
         if (animaFiles.Length >= 1) {
             recorder.StopRecording();
             this.NavigationService.Navigate(new ManageVoicesWindow());
@@ -111,7 +114,7 @@ public partial class BankVoiceWindow : Page {
 
     private string[] ExtractNames() {
         string[] filePaths =
-            Directory.GetFiles("../../../animaProfiles",
+            Directory.GetFiles("../animaProfiles",
                                "*.animaprofile");  // only get files with
                                                    // extension of 'animeprofile'
         string[] namesList = new string[filePaths.Length];
@@ -131,7 +134,7 @@ public partial class BankVoiceWindow : Page {
         speakingLang.IsEnabled = false;
         // Starting the voice recording
         if (this.buttonClickedCount == 1) {
-            recorder.StartRecording("../../../output.wav");
+            recorder.StartRecording("../output.wav");
             restartButton.Visibility = Visibility.Visible;
         }
 
@@ -351,11 +354,11 @@ public partial class BankVoiceWindow : Page {
             string currentLanguage = frontendJsonObject["language"];
             string textFilePath = "";
             if (currentLanguage == "en") {
-                textFilePath = "../../texts/VoiceBankingText-En.txt";
+                textFilePath = "texts/VoiceBankingText-En.txt";
             } else if (currentLanguage == "fr-fr") {
-                textFilePath = "../../texts/VoiceBankingText-Fr.txt";
+                textFilePath = "texts/VoiceBankingText-Fr.txt";
             } else if (currentLanguage == "pt-br") {
-                textFilePath = "../../texts/VoiceBankingText-Pt.txt";
+                textFilePath = "texts/VoiceBankingText-Pt.txt";
             }
 
             // Read and separate text from the chosen file

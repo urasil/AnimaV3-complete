@@ -1,10 +1,10 @@
 {
-  "nameOfCurrentUser": "Uras",
-  "content": "Hello, how are you?",
-  "speakerName": "Uras",
-  "speakID": "ad5074cd-021b-4077-a5ab-6f1ce239fd30",
+  "nameOfCurrentUser": "deneme",
+  "content": "",
+  "speakerName": "deneme",
+  "speakID": "d5020409-9f39-46f1-98aa-e677a941fb14",
   "readFilePath": "",
-  "readFileID": "",
+  "readFileID": "32d7c1ac-b925-4a1e-9c4d-95c9654e5f04",
   "importFilePath": "",
   "stopSpeakTrigger": "false",
   "language": "en"
