@@ -32,10 +32,15 @@ The JSON files serve as a communication bridge between the frontend and backend.
 - Frontend JSON File (frontend.json):  
 Contains essential information about the current user, such as their name, preferred language, and unique identifiers for audio files. The frontend writes data to this file, while the backend reads from it to determine the current status and perform necessary actions accordingly.
 - Backend JSON File (backend.json): 
-Records the success status of various backend operations, including profile creation, file reading, speech synthesis, and more. Additionally, it maintains information about the readiness of the backend system and the length of audio files processed. The frontend writes to this file, while the backend reads from it to report operation outcomes and system readiness.
-
+Records the success status of various backend operations, including profile creation, file reading, speech synthesis, and more. Additionally, it maintains information about the readiness of the backend system and the length of audio files processed. The backend writes to this file, while the frontend reads from it to report operation outcomes and system readiness.
+- Languages JSON File (profileLanguages.json):
+Contains information about what language each animaprofile is in. When a new animaprofile is created under a certain language, the backend updates this JSON file.
 ### Local Database
-For optimal user privacy, we maintain a local database within an 'animaprofiles' folder. This database stores user data in output.wav files, ensuring that the most recent audio generated is consistently updated and overwritten, aligning with our commitment to safeguarding user information.  
+For optimal user privacy, we maintain a local database, aligning with our commitment to safeguarding user information.
+- animaProfiles directory:
+Stores the .animaprofile files generated. 
+- output.wav:
+The most recent audio generated is consistently written into this .wav file and updated, which is then played by the frontend to the user.
 ## Key Features
 The key features of Anima can be split into 2 sections:  
 ### Voice Setup
