@@ -1,10 +1,10 @@
 {
   "profileCreationSuccess": "true", 
   "readFileSuccess": "false", 
-  "speechSuccess": "true", 
+  "speechSuccess": "false", 
   "readContentSuccess": "false", 
   "importSuccess": "NULL", 
   "backendReady": "false", 
   "stopSpeakSuccess": "false", 
-  "audioLength": "1.617"
+  "audioLength": ""
 }
