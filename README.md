@@ -1,4 +1,8 @@
 # Anima V3
+## Introdcution
+Anima V3 is an offline and secure voice banking solution. Anima V3 preserves the person's voice so that even when their natural voice is lost, they can still communicate and maintain their sense of self.  
+With Anima V3, you can record your voice, and we can create a blueprint of it, giving those in need a way to speak with Anima V3 is our vision.
+
 ## Index
 - [Introdcution](#introdcution)
 - [System Architecture](#system-architecture)
@@ -16,10 +20,6 @@
 - [Packages](#packages)
 - [License](#license)
 
-
-## Introdcution
-Anima V3 is an offline and secure voice banking solution. Anima V3 preserves the person's voice so that even when their natural voice is lost, they can still communicate and maintain their sense of self.  
-With Anima V3, you can record your voice, and we can create a blueprint of it, giving those in need a way to speak with Anima V3 is our vision.
 ## System Architecture
 The design of Anima v3 consists of a frontend, backend, JSON files and a local data folder.
 ![System architecture](/doc/img/overview.png "System architecture")
